@@ -9,9 +9,16 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
         rel="stylesheet"
     >
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body>
 
+<!-- HERO -->
 <section class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
     <div class="text-center container">
         <h1 class="display-3 fw-bold">MyBuddy</h1>
@@ -24,7 +31,23 @@
     </div>
 </section>
 
+<!-- TABLE OF CONTENTS -->
 <section class="container py-5">
+    <h2>Table of Contents</h2>
+    <ul>
+        <li><a href="#app-concept">App Concept</a></li>
+        <li><a href="#app-structure">App Structure</a></li>
+        <li><a href="#screenshots">Screenshots</a></li>
+        <li><a href="#wellbeing-score">Wellbeing Score</a></li>
+        <li><a href="#usability-test-plan">Usability Test Plan</a></li>
+        <li><a href="#heuristic-evaluation">Heuristic Evaluation</a></li>
+        <li><a href="#usability-test-results">Usability Test Results</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+    </ul>
+</section>
+
+<!-- APP CONCEPT -->
+<section class="container py-5" id="app-concept">
     <h2>App Concept</h2>
     <p>
         MyBuddy is a 4-in-1 wellbeing tracking app featuring a virtual companion called Buddy.
@@ -38,6 +61,7 @@
     </p>
 </section>
 
+<!-- GOALS & FEATURES -->
 <section class="container py-5">
     <h2>Goals & Features</h2>
     <ul>
@@ -50,25 +74,11 @@
     </ul>
 </section>
 
-<section class="container py-5">
-    <h2>Table of Contents</h2>
-    <ul>
-        <li>App Concept</li>
-        <li>App Structure</li>
-        <li>Screenshots</li>
-        <li>Wellbeing Score</li>
-        <li>Usability Test Plan</li>
-        <li>Heuristic Evaluation</li>
-        <li>Usability Test Results</li>
-        <li>Conclusion</li>
-    </ul>
-</section>
-
-<section class="container py-5">
+<!-- APP STRUCTURE -->
+<section class="container py-5" id="app-structure">
     <h2>App Structure</h2>
 
     <h3>Data</h3>
-
     <h4>Database Tables</h4>
 
     <div class="table-responsive">
@@ -122,57 +132,67 @@
         <li>ViewModel: Acts as intermediary between UI and data layer, all operations execute within viewModelScope</li>
         <li>Repository: Provides clean API for data operations, handles CRUD logic</li>
     </ul>
-</section>
 
-<section class="container py-5">
-    <h2>UI</h2>
+    <h3>UI</h3>
 
-    <h3>Screens</h3>
+    <h4>Screens</h4>
     <ul>
         <li>HomeScreen</li>
+        <li>Displays animated Buddy with mood based on Wellbeing Score, daily quote, and overview widgets</li>
         <li>MoodScreen</li>
+        <li>Shows mood calendar with emoji indicators, monthly statistics, and "Add Today's Mood" button</li>
         <li>MoodDayView</li>
+        <li>Displays detailed view of a specific day's mood entry with blob and notes</li>
         <li>AddMoodFlow</li>
+        <li>Two-step modal: (1) Select mood emoji, (2) Add optional note</li>
         <li>HabitsScreen</li>
+        <li>Shows habit list with streak grids, completion status, and "Create New Habit" button</li>
         <li>AddHabitScreen</li>
+        <li>Allows users to create habits with name, description, and color selection</li>
         <li>EditHabitScreen</li>
+        <li>Enables editing or deleting existing habits</li>
         <li>HealthScreen</li>
+        <li>Tab-based view with Sleep and Water sections</li>
         <li>ProfileScreen</li>
+        <li>Shows Buddy preview, statistics cards, and "Customize" button</li>
         <li>CustomizeBuddyScreen</li>
+        <li>Color wheel picker and name editor for Buddy personalization</li>
     </ul>
 
-    <h3>Components</h3>
+    <h4>Components</h4>
     <ul>
-        <li>BottomNavBar</li>
-        <li>StatWidget</li>
-        <li>BuddyBlob</li>
-        <li>MoodCalendar</li>
-        <li>HabitCard</li>
-        <li>CircularProgress</li>
-        <li>ColorWheelPicker</li>
+        <li>BottomNavBar: Contains main navigation (Home, Mood, Habits, Health, Profile)</li>
+        <li>StatWidget: Reusable widget cards for Home screen (Mood, Sleep, Water, Habits)</li>
+        <li>BuddyBlob: Animated Canvas component with Bézier curves, supports multiple moods and colors</li>
+        <li>MoodCalendar: Monthly calendar grid with emoji indicators for logged days</li>
+        <li>HabitCard: Displays habit with streak grid, name, and check-in button</li>
+        <li>CircularProgress: Reusable progress indicator for Sleep and Water widgets</li>
+        <li>ColorWheelPicker: HSV color wheel for Buddy customization</li>
     </ul>
 
-    <h3>Utils</h3>
+    <h4>Utils</h4>
     <ul>
-        <li>WellbeingCalculator</li>
-        <li>BuddyMoodMapper</li>
-        <li>DateUtil</li>
-        <li>ColorUtil</li>
+        <li>WellbeingCalculator: Calculates Wellbeing Score (0-100) from mood, habits, sleep, and water data</li>
+        <li>BuddyMoodMapper: Maps Wellbeing Score ranges to Buddy mood states</li>
+        <li>DateUtil: Helper functions for date formatting and comparisons</li>
+        <li>ColorUtil: Generates gradient shades from selected color</li>
     </ul>
 </section>
 
-<section class="container py-5">
-    <h2>Buddy Moods</h2>
+<!-- SCREENSHOTS -->
+<section class="container py-5" id="screenshots">
+    <h2>Screenshots</h2>
     <ul>
-        <li>EXCITED (85-100)</li>
-        <li>HAPPY (65-84)</li>
-        <li>WORRIED (45-64)</li>
-        <li>SAD (25-44)</li>
-        <li>SLEEPY (0-24)</li>
+        <li>Home</li>
+        <li>Mood</li>
+        <li>Habits</li>
+        <li>Health</li>
+        <li>Profile</li>
     </ul>
 </section>
 
-<section class="container py-5">
+<!-- WELLBEING SCORE -->
+<section class="container py-5" id="wellbeing-score">
     <h2>Wellbeing Score</h2>
 
     <p>
@@ -193,129 +213,76 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Mood</td>
-                    <td>30</td>
-                    <td>Based on logged mood type</td>
-                </tr>
-                <tr>
-                    <td>Habits</td>
-                    <td>30</td>
-                    <td>(completed ÷ total) * 30</td>
-                </tr>
-                <tr>
-                    <td>Sleep</td>
-                    <td>25</td>
-                    <td>Duration: (actual ÷ goal) * 15 + Quality (10)</td>
-                </tr>
-                <tr>
-                    <td>Water</td>
-                    <td>15</td>
-                    <td>(intake ÷ goal) * 15</td>
-                </tr>
-                <tr>
-                    <td>Total</td>
-                    <td>100</td>
-                    <td></td>
-                </tr>
+                <tr><td>Mood</td><td>30</td><td>Based on logged mood type</td></tr>
+                <tr><td>Habits</td><td>30</td><td>(completed ÷ total) * 30</td></tr>
+                <tr><td>Sleep</td><td>25</td><td>Duration: (actual ÷ goal) * 15 + Quality (10)</td></tr>
+                <tr><td>Water</td><td>15</td><td>(intake ÷ goal) * 15</td></tr>
+                <tr><td>Total</td><td>100</td><td></td></tr>
             </tbody>
         </table>
     </div>
 
     <h3>Mood Points (0-30)</h3>
+    <ul>
+        <li>Awesome – 30</li>
+        <li>Loved – 28</li>
+        <li>Okay – 20</li>
+        <li>Tired – 12</li>
+        <li>Anxious – 10</li>
+        <li>Sad – 8</li>
+        <li>Upset – 5</li>
+        <li>Terrible – 3</li>
+    </ul>
 
-<div class="table-responsive">
-    <table class="table table-bordered">
-        <thead class="table-light">
-            <tr>
-                <th>Mood</th>
-                <th>Points</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>Awesome</td><td>30</td></tr>
-            <tr><td>Loved</td><td>28</td></tr>
-            <tr><td>Okay</td><td>20</td></tr>
-            <tr><td>Tired</td><td>12</td></tr>
-            <tr><td>Anxious</td><td>10</td></tr>
-            <tr><td>Sad</td><td>8</td></tr>
-            <tr><td>Upset</td><td>5</td></tr>
-            <tr><td>Terrible</td><td>3</td></tr>
-        </tbody>
-    </table>
-</div>
+    <h3>Sleep Points (0-25)</h3>
+    <p><strong>Duration (0-15 points):</strong></p>
+    <p>Score = (actual_hours ÷ goal_hours) * 15, max 15</p>
+    <p><strong>Quality (0-10 points):</strong></p>
+    <ul>
+        <li>Awesome: 10 points</li>
+        <li>Okay: 6 points</li>
+        <li>Terrible: 2 points</li>
+    </ul>
 
-<h3>Sleep Points (0-25)</h3>
+    <h3>Buddy Mood Logic</h3>
+    <ul>
+        <li>85-100 – EXCITED – Bouncing animation with sparkles</li>
+        <li>65-84 – HAPPY – Gentle breathing animation with a smile</li>
+        <li>45-64 – WORRIED – Wobble animation with concerned expression</li>
+        <li>25-44 – SAD – Slow breathing with tears</li>
+        <li>0-24 – SLEEPY – Droopy eyes with ZZZ</li>
+    </ul>
 
-<p><strong>Duration (0-15 points):</strong></p>
-<p>
-    Score = (actual_hours ÷ goal_hours) * 15, max 15
-</p>
+    <h3>Example Calculation</h3>
+    <p><strong>Great Day Example</strong></p>
+    <ul>
+        <li>Mood: Awesome – 30 points</li>
+        <li>Habits: 4/5 completed – 24 points</li>
+        <li>Sleep: 8h + Awesome quality – 15 + 10 = 25 points</li>
+        <li>Water: 1800ml / 2000ml – 13 points</li>
+        <li><strong>Total – 92 → EXCITED</strong></li>
+    </ul>
+</section>
 
-<p><strong>Quality (0-10 points):</strong></p>
-<ul>
-    <li>Awesome: 10 points</li>
-    <li>Okay: 6 points</li>
-    <li>Terrible: 2 points</li>
-</ul>
+<!-- EMPTY PDF SECTIONS -->
+<section class="container py-5" id="usability-test-plan">
+    <h2>Usability Test Plan</h2>
+</section>
 
-<h3>Buddy Mood Logic</h3>
+<section class="container py-5" id="heuristic-evaluation">
+    <h2>Heuristic Evaluation</h2>
+</section>
 
-<div class="table-responsive">
-    <table class="table table-bordered">
-        <thead class="table-light">
-            <tr>
-                <th>Score Range</th>
-                <th>Buddy Mood</th>
-                <th>Appearance</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>85-100</td>
-                <td>EXCITED</td>
-                <td>Bouncing animation, sparkles</td>
-            </tr>
-            <tr>
-                <td>65-84</td>
-                <td>HAPPY</td>
-                <td>Smiling expression</td>
-            </tr>
-            <tr>
-                <td>45-64</td>
-                <td>WORRIED</td>
-                <td>Concerned expression</td>
-            </tr>
-            <tr>
-                <td>25-44</td>
-                <td>SAD</td>
-                <td>Frown, tears animation</td>
-            </tr>
-            <tr>
-                <td>0-24</td>
-                <td>SLEEPY</td>
-                <td>Closed eyes, ZZZ</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<section class="container py-5" id="usability-test-results">
+    <h2>Usability Test Results</h2>
+</section>
 
-<h3>Example Calculation</h3>
-
-<h4>Great Day Example</h4>
-
-<ul>
-    <li>Mood: Awesome &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;30 points</li>
-    <li>Habits: 4/5 completed &nbsp;&nbsp;24 points</li>
-    <li>Sleep: 8h + Awesome quality &nbsp;&nbsp;15 + 10 = 25 points</li>
-    <li>Water: 1800ml / 2000ml &nbsp;&nbsp;13 points</li>
-    <li><strong>Total</strong> &nbsp;&nbsp;92 → EXCITED</li>
-</ul>
-
+<section class="container py-5" id="conclusion">
+    <h2>Conclusion</h2>
 </section>
 
 <footer class="text-center py-4 text-muted">
-    © 2026 MyBuddy - Ilse Hahn & Pascal Pamer
+    © 2026 MyBuddy – Ilse Hahn & Pascal Pamer
 </footer>
 
 </body>
