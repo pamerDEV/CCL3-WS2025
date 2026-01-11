@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Mein Projekt</title>
+    <title>MyBuddy | Ilse Hahn & Pascal Pamer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link 
@@ -11,10 +11,109 @@
     >
 </head>
 <body>
-    <main class="d-flex align-items-center justify-content-center min-vh-100">
-        <div class="text-center">
-            <h1 class="display-4">MyBuddy</h1>
+
+<!-- HERO -->
+<section class="d-flex align-items-center justify-content-center min-vh-100 bg-light">
+    <div class="text-center container">
+        <h1 class="display-3 fw-bold">MyBuddy</h1>
+        <p class="lead mt-3">Your Wellbeing Companion</p>
+        <p class="text-muted">
+            By Ilse & Pascal Pamer
+        </p>
+        <div class="mt-4">
+            <a href="#" class="btn btn-primary me-2">View on GitHub</a>
+            <a href="#" class="btn btn-outline-secondary">Download APK</a>
         </div>
-    </main>
+    </div>
+</section>
+
+<section class="py-5 container">
+    <h2 class="mb-4">App Concept</h2>
+    <p>
+        <strong>MyBuddy</strong> is a 4-in-1 wellbeing tracking app featuring a virtual companion called
+        <strong>Buddy</strong>. Users can track their mood, habits, sleep, and water intake.
+        Buddy reacts emotionally through expressions and animations based on the user’s wellbeing.
+    </p>
+    <p>
+        A hidden <strong>Wellbeing Score (0–100)</strong> is calculated from all tracked data.
+        Instead of showing numbers, Buddy reflects the score through mood and behavior,
+        creating emotional engagement and motivation.
+    </p>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="mb-4">Goals & Features</h2>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Mood tracking with 8 emotional states and optional notes</li>
+            <li class="list-group-item">Habit creation and streak tracking (CRUD)</li>
+            <li class="list-group-item">Sleep logging with duration and quality ratings</li>
+            <li class="list-group-item">Water intake tracking with customizable daily goals</li>
+            <li class="list-group-item">Animated Buddy reacting to the Wellbeing Score</li>
+            <li class="list-group-item">Full customization of Buddy (name & color)</li>
+        </ul>
+    </div>
+</section>
+
+<section class="py-5 container">
+    <h2 class="mb-4">Wellbeing Score</h2>
+    <p>
+        The Wellbeing Score combines four dimensions: mood, habits, sleep, and water intake.
+        The score is calculated internally and never shown directly to the user.
+        Instead, Buddy’s mood reflects the current state.
+    </p>
+
+    <div class="table-responsive">
+        <table class="table table-bordered mt-4">
+            <thead class="table-light">
+                <tr>
+                    <th>Component</th>
+                    <th>Max Points</th>
+                    <th>Calculation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mood</td>
+                    <td>30</td>
+                    <td>Based on logged mood type</td>
+                </tr>
+                <tr>
+                    <td>Habits</td>
+                    <td>30</td>
+                    <td>(completed ÷ total) × 30</td>
+                </tr>
+                <tr>
+                    <td>Sleep</td>
+                    <td>25</td>
+                    <td>Duration + Quality</td>
+                </tr>
+                <tr>
+                    <td>Water</td>
+                    <td>15</td>
+                    <td>(intake ÷ goal) × 15</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="mb-4">Buddy Mood States</h2>
+        <ul>
+            <li><strong>EXCITED (85–100):</strong> Bouncing animation with sparkles</li>
+            <li><strong>HAPPY (65–84):</strong> Gentle breathing with a smile</li>
+            <li><strong>WORRIED (45–64):</strong> Wobble animation with concerned expression</li>
+            <li><strong>SAD (25–44):</strong> Slow breathing with tears</li>
+            <li><strong>SLEEPY (0–24):</strong> Droopy eyes with ZZZ</li>
+        </ul>
+    </div>
+</section>
+
+<footer class="py-4 text-center text-muted">
+    <small>© 2025 MyBuddy – Ilse Hahn & Pascal Pamer</small>
+</footer>
+
 </body>
 </html>
