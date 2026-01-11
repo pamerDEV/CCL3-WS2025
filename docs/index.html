@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>MyBuddy | Ilse Hahn & Pascal Pamer</title>
+    <title>MyBuddy – Ilse Hahn & Pascal Pamer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link 
@@ -12,59 +12,179 @@
 </head>
 <body>
 
-<!-- HERO -->
-<section class="d-flex align-items-center justify-content-center min-vh-100 bg-light">
+<section class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
     <div class="text-center container">
         <h1 class="display-3 fw-bold">MyBuddy</h1>
-        <p class="lead mt-3">Your Wellbeing Companion</p>
-        <p class="text-muted">
-            By Ilse & Pascal Pamer
-        </p>
+        <p class="lead">Your Wellbeing Companion</p>
+        <p>By Ilse Hahn (cc241064) & Pascal Pamer (cc241013)</p>
         <div class="mt-4">
-            <a href="#" class="btn btn-primary me-2">View on GitHub</a>
+            <a href="#" class="btn btn-primary me-2">View on Github</a>
             <a href="#" class="btn btn-outline-secondary">Download APK</a>
         </div>
     </div>
 </section>
 
-<section class="py-5 container">
-    <h2 class="mb-4">App Concept</h2>
+<section class="container py-5">
+    <h2>App Concept</h2>
     <p>
-        <strong>MyBuddy</strong> is a 4-in-1 wellbeing tracking app featuring a virtual companion called
-        <strong>Buddy</strong>. Users can track their mood, habits, sleep, and water intake.
-        Buddy reacts emotionally through expressions and animations based on the user’s wellbeing.
+        MyBuddy is a 4-in-1 wellbeing tracking app featuring a virtual companion called Buddy.
+        Users can track their mood, habits, sleep, and water intake while Buddy reacts to their
+        overall wellbeing through expressions and animations.
     </p>
     <p>
-        A hidden <strong>Wellbeing Score (0–100)</strong> is calculated from all tracked data.
-        Instead of showing numbers, Buddy reflects the score through mood and behavior,
-        creating emotional engagement and motivation.
+        The app calculates a hidden Wellbeing Score (0-100) based on all tracked data,
+        which determines Buddy's mood. This creates a meaningful connection between tracking
+        activities and provides motivation through positive reinforcement and emotional engagement.
     </p>
 </section>
 
-<section class="py-5 bg-light">
-    <div class="container">
-        <h2 class="mb-4">Goals & Features</h2>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Mood tracking with 8 emotional states and optional notes</li>
-            <li class="list-group-item">Habit creation and streak tracking (CRUD)</li>
-            <li class="list-group-item">Sleep logging with duration and quality ratings</li>
-            <li class="list-group-item">Water intake tracking with customizable daily goals</li>
-            <li class="list-group-item">Animated Buddy reacting to the Wellbeing Score</li>
-            <li class="list-group-item">Full customization of Buddy (name & color)</li>
-        </ul>
-    </div>
+<section class="container py-5">
+    <h2>Goals & Features</h2>
+    <ul>
+        <li>Mood tracking with 8 emotional states and optional notes</li>
+        <li>Habit creation and streak tracking (CRUD functionality)</li>
+        <li>Sleep logging with duration and quality ratings</li>
+        <li>Water intake tracking with customizable daily goals</li>
+        <li>Animated Buddy companion that reacts to Wellbeing Score</li>
+        <li>Full customization: Buddy name and color via color wheel</li>
+    </ul>
 </section>
 
-<section class="py-5 container">
-    <h2 class="mb-4">Wellbeing Score</h2>
-    <p>
-        The Wellbeing Score combines four dimensions: mood, habits, sleep, and water intake.
-        The score is calculated internally and never shown directly to the user.
-        Instead, Buddy’s mood reflects the current state.
-    </p>
+<section class="container py-5">
+    <h2>Table of Contents</h2>
+    <ul>
+        <li>App Concept</li>
+        <li>App Structure</li>
+        <li>Screenshots</li>
+        <li>Wellbeing Score</li>
+        <li>Usability Test Plan</li>
+        <li>Heuristic Evaluation</li>
+        <li>Usability Test Results</li>
+        <li>Conclusion</li>
+    </ul>
+</section>
+
+<section class="container py-5">
+    <h2>App Structure</h2>
+
+    <h3>Data</h3>
+
+    <h4>Database Tables</h4>
 
     <div class="table-responsive">
-        <table class="table table-bordered mt-4">
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Table</th>
+                    <th>Fields</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Moods</td>
+                    <td>id, mood_type, note, timestamp</td>
+                    <td>Stores daily mood entries with optional notes</td>
+                </tr>
+                <tr>
+                    <td>Habits</td>
+                    <td>id, name, description, color, created_at</td>
+                    <td>Stores habit definitions</td>
+                </tr>
+                <tr>
+                    <td>habit_logs</td>
+                    <td>id, habit_id, date, completed</td>
+                    <td>Tracks daily habit completions for streaks</td>
+                </tr>
+                <tr>
+                    <td>sleep_logs</td>
+                    <td>id, date, bedtime, wake_time, duration, quality, goal_hours</td>
+                    <td>Records sleep duration and quality ratings</td>
+                </tr>
+                <tr>
+                    <td>water_logs</td>
+                    <td>id, date, amount_ml, goal_ml</td>
+                    <td>Tracks daily water intake</td>
+                </tr>
+                <tr>
+                    <td>buddy_profile</td>
+                    <td>id, name, color_hex</td>
+                    <td>Stores Buddy customization settings</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4>Data Flow</h4>
+    <ul>
+        <li>MyBuddyDatabase: Creates the Room database for the entire project</li>
+        <li>Entity & DAO: Controls how data is saved to the Room database</li>
+        <li>ViewModel: Acts as intermediary between UI and data layer, all operations execute within viewModelScope</li>
+        <li>Repository: Provides clean API for data operations, handles CRUD logic</li>
+    </ul>
+</section>
+
+<section class="container py-5">
+    <h2>UI</h2>
+
+    <h3>Screens</h3>
+    <ul>
+        <li>HomeScreen</li>
+        <li>MoodScreen</li>
+        <li>MoodDayView</li>
+        <li>AddMoodFlow</li>
+        <li>HabitsScreen</li>
+        <li>AddHabitScreen</li>
+        <li>EditHabitScreen</li>
+        <li>HealthScreen</li>
+        <li>ProfileScreen</li>
+        <li>CustomizeBuddyScreen</li>
+    </ul>
+
+    <h3>Components</h3>
+    <ul>
+        <li>BottomNavBar</li>
+        <li>StatWidget</li>
+        <li>BuddyBlob</li>
+        <li>MoodCalendar</li>
+        <li>HabitCard</li>
+        <li>CircularProgress</li>
+        <li>ColorWheelPicker</li>
+    </ul>
+
+    <h3>Utils</h3>
+    <ul>
+        <li>WellbeingCalculator</li>
+        <li>BuddyMoodMapper</li>
+        <li>DateUtil</li>
+        <li>ColorUtil</li>
+    </ul>
+</section>
+
+<section class="container py-5">
+    <h2>Buddy Moods</h2>
+    <ul>
+        <li>EXCITED (85-100)</li>
+        <li>HAPPY (65-84)</li>
+        <li>WORRIED (45-64)</li>
+        <li>SAD (25-44)</li>
+        <li>SLEEPY (0-24)</li>
+    </ul>
+</section>
+
+<section class="container py-5">
+    <h2>Wellbeing Score</h2>
+
+    <p>
+        The Wellbeing Score (0-100) combines four wellbeing dimensions.
+        The score is calculated internally and reflected through Buddy's mood -
+        users never see the number directly, only Buddy's expression.
+    </p>
+
+    <h3>Score Calculation</h3>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
             <thead class="table-light">
                 <tr>
                     <th>Component</th>
@@ -81,38 +201,30 @@
                 <tr>
                     <td>Habits</td>
                     <td>30</td>
-                    <td>(completed ÷ total) × 30</td>
+                    <td>(completed ÷ total) * 30</td>
                 </tr>
                 <tr>
                     <td>Sleep</td>
                     <td>25</td>
-                    <td>Duration + Quality</td>
+                    <td>Duration: (actual ÷ goal) * 15 + Quality (10)</td>
                 </tr>
                 <tr>
                     <td>Water</td>
                     <td>15</td>
-                    <td>(intake ÷ goal) × 15</td>
+                    <td>(intake ÷ goal) * 15</td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td>100</td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
     </div>
 </section>
 
-<section class="py-5 bg-light">
-    <div class="container">
-        <h2 class="mb-4">Buddy Mood States</h2>
-        <ul>
-            <li><strong>EXCITED (85–100):</strong> Bouncing animation with sparkles</li>
-            <li><strong>HAPPY (65–84):</strong> Gentle breathing with a smile</li>
-            <li><strong>WORRIED (45–64):</strong> Wobble animation with concerned expression</li>
-            <li><strong>SAD (25–44):</strong> Slow breathing with tears</li>
-            <li><strong>SLEEPY (0–24):</strong> Droopy eyes with ZZZ</li>
-        </ul>
-    </div>
-</section>
-
-<footer class="py-4 text-center text-muted">
-    <small>© 2025 MyBuddy – Ilse Hahn & Pascal Pamer</small>
+<footer class="text-center py-4 text-muted">
+    © 2026 MyBuddy - Ilse Hahn & Pascal Pamer
 </footer>
 
 </body>
