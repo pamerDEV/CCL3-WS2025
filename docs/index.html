@@ -12,13 +12,135 @@
         html {
             scroll-behavior: smooth;
         }
+        :root{
+            --violet: #7c3aed;       /* MyBuddy main violet */
+            --ink: #0f172a;         /* black-ish */
+            --muted: #475569;
+            --line: rgba(124,58,237,.25);
+        }
+
+        body{
+            color: var(--ink);
+            background: #ffffff;
+        }
+
+        .container{
+            max-width: 980px;
+        }
+        h1, h2, h3, h4{
+          font-weight: 400; /* normal */
+        }
+
+        h2{
+          color: var(--violet);
+          font-size: 2rem;
+          margin-bottom: 1.2rem;
+          padding-bottom: .6rem;
+          border-bottom: 2px solid rgba(124,58,237,.18);
+        }
+
+        h3{
+          color: var(--ink);
+          font-size: 1.55rem;
+          margin-top: 2.2rem;
+          margin-bottom: .8rem;
+        }
+
+        h4{
+          color: var(--ink);
+          font-size: 1.20rem;
+          margin-top: 1.4rem;
+          margin-bottom: .6rem;
+          padding-left: .75rem;
+          border-left: 4px solid rgba(124,58,237,.35);
+        }
+        p, li{
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 1.02rem;
+        }
+
+        a{
+            color: var(--violet);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover{
+            text-decoration: underline;
+        }
+
+        .btn-primary{
+            background-color: var(--violet);
+            border-color: var(--violet);
+        }
+
+        .btn-outline-secondary{
+            border-color: var(--violet);
+            color: var(--violet);
+        }
+
+        .btn-outline-secondary:hover{
+            background-color: var(--violet);
+            color: white;
+        }
+
+        .table thead{
+            background-color: rgba(124,58,237,.08);
+        }
+
+        .table th{
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .screen-tree{
+            list-style: disc;
+            padding-left: 1.2rem;
+        }
+
+        .screen-tree > li{
+            margin-bottom: 1.2rem;
+            color: var(--violet);
+        }
+
+        .screen-tree ul{
+            list-style: circle;
+            margin-top: .4rem;
+            padding-left: 1.4rem;
+        }
+
+        .screen-tree li{
+            font-size: 1.02rem;
+        }
+
+        .screen-tree .desc{
+            list-style: none;
+            margin-left: -1.1rem;
+            color: var(--muted);
+        }
+
+        .screen-tree .sub{
+            font-weight: 600;
+            color: var(--ink);
+            list-style: "–> ";
+        }
+        /* Table of Contents */
+        #toc li,
+        #toc li a {
+            color: var(--ink);
+        }
+
+        #toc li a:hover {
+            color: var(--violet);
+        }
     </style>
 </head>
 
 <body>
 
     <!-- HERO -->
-    <section class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+    <section class="d-flex align-items-center justify-content-center bg-light py-5">
         <div class="text-center container">
             <h1 class="display-3 fw-bold">MyBuddy</h1>
             <p class="lead">Your Wellbeing Companion</p>
@@ -31,12 +153,12 @@
     </section>
 
     <!-- TABLE OF CONTENTS -->
-    <section class="container py-5">
+    <section class="container py-5" id="toc">
         <h2>Table of Contents</h2>
         <ul>
             <li><a href="#app-concept">App Concept</a></li>
             <li><a href="#app-structure">App Structure</a></li>
-            <li><a href="#screenshots">Screenshots</a></li>
+            <li><a href="#screenshots">Hi-Fi Prototype</a></li>
             <li><a href="#wellbeing-score">Wellbeing Score</a></li>
         </ul>
     </section>
@@ -137,11 +259,11 @@
         <h3>UI</h3>
 
         <h4>Screens</h4>
-        <ul>
+        <ul class="screen-tree">
             <li>
                 HomeScreen
                 <ul>
-                    <li>Displays animated Buddy with mood based on Wellbeing Score, daily quote (via API), and overview widgets
+                    <li class="desc">Displays animated Buddy with mood based on Wellbeing Score, daily quote (via API), and overview widgets
                     </li>
                 </ul>
             </li>
@@ -149,64 +271,42 @@
             <li>
                 MoodScreen
                 <ul>
-                    <li>Shows mood calendar with emoji indicators, monthly statistics, and "Add Today's Mood" button
-                    </li>
-                </ul>
-            </li>
-
-            <li>
-                MoodDayView
-                <ul>
-                    <li>Displays detailed view of a specific day's mood entry with blob and notes</li>
-                </ul>
-            </li>
-
-            <li>
-                AddMoodFlow
-                <ul>
-                    <li>Two-step modal: (1) Select mood emoji, (2) Add optional note</li>
+                    <li class="desc">Shows mood calendar with emoji indicators, monthly statistics, and "Add Today's Mood" button</li>
+                    <li class="sub">MoodDayView</li>
+                    <li class="desc">Displays detailed view of a specific day’s mood entry with blob and notes</li>
+                    <li class="sub">AddMoodFlow</li>
+                    <li class="desc">Two-step modal: (1) Select mood emoji, (2) Add optional note</li>
                 </ul>
             </li>
 
             <li>
                 HabitsScreen
                 <ul>
-                    <li>Shows habit list with streak grids, completion status, and "Create New Habit" button</li>
-                </ul>
-            </li>
-
-            <li>
-                AddHabitScreen
-                <ul>
-                    <li>Allows users to create habits with name, description, and color selection</li>
-                </ul>
-            </li>
-
-            <li>
-                EditHabitScreen
-                <ul>
-                    <li>Enables editing or deleting existing habits</li>
+                    <li class="desc">Shows habit list with streak grids, completion status, and “Create New Habit” button</li>
+                    <li class="sub">AddHabitScreen</li>
+                    <li class="desc">Create habits with name, description, and color selection</li>
+                    <li class="sub">EditHabitScreen</li>
+                    <li class="desc">Edit or delete existing habits</li>
                 </ul>
             </li>
 
             <li>
                 HealthScreen
                 <ul>
-                    <li>Tab-based view with Sleep and Water sections</li>
+                    <li class="desc">Tab-based view with Sleep and Water sections</li>
+                    <li class="sub">AddSleepScreen</li>
+                    <li class="desc">Log bedtime, wake time, and sleep quality (Terrible/Okay/Awesome)</li>
+                    <li class="sub">AddWaterScreen</li>
+                    <li class="desc">Quick-add water intake with slider and customizable daily goal</li>
                 </ul>
             </li>
 
             <li>
                 ProfileScreen
                 <ul>
-                    <li>Shows Buddy preview, statistics cards, and "Customize" button</li>
-                </ul>
-            </li>
-
-            <li>
-                CustomizeBuddyScreen
-                <ul>
-                    <li>Color wheel picker and name editor for Buddy personalization</li>
+                    <li class="desc">Shows Buddy preview, statistics cards, and “Customize” button</li>
+                    <li class="sub">CustomizeBuddyScreen</li>
+                    <li class="desc">Color wheel picker and name editor for Buddy personalization</li>
                 </ul>
             </li>
         </ul>
@@ -295,33 +395,94 @@
                 </ul>
             </li>
         </ul>
-
+    </section>
 
         <!-- SCREENSHOTS -->
         <section class="container py-5" id="screenshots">
-            <h2>Screenshots</h2>
+            <h2>Hi-Fi Prototype</h2>
 
-            <h3>Hi-Fi Prototype</h3>
+            <!-- Main Screens -->
+            <h3>Main Screens</h3>
+            <p class="text-muted">Bottom navigation screens</p>
+            <div class="row g-4 mb-5">
+                <div class="col-6 col-md-4 col-lg">
+                    <img src="images/home.png" class="img-fluid rounded shadow" alt="Home">
+                    <p class="text-center mt-2 small">Home</p>
+                </div>
+                <div class="col-6 col-md-4 col-lg">
+                    <img src="images/mood.png" class="img-fluid rounded shadow" alt="Mood">
+                    <p class="text-center mt-2 small">Mood</p>
+                </div>
+                <div class="col-6 col-md-4 col-lg">
+                    <img src="images/habits.png" class="img-fluid rounded shadow" alt="Habits">
+                    <p class="text-center mt-2 small">Habits</p>
+                </div>
+                <div class="col-6 col-md-4 col-lg">
+                    <img src="images/health.png" class="img-fluid rounded shadow" alt="Health">
+                    <p class="text-center mt-2 small">Health</p>
+                </div>
+                <div class="col-6 col-md-4 col-lg">
+                    <img src="images/profile.png" class="img-fluid rounded shadow" alt="Profile">
+                    <p class="text-center mt-2 small">Profile</p>
+                </div>
+            </div>
 
-            <div class="row g-4">
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <img src="images/home.png" class="img-fluid rounded shadow" alt="Home Screen">
+            <!-- Mood Flow -->
+            <h3>Mood Flow</h3>
+            <div class="row g-4 mb-5">
+                <div class="col-6 col-md-4 col-lg-3">
+                    <img src="images/mood_add_emoji.png" class="img-fluid rounded shadow" alt="Add Mood">
+                    <p class="text-center mt-2 small">Select Mood</p>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <img src="images/mood_add_notes.png" class="img-fluid rounded shadow" alt="Add Notes">
+                    <p class="text-center mt-2 small">Add Notes</p>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <img src="images/mood_detailView.png" class="img-fluid rounded shadow" alt="Mood Detail">
+                    <p class="text-center mt-2 small">Day Detail View</p>
+                </div>
+            </div>
+
+            <!-- Habits Flow -->
+            <h3>Habits Flow</h3>
+            <div class="row g-4 mb-5">
+                <div class="col-6 col-md-4 col-lg-3">
+                    <img src="images/habits_create.png" class="img-fluid rounded shadow" alt="Create Habit">
+                    <p class="text-center mt-2 small">Create Habit</p>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <img src="images/habits_edit.png" class="img-fluid rounded shadow" alt="Edit Habit">
+                    <p class="text-center mt-2 small">Edit Habit</p>
+                </div>
+            </div>
+
+            <!-- Health & Profile Flow (Side by Side) -->
+            <div class="row mb-5">
+                <!-- Health Flow -->
+                <div class="col-md-6">
+                    <h3>Health Flow</h3>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <img src="images/Health - Sleep Add.png" class="img-fluid rounded shadow" alt="Add Sleep">
+                            <p class="text-center mt-2 small">Add Sleep</p>
+                        </div>
+                        <div class="col-6">
+                            <img src="images/health_add.png" class="img-fluid rounded shadow" alt="Add Water">
+                            <p class="text-center mt-2 small">Add Water</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <img src="images/mood.png" class="img-fluid rounded shadow" alt="Mood Screen">
-                </div>
-
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <img src="images/habits.png" class="img-fluid rounded shadow" alt="Habits Screen">
-                </div>
-
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <img src="images/health.png" class="img-fluid rounded shadow" alt="Health Screen">
-                </div>
-
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <img src="images/profile.png" class="img-fluid rounded shadow" alt="Profile Screen">
+                <!-- Profile Flow -->
+                <div class="col-md-6">
+                    <h3>Profile Flow</h3>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <img src="images/profile_edit.png" class="img-fluid rounded shadow" alt="Customize Buddy">
+                            <p class="text-center mt-2 small">Customize Buddy</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -378,44 +539,72 @@
                 </table>
             </div>
 
-            <h3>Mood Points (0-30)</h3>
-            <ul>
-                <li>Awesome – 30</li>
-                <li>Loved – 28</li>
-                <li>Okay – 20</li>
-                <li>Tired – 12</li>
-                <li>Anxious – 10</li>
-                <li>Sad – 8</li>
-                <li>Upset – 5</li>
-                <li>Terrible – 3</li>
-            </ul>
+            <!-- Mood & Sleep Points Side by Side -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h3 class="mt-0">Mood Points (0-30)</h3>
+                    <ul>
+                        <li>Awesome – 30</li>
+                        <li>Loved – 28</li>
+                        <li>Okay – 20</li>
+                        <li>Tired – 12</li>
+                        <li>Anxious – 10</li>
+                        <li>Sad – 8</li>
+                        <li>Upset – 5</li>
+                        <li>Terrible – 3</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="mt-0">Sleep Points (0-25)</h3>
+                    <p><strong>Duration (0-15 points):</strong></p>
+                    <p>Score = (actual_hours ÷ goal_hours) * 15, max 15</p>
+                    <p><strong>Quality (0-10 points):</strong></p>
+                    <ul>
+                        <li>Awesome: 10 points</li>
+                        <li>Okay: 6 points</li>
+                        <li>Terrible: 2 points</li>
+                    </ul>
+                </div>
+            </div>
 
-            <h3>Sleep Points (0-25)</h3>
-            <p><strong>Duration (0-15 points):</strong></p>
-            <p>Score = (actual_hours ÷ goal_hours) * 15, max 15</p>
-            <p><strong>Quality (0-10 points):</strong></p>
-            <ul>
-                <li>Awesome: 10 points</li>
-                <li>Okay: 6 points</li>
-                <li>Terrible: 2 points</li>
-            </ul>
-
+            <!-- Buddy Mood Logic with GIFs -->
             <h3>Buddy Mood Logic</h3>
-            <ul>
-                <li>85-100 – EXCITED – Bouncing animation with sparkles</li>
-                <li>65-84 – HAPPY – Gentle breathing animation with a smile</li>
-                <li>45-64 – WORRIED – Wobble animation with concerned expression</li>
-                <li>25-44 – SAD – Slow breathing with tears</li>
-                <li>0-24 – SLEEPY – Droopy eyes with ZZZ</li>
-            </ul>
+            <div class="row g-4 text-center mb-5">
+                <div class="col">
+                    <img src="images/exited.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Excited">
+                    <p class="mb-0 mt-2"><strong>EXCITED</strong></p>
+                    <small class="text-muted">85-100</small>
+                </div>
+                <div class="col">
+                    <img src="images/happy.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Happy">
+                    <p class="mb-0 mt-2"><strong>HAPPY</strong></p>
+                    <small class="text-muted">65-84</small>
+                </div>
+                <div class="col">
+                    <img src="images/worried.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Worried">
+                    <p class="mb-0 mt-2"><strong>WORRIED</strong></p>
+                    <small class="text-muted">45-64</small>
+                </div>
+                <div class="col">
+                    <img src="images/sad.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Sad">
+                    <p class="mb-0 mt-2"><strong>SAD</strong></p>
+                    <small class="text-muted">25-44</small>
+                </div>
+                <div class="col">
+                    <img src="images/sleepy.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Sleepy">
+                    <p class="mb-0 mt-2"><strong>SLEEPY</strong></p>
+                    <small class="text-muted">0-24</small>
+                </div>
+            </div>
 
+            <!-- Example Calculation -->
             <h3>Example Calculation</h3>
             <p><strong>Great Day Example</strong></p>
             <ul>
-                <li>Mood: Awesome – 30 points</li>
-                <li>Habits: 4/5 completed – 24 points</li>
-                <li>Sleep: 8h + Awesome quality – 15 + 10 = 25 points</li>
-                <li>Water: 1800ml / 2000ml – 13 points</li>
+                <li>Mood: Awesome –> 30 points</li>
+                <li>Habits: 4/5 completed –> 24 points</li>
+                <li>Sleep: 8h + Awesome quality – 15 + 10 –> 25 points</li>
+                <li>Water: 1800ml / 2000ml –> 13 points</li>
                 <li><strong>Total – 92 → EXCITED</strong></li>
             </ul>
         </section>
@@ -423,7 +612,6 @@
         <footer class="text-center py-4 text-muted">
             © 2026 MyBuddy – Ilse Hahn & Pascal Pamer
         </footer>
-
 </body>
 
 </html>
