@@ -7,28 +7,28 @@ val Violet = Color(0xFF9756F2)
 val VioletLight = Color(0xFFDAB5FF)
 val VioletDark = Color(0xFF8A38F5)
 
-// Gradient für Buttons (Start → End)
+// Violet Gradient for Buttons (z.B. "Add Today's Mood")
 val GradientVioletStart = Color(0xFFDAB5FF)
 val GradientVioletEnd = Color(0xFF9756F2)
 
-// Water Tab Blau Gradient
+// blue Gradient für Water Tab Button
 val GradientBlueStart = Color(0xFFE9F1FF)
 val GradientBlueEnd = Color(0xFF83D0F5)
 
 // Delete Button Rot
-val DeleteRed = Color(0xFFC60F12)
-val DeleteRedLight = Color(0xFFFFE6E7)
+val DeleteRed = Color(0xFFC60F12)               // Delete Button Text
+val DeleteRedLight = Color(0xFFFFE6E7)          // Delete Button Background
 
 // Text Colors
-val TextPrimary = Color(0xFF0F172A)      // Ink - Haupttext
-val TextSecondary = Color(0xFF959595)    // Grau - Sekundärtext
-val TextViolet = Color(0xFF8A38F5)       // Lila Text
+val TextPrimary = Color(0xFF0F172A)      // main text (black)
+val TextSecondary = Color(0xFF959595)    // Secondary text (grey)
+val TextViolet = Color(0xFF8A38F5)       // Violet Text
 
 // Background & Surface
 val Background = Color(0xFFFFFFFF)
-val Surface = Color(0xFFF8FAFC)
+val Surface = Color(0xFFF8FAFC)         // Cards, Dialogs
 
-// Habit Colors (Regenbogen)
+// Habit Color Picker (Rainbow)
 val HabitRed = Color(0xFFEF4444)
 val HabitOrange = Color(0xFFF97316)
 val HabitYellow = Color(0xFFEAB308)
