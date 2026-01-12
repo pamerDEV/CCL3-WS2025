@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.mybuddy.db.dao.HabitDao
 import com.example.mybuddy.db.dao.HabitLogDao
+import com.example.mybuddy.db.dao.MoodDao
 import com.example.mybuddy.db.entity.HabitEntity
 import com.example.mybuddy.db.entity.HabitLogEntity
 import com.example.mybuddy.db.entity.MoodEntity
