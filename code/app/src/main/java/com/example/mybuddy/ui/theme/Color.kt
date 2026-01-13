@@ -38,6 +38,22 @@ val HabitIndigo = Color(0xFF6366F1)
 val HabitPink = Color(0xFFEC4899)
 val HabitTeal = Color(0xFF14B8A6)
 
+//virtual companion - Buddy
+val EyeColor = Color(0xFF1A1A2E)
+val CheekPink = Color(0xFFFD99A8)
+val SparkleYellow = Color(0xFFFFE66D)
+val SparkleCyan = Color(0xFF7DD3FC)
+
+object BlobThemes {
+    // Purple (Default)
+    val purple = listOf(
+        Color(0xFFDAB5FF),  // Light
+        Color(0xFFB87AFF),  // Mid
+        Color(0xFF9756F2),  // MidDark
+        Color(0xFF7B3FD3)   // Dark
+    )
+}
+
 // Alte Farben (für Theme.kt Kompatibilität)
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
