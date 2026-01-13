@@ -6,6 +6,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+// Custom TextStyles
+val TitleLargeRegular = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontSize = 20.sp,
+    lineHeight = 28.sp
+)
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     headlineLarge = TextStyle(
@@ -48,7 +55,7 @@ val Typography = Typography(
     labelLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Medium,
-        fontSize = 14.sp,
+        fontSize = 16.sp,
         lineHeight = 20.sp
     ),
     labelMedium = TextStyle(

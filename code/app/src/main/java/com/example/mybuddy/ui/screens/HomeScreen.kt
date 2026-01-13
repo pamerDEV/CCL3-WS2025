@@ -8,23 +8,34 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.mybuddy.MyBuddyApplication
 import com.example.mybuddy.ui.components.BlobMood
 import com.example.mybuddy.ui.components.BuddyBlob
 import com.example.mybuddy.ui.theme.*
+import com.example.mybuddy.ui.viewmodel.BuddyViewModel
+import com.example.mybuddy.ui.viewmodel.BuddyViewModelFactory
+import com.example.mybuddy.utils.ColorUtil
+import com.example.mybuddy.utils.hexToColor
 
 @Composable
 fun HomeScreen() {
-    // TODO: Wird später vom HomeViewModel geholt:
-    // - buddyMood based on WellbeingScore
-    // - buddyName + buddyColor aus BuddyProfile DB
-    // - dailyQuote von API
-    // - stats von den jeweiligen Repositories
+    val context = LocalContext.current
+    val application = context.applicationContext as MyBuddyApplication
+    val viewModel: BuddyViewModel = viewModel(
+        factory = BuddyViewModelFactory(application.buddyRepository)
+    )
 
-    val buddyMood = BlobMood.HAPPY  // Placeholder for testing
-    val buddyName = "Buddy"         // Default
+    val buddyName by viewModel.buddyName.collectAsState()
+    val buddyColorHex by viewModel.buddyColorHex.collectAsState()
+    val buddyColor = hexToColor(buddyColorHex)
+    val buddyColorTheme = ColorUtil.generateBlobTheme(buddyColor)
 
-    // Greeting above the Buddy
+    // TODO: Später vom WellbeingCalculator
+    val buddyMood = BlobMood.HAPPY
+
     val greeting = if (buddyName == "Buddy") {
         "Hi, I'm Buddy!"
     } else {
@@ -53,7 +64,7 @@ fun HomeScreen() {
         // Buddy Blob
         BuddyBlob(
             mood = buddyMood,
-            colorTheme = BlobThemes.purple,
+            colorTheme = buddyColorTheme,
             modifier = Modifier.size(280.dp)
         )
 
