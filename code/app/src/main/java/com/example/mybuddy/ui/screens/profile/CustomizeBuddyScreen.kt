@@ -1,4 +1,4 @@
-package com.example.mybuddy.ui.screens
+package com.example.mybuddy.ui.screens.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

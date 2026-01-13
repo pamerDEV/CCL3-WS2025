@@ -73,6 +73,8 @@ private fun EditHabitContent(
         mutableStateOf(hexToColor(habit.color))
     }
 
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
     val colors = listOf(
         HabitRed, HabitOrange, HabitYellow, HabitGreen, HabitBlue, HabitIndigo, HabitPink, HabitTeal
     )
@@ -139,18 +141,21 @@ private fun EditHabitContent(
                             color = TextPrimary,
                             shape = CircleShape
                         )
-                        .clickable { selectedColor = color })
+                        .clickable { selectedColor = color }
+                )
             }
         }
 
         Spacer(Modifier.weight(1f))
 
         Row(
-            horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth()
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.fillMaxWidth()
         ) {
-
             GradientButton(
-                text = "Save", modifier = Modifier.weight(1f), onClick = {
+                text = "Save",
+                modifier = Modifier.weight(1f),
+                onClick = {
                     viewModel.updateHabit(
                         habit = habit,
                         name = name,
@@ -158,15 +163,43 @@ private fun EditHabitContent(
                         colorHex = selectedColor.toHexString(),
                         onDone = onDone
                     )
-                })
+                }
+            )
 
             GradientButton(
-                text = "Delete", modifier = Modifier.weight(1f), onClick = {
-                    viewModel.deleteHabit(habit, onDone)
-                }, gradientColors = listOf(DeleteRedLight, DeleteRed)
+                text = "Delete",
+                modifier = Modifier.weight(1f),
+                onClick = {
+                    showDeleteDialog = true
+                },
+                gradientColors = listOf(DeleteRedLight, DeleteRed)
             )
         }
 
         Spacer(Modifier.height(24.dp))
+    }
+
+    // Delete Confirmation Dialog
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = { Text("Delete Habit") },
+            text = { Text("Are you sure you want to delete this habit? All streak data will be lost.") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        viewModel.deleteHabit(habit, onDone)
+                        showDeleteDialog = false
+                    }
+                ) {
+                    Text("Delete", color = DeleteRed)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteDialog = false }) {
+                    Text("Cancel", color = TextSecondary)
+                }
+            }
+        )
     }
 }

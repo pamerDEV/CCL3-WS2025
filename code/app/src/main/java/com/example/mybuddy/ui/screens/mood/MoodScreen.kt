@@ -1,4 +1,4 @@
-package com.example.mybuddy.ui.screens
+package com.example.mybuddy.ui.screens.mood
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
