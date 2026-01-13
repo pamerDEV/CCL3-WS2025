@@ -2,6 +2,7 @@ package com.example.mybuddy.db.dao
 
 import androidx.room.*
 import com.example.mybuddy.db.entity.HabitEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HabitDao {
@@ -16,7 +17,7 @@ interface HabitDao {
     suspend fun deleteHabit(habit: HabitEntity)
 
     @Query("SELECT * FROM habits ORDER BY createdAt DESC")
-    suspend fun getAllHabits(): List<HabitEntity>
+    fun getAllHabits(): Flow<List<HabitEntity>>
 
     @Query("SELECT * FROM habits WHERE id = :id LIMIT 1")
     suspend fun getHabitById(id: Long): HabitEntity?

@@ -2,6 +2,7 @@ package com.example.mybuddy.db.dao
 
 import androidx.room.*
 import com.example.mybuddy.db.entity.HabitLogEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HabitLogDao {
@@ -14,14 +15,19 @@ interface HabitLogDao {
         WHERE habitId = :habitId AND date = :date
         LIMIT 1
     """)
-    suspend fun getLogForDay(habitId: Long, date: String): HabitLogEntity?
+    suspend fun getLogForDay(
+        habitId: Long,
+        date: String
+    ): HabitLogEntity?
 
     @Query("""
         SELECT * FROM habit_logs 
         WHERE habitId = :habitId
         ORDER BY date DESC
     """)
-    suspend fun getLogsForHabit(habitId: Long): List<HabitLogEntity>
+    fun getLogsForHabit(
+        habitId: Long
+    ): Flow<List<HabitLogEntity>>
 
     @Query("""
         DELETE FROM habit_logs 
@@ -29,3 +35,4 @@ interface HabitLogDao {
     """)
     suspend fun deleteLogsForHabit(habitId: Long)
 }
+

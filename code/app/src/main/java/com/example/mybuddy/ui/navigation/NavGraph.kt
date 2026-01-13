@@ -3,9 +3,14 @@ package com.example.mybuddy.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.mybuddy.ui.screens.*
+import com.example.mybuddy.ui.screens.habit.AddHabitScreen
+import com.example.mybuddy.ui.screens.habit.EditHabitScreen
+import com.example.mybuddy.ui.screens.habit.HabitScreen
 
 @Composable
 fun NavGraph(
@@ -24,7 +29,12 @@ fun NavGraph(
             MoodScreen()
         }
         composable(Screen.Habits.route) {
-            HabitScreen()
+            HabitScreen(
+                onCreateHabit = {
+                    navController.navigate(Screen.AddHabit.route)
+                },
+                navController
+            )
         }
         composable(Screen.Health.route) {
             HealthScreen()
@@ -46,5 +56,34 @@ fun NavGraph(
                 }
             )
         }
+        /* HABIT SCREENS */
+        composable(Screen.AddHabit.route) {
+            AddHabitScreen(
+                onBack = {
+                    navController.popBackStack()
+                },
+                onHabitCreated = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(
+            route = Screen.EditHabit.route + "/{habitId}",
+            arguments = listOf(
+                navArgument("habitId") { type = NavType.LongType}
+            )
+        ) { backstackEntry ->
+            val habit = backstackEntry.arguments!!.getLong("habitId")
+            EditHabitScreen(
+                habitId = habit,
+                onBack = {
+                    navController.popBackStack()
+                },
+                onDone = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        /* HABIT SCREENS END */
     }
 }
