@@ -42,3 +42,21 @@ object ColorUtil {
         )
     }
 }
+
+/**
+ * Convert Color to Hex String
+ */
+fun Color.toHexString(): String {
+    val red = (this.red * 255).toInt()
+    val green = (this.green * 255).toInt()
+    val blue = (this.blue * 255).toInt()
+    return String.format("#%02X%02X%02X", red, green, blue)
+}
+
+/**
+ * Convert Hex String to Color
+ */
+fun hexToColor(hex: String): Color {
+    val colorInt = android.graphics.Color.parseColor(hex)
+    return Color(colorInt)
+}
