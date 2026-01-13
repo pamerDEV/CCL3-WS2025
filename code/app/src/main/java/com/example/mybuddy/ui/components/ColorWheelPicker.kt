@@ -45,7 +45,7 @@ fun ColorWheelPicker(
 
             selectorPosition = Offset(
                 x = centerOffset.x + (cos(angle) * dist).toFloat(),
-                y = centerOffset.y - (sin(angle) * dist).toFloat()
+                y = centerOffset.y + (sin(angle) * dist).toFloat()  // ← Geändert: - zu +
             )
         }
     }
@@ -146,7 +146,7 @@ private fun getColorFromPosition(
     if (distance > radius) return null
 
     // Calculate hue from angle (0-360)
-    var angle = Math.toDegrees(atan2(-dy.toDouble(), dx.toDouble()))
+    var angle = Math.toDegrees(atan2(dy.toDouble(), dx.toDouble()))  // ← Geändert: -dy zu dy
     if (angle < 0) angle += 360.0
     val hue = angle.toFloat()
 
