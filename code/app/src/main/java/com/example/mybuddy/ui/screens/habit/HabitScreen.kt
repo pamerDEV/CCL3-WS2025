@@ -58,7 +58,7 @@ fun HabitScreen(
             color = TextPrimary
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         Text(
             text = "Build routines that will lead you to success.",
@@ -68,12 +68,12 @@ fun HabitScreen(
 
         Spacer(Modifier.height(16.dp))
 
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             StatCard(
-                "Total Habits", habits.size.toString(), HabitGreen
+                "Total Habits", habits.size.toString(), HabitBlue
             )
             StatCard(
-                "Completed Today", habits.count { it.completedToday }.toString(), HabitBlue
+                "Completed Today", habits.count { it.completedToday }.toString(), HabitGreen
             )
         }
 
@@ -83,7 +83,7 @@ fun HabitScreen(
             text = "Create new Habit", onClick = onCreateHabit
         )
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(28.dp))
 
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(12.dp)

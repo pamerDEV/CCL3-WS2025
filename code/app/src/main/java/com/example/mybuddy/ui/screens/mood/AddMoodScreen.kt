@@ -76,7 +76,6 @@ fun AddMoodScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Date in der Mitte (nur wenn nicht heute)
             if (!DateUtil.isToday(moodTimestamp)) {
                 Text(
                     text = DateUtil.formatDate(moodTimestamp),
@@ -87,7 +86,6 @@ fun AddMoodScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Step indicator rechts
             Text(
                 text = "Step $step of 2",
                 style = MaterialTheme.typography.labelMedium,

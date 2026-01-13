@@ -1,5 +1,6 @@
 package com.example.mybuddy.ui.components.habit
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,13 +24,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
+import com.example.mybuddy.ui.theme.Background
 import com.example.mybuddy.ui.theme.Surface
 import com.example.mybuddy.ui.theme.TextPrimary
 import com.example.mybuddy.ui.theme.TextSecondary
-import com.example.mybuddy.ui.theme.Violet
 import com.example.mybuddy.ui.viewmodel.habit.HabitUiState
 
 @Composable
@@ -42,24 +42,32 @@ fun HabitCard(
         state.logs.filter { it.completed }.map { it.date }.toSet()
     }
 
+    val habitColor = Color(state.habit.color.toColorInt())
+
     Card(
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = Surface),
-        modifier = Modifier.fillMaxWidth()
+        colors = CardDefaults.cardColors(containerColor = Background),
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = TextPrimary.copy(alpha = 0.25f),
+                shape = RoundedCornerShape(20.dp)
+            )
     ) {
         Row(
-            modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)
+            modifier = Modifier.padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             HabitStreakGrid(
                 dates = streakDates,
                 completedDates = completedDates,
-                color = Color(state.habit.color.toColorInt())
+                color = habitColor
             )
 
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -82,19 +90,28 @@ fun HabitCard(
 
                 state.habit.description?.let {
                     Text(
-                        text = it, style = MaterialTheme.typography.bodySmall, color = TextSecondary
+                        text = it,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = TextSecondary
                     )
                 }
 
                 Spacer(Modifier.height(12.dp))
 
                 Button(
-                    onClick = onCheckIn, colors = ButtonDefaults.buttonColors(
-                        containerColor = if (state.completedToday) Gray else Violet
-                    ), modifier = Modifier.fillMaxWidth()
+                    onClick = onCheckIn,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (state.completedToday) TextSecondary else habitColor
+                    ),
+                    shape = RoundedCornerShape(14.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(42.dp)
                 ) {
                     Text(
-                        if (state.completedToday) "↺ Undo" else "+ Check in"
+                        text = if (state.completedToday) "✓ Done" else "+ Check in",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = Color.White
                     )
                 }
             }

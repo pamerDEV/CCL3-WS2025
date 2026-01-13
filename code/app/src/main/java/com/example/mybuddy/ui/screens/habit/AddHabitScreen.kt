@@ -10,8 +10,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mybuddy.MyBuddyApplication
@@ -60,10 +62,12 @@ fun AddHabitScreen(
         Text(
             text = "Create new Habit",
             style = MaterialTheme.typography.headlineMedium,
-            color = TextPrimary
+            color = TextPrimary,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center
         )
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(32.dp))
 
         Text("Habit Name", style = MaterialTheme.typography.labelMedium)
         Spacer(Modifier.height(6.dp))
@@ -108,21 +112,24 @@ fun AddHabitScreen(
                             color = TextPrimary,
                             shape = CircleShape
                         )
-                        .clickable { selectedColor = color })
+                        .clickable { selectedColor = color }
+                )
             }
         }
 
         Spacer(Modifier.weight(1f))
 
         GradientButton(
-            text = "Create Habit", onClick = {
+            text = "Create Habit",
+            onClick = {
                 viewModel.createHabit(
                     title = name,
                     description = description,
                     colorHex = selectedColor.toHexString(),
                     onDone = onHabitCreated
                 )
-            })
+            }
+        )
 
         Spacer(Modifier.height(24.dp))
     }
