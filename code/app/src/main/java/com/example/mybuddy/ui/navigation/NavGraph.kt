@@ -30,7 +30,21 @@ fun NavGraph(
             HealthScreen()
         }
         composable(Screen.Profile.route) {
-            ProfileScreen()
+            ProfileScreen(
+                onCustomizeClick = {
+                    navController.navigate(Screen.CustomizeBuddy.route)
+                }
+            )
+        }
+        composable(Screen.CustomizeBuddy.route) {
+            CustomizeBuddyScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onSaveClick = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
