@@ -16,9 +16,9 @@ import com.example.mybuddy.ui.theme.*
 @Composable
 fun HomeScreen() {
     // TODO: Wird später vom HomeViewModel geholt:
-    // - buddyMood basierend auf WellbeingScore
+    // - buddyMood based on WellbeingScore
     // - buddyName + buddyColor aus BuddyProfile DB
-    // - dailyQuote von ZenQuotes API
+    // - dailyQuote von API
     // - stats von den jeweiligen Repositories
 
     val buddyMood = BlobMood.HAPPY  // Placeholder for testing
