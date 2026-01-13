@@ -26,7 +26,14 @@ fun NavGraph(
             HomeScreen()
         }
         composable(Screen.Mood.route) {
-            MoodScreen()
+            MoodScreen(
+                onAddMoodClick = {
+                    navController.navigate(Screen.AddMood.createRoute())
+                },
+                onDayClick = { timestamp, _ ->
+                    navController.navigate(Screen.MoodDayView.createRoute(timestamp))
+                }
+            )
         }
         composable(Screen.Habits.route) {
             HabitScreen(
@@ -85,5 +92,80 @@ fun NavGraph(
             )
         }
         /* HABIT SCREENS END */
+
+        /*Mood Screen Start*/
+        composable(Screen.AddMood.route) {
+            AddMoodScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onSaveClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(
+            route = Screen.MoodDayView.route,
+            arguments = listOf(
+                navArgument("timestamp") { type = NavType.LongType }
+            )
+        ) { backStackEntry ->
+            val timestamp = backStackEntry.arguments?.getLong("timestamp") ?: 0L
+            MoodDayView(
+                timestamp = timestamp,
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onEditClick = { moodId ->
+                    navController.navigate(Screen.EditMood.createRoute(moodId))
+                },
+                onAddClick = { ts ->
+                    navController.navigate(Screen.AddMood.createRoute(ts))
+                },
+                onDeleteSuccess = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(
+            route = Screen.EditMood.route,
+            arguments = listOf(
+                navArgument("moodId") { type = NavType.LongType }
+            )
+        ) { backStackEntry ->
+            val moodId = backStackEntry.arguments?.getLong("moodId") ?: 0L
+            EditMoodScreen(
+                moodId = moodId,
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onSaveClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(
+            route = "add_mood?timestamp={timestamp}",
+            arguments = listOf(
+                navArgument("timestamp") {
+                    type = NavType.LongType
+                    defaultValue = 0L
+                }
+            )
+        ) { backStackEntry ->
+            val timestamp = backStackEntry.arguments?.getLong("timestamp")
+            AddMoodScreen(
+                timestamp = if (timestamp == 0L) null else timestamp,
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onSaveClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        /*Mood Screen End*/
+
+
     }
 }

@@ -19,10 +19,28 @@ sealed class Screen(
 
     // Habit Screens
     object AddHabit : Screen("add_habit", "Create new Habit")
-    object EditHabit : Screen("edit_habit", "Edit Habbit")
+    object EditHabit : Screen("edit_habit", "Edit Habit")
 
-    // Profile Screens
+    // Profile Screen
     object CustomizeBuddy : Screen("customize_buddy", "Customize")
+
+    //Mood Screens
+    object AddMood : Screen("add_mood?timestamp={timestamp}", "Add Mood") {
+        fun createRoute(timestamp: Long? = null): String {
+            return if (timestamp != null) {
+                "add_mood?timestamp=$timestamp"
+            } else {
+                "add_mood"
+            }
+        }
+    }
+    object MoodDayView : Screen("mood_day/{timestamp}", "Mood Day") {
+        fun createRoute(timestamp: Long) = "mood_day/$timestamp"
+    }
+    object EditMood : Screen("edit_mood/{moodId}", "Edit Mood") {
+        fun createRoute(moodId: Long) = "edit_mood/$moodId"
+    }
+
 
     companion object {
         val bottomItems = listOf(Home, Mood, Habits, Health, Profile)
