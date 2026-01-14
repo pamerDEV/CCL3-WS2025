@@ -78,19 +78,19 @@ fun HomeScreen(
             color = TextPrimary
         )
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(2.dp))
 
         BuddyBlob(
             mood = BlobMood.HAPPY,
             colorTheme = buddyColorTheme,
-            modifier = Modifier.size(260.dp)
+            modifier = Modifier.size(240.dp)
         )
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(2.dp))
 
         QuoteSection()
 
-        Spacer(Modifier.height(32.dp))
+        Spacer(Modifier.height(18.dp))
 
         Text(
             text = "Today's Stats",
