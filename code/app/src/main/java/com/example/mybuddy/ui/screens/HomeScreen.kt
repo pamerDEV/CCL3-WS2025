@@ -2,6 +2,7 @@ package com.example.mybuddy.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -12,29 +13,47 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mybuddy.MyBuddyApplication
+import com.example.mybuddy.data.quote.QuoteApiProvider
 import com.example.mybuddy.ui.components.BlobMood
 import com.example.mybuddy.ui.components.BuddyBlob
+import com.example.mybuddy.ui.components.home.HabitsStatCard
+import com.example.mybuddy.ui.components.home.QuoteBubble
+import com.example.mybuddy.ui.components.home.QuoteSection
+import com.example.mybuddy.ui.components.home.StatCard
 import com.example.mybuddy.ui.theme.*
 import com.example.mybuddy.ui.viewmodel.BuddyViewModel
 import com.example.mybuddy.ui.viewmodel.BuddyViewModelFactory
+import com.example.mybuddy.ui.viewmodel.QuoteViewModel
+import com.example.mybuddy.ui.viewmodel.QuoteViewModelFactory
+import com.example.mybuddy.ui.viewmodel.habit.HabitViewModel
+import com.example.mybuddy.ui.viewmodel.habit.HabitsViewModelFactory
 import com.example.mybuddy.utils.ColorUtil
 import com.example.mybuddy.utils.hexToColor
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onHabitsClick: () -> Unit = {}
+) {
     val context = LocalContext.current
     val application = context.applicationContext as MyBuddyApplication
-    val viewModel: BuddyViewModel = viewModel(
+
+    val buddyViewModel: BuddyViewModel = viewModel(
         factory = BuddyViewModelFactory(application.buddyRepository)
     )
 
-    val buddyName by viewModel.buddyName.collectAsState()
-    val buddyColorHex by viewModel.buddyColorHex.collectAsState()
+    val habitViewModel: HabitViewModel = viewModel(
+        factory = HabitsViewModelFactory(
+            application.database.habitDao(),
+            application.database.habitLogDao()
+        )
+    )
+
+    val buddyName by buddyViewModel.buddyName.collectAsState()
+    val buddyColorHex by buddyViewModel.buddyColorHex.collectAsState()
+    val habits by habitViewModel.habits.collectAsState()
+
     val buddyColor = hexToColor(buddyColorHex)
     val buddyColorTheme = ColorUtil.generateBlobTheme(buddyColor)
-
-    // TODO: Später vom WellbeingCalculator
-    val buddyMood = BlobMood.HAPPY
 
     val greeting = if (buddyName == "Buddy") {
         "Hi, I'm Buddy!"
@@ -50,31 +69,70 @@ fun HomeScreen() {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
 
-        // Greeting above the Buddy
+        Spacer(Modifier.height(16.dp))
+
         Text(
             text = greeting,
             style = MaterialTheme.typography.titleLarge,
             color = TextPrimary
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(Modifier.height(16.dp))
 
-        // Buddy Blob
         BuddyBlob(
-            mood = buddyMood,
+            mood = BlobMood.HAPPY,
             colorTheme = buddyColorTheme,
-            modifier = Modifier.size(280.dp)
+            modifier = Modifier.size(260.dp)
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(Modifier.height(24.dp))
 
-        // TODO: QuoteCard (API)
+        QuoteSection()
 
-        // TODO: StatWidgets
+        Spacer(Modifier.height(32.dp))
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Text(
+            text = "Today's Stats",
+            style = MaterialTheme.typography.titleLarge,
+            color = TextPrimary
+        )
+
+        Spacer(Modifier.height(16.dp))
+
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Box(modifier = Modifier.weight(1f)) {
+                    StatCard(title = "Mood")
+                }
+                Box(modifier = Modifier.weight(1f)) {
+                    StatCard(title = "Water")
+                }
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Box(modifier = Modifier.weight(1f)) {
+                    StatCard(title = "Sleep")
+                }
+                Box(modifier = Modifier.weight(1f)) {
+                    HabitsStatCard(
+                        done = habits.count { it.completedToday },
+                        total = habits.size,
+                        onClick = onHabitsClick
+                    )
+                }
+            }
+        }
+
+
+        Spacer(Modifier.height(32.dp))
     }
 }
 

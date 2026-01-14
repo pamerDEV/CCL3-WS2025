@@ -26,7 +26,17 @@ fun NavGraph(
         modifier = modifier
     ) {
         composable(Screen.Home.route) {
-            HomeScreen()
+            HomeScreen(
+                onHabitsClick = {
+                    navController.navigate(Screen.Habits.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            )
         }
         composable(Screen.Mood.route) {
             MoodScreen(
@@ -80,7 +90,7 @@ fun NavGraph(
         composable(
             route = Screen.EditHabit.route + "/{habitId}",
             arguments = listOf(
-                navArgument("habitId") { type = NavType.LongType}
+                navArgument("habitId") { type = NavType.LongType }
             )
         ) { backstackEntry ->
             val habit = backstackEntry.arguments!!.getLong("habitId")
