@@ -47,10 +47,7 @@ fun HomeScreen(
     )
 
     val habitViewModel: HabitViewModel = viewModel(
-        factory = HabitsViewModelFactory(
-            application.database.habitDao(),
-            application.database.habitLogDao()
-        )
+        factory = HabitsViewModelFactory(application.habitRepository)
     )
 
     val moodViewModel: MoodViewModel = viewModel(
@@ -58,9 +55,7 @@ fun HomeScreen(
     )
 
     val waterViewModel: WaterViewModel = viewModel(
-        factory = WaterViewModelFactory(
-            application.database.waterLogDao()
-        )
+        factory = WaterViewModelFactory(application.waterRepository)
     )
 
     val buddyName by buddyViewModel.buddyName.collectAsState()

@@ -17,23 +17,30 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mybuddy.MyBuddyApplication
+import com.example.mybuddy.ui.components.health.tabs.HealthTab
 import com.example.mybuddy.ui.components.health.tabs.HealthTabs
 import com.example.mybuddy.ui.theme.Background
-import com.example.mybuddy.ui.components.health.tabs.HealthTab
+import com.example.mybuddy.ui.viewmodel.SleepViewModel
+import com.example.mybuddy.ui.viewmodel.SleepViewModelFactory
 import com.example.mybuddy.ui.viewmodel.WaterViewModel
 import com.example.mybuddy.ui.viewmodel.WaterViewModelFactory
 
 @Composable
-fun HealthScreen() {
-
-    var selectedTab by remember { mutableStateOf(HealthTab.Sleep) }
-
+fun HealthScreen(
+    onAddSleepClick: () -> Unit = {}
+) {
     val context = LocalContext.current
-    val app = context.applicationContext as MyBuddyApplication
+    val application = context.applicationContext as MyBuddyApplication
 
     val waterViewModel: WaterViewModel = viewModel(
-        factory = WaterViewModelFactory(app.database.waterLogDao())
+        factory = WaterViewModelFactory(application.waterRepository)
     )
+
+    val sleepViewModel: SleepViewModel = viewModel(
+        factory = SleepViewModelFactory(application.sleepRepository)
+    )
+
+    var selectedTab by remember { mutableStateOf(HealthTab.Sleep) }
 
     Column(
         modifier = Modifier
@@ -42,7 +49,6 @@ fun HealthScreen() {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Spacer(Modifier.height(12.dp))
 
         HealthTabs(
@@ -54,11 +60,14 @@ fun HealthScreen() {
 
         when (selectedTab) {
             HealthTab.Sleep -> {
-                SleepTab()
+                SleepTab(
+                    viewModel = sleepViewModel,
+                    onAddSleepClick = onAddSleepClick
+                )
             }
 
             HealthTab.Water -> {
-                WaterTab(waterViewModel)
+                WaterTab(viewModel = waterViewModel)
             }
         }
     }

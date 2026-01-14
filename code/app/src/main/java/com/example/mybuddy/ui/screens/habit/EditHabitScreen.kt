@@ -23,6 +23,8 @@ import com.example.mybuddy.ui.viewmodel.habit.EditHabitViewModel
 import com.example.mybuddy.ui.viewmodel.habit.EditHabitViewModelFactory
 import com.example.mybuddy.utils.hexToColor
 import com.example.mybuddy.utils.toHexString
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
 fun EditHabitScreen(
@@ -34,11 +36,13 @@ fun EditHabitScreen(
     val habit by produceState<HabitEntity?>(
         initialValue = null, key1 = habitId
     ) {
-        value = app.database.habitDao().getHabitById(habitId)
+        value = withContext(Dispatchers.IO) {
+            app.habitRepository.getHabitById(habitId)
+        }
     }
 
     val viewModel: EditHabitViewModel = viewModel(
-        factory = EditHabitViewModelFactory(app.database.habitDao())
+        factory = EditHabitViewModelFactory(app.habitRepository)
     )
 
     when (habit) {

@@ -36,9 +36,7 @@ fun HabitScreen(
     val app = context.applicationContext as MyBuddyApplication
 
     val viewModel: HabitViewModel = viewModel(
-        factory = HabitsViewModelFactory(
-            app.database.habitDao(), app.database.habitLogDao()
-        )
+        factory = HabitsViewModelFactory(app.habitRepository)
     )
 
     val habits by viewModel.habits.collectAsState()

@@ -31,7 +31,7 @@ fun AddHabitScreen(
     val app = context.applicationContext as MyBuddyApplication
 
     val viewModel: AddHabitViewModel = viewModel(
-        factory = AddHabitViewModelFactory(app.database.habitDao())
+        factory = AddHabitViewModelFactory(app.habitRepository)
     )
 
     var name by remember { mutableStateOf("") }
