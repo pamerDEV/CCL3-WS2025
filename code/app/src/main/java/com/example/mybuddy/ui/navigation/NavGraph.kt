@@ -12,6 +12,7 @@ import com.example.mybuddy.ui.screens.*
 import com.example.mybuddy.ui.screens.habit.AddHabitScreen
 import com.example.mybuddy.ui.screens.habit.EditHabitScreen
 import com.example.mybuddy.ui.screens.habit.HabitScreen
+import com.example.mybuddy.ui.screens.health.AddSleepScreen
 import com.example.mybuddy.ui.screens.health.HealthScreen
 import com.example.mybuddy.ui.screens.mood.MoodScreen
 import com.example.mybuddy.ui.screens.profile.CustomizeBuddyScreen
@@ -79,7 +80,11 @@ fun NavGraph(
             )
         }
         composable(Screen.Health.route) {
-            HealthScreen()
+            HealthScreen(
+                onAddSleepClick = {
+                    navController.navigate(Screen.AddSleep.route)
+                }
+            )
         }
         composable(Screen.Profile.route) {
             ProfileScreen(
@@ -191,6 +196,17 @@ fun NavGraph(
             val timestamp = backStackEntry.arguments?.getLong("timestamp")
             AddMoodScreen(
                 timestamp = if (timestamp == 0L) null else timestamp,
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onSaveClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable(Screen.AddSleep.route) {
+            AddSleepScreen(
                 onBackClick = {
                     navController.popBackStack()
                 },

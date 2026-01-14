@@ -41,6 +41,9 @@ sealed class Screen(
         fun createRoute(moodId: Long) = "edit_mood/$moodId"
     }
 
+    //Health Sleep
+    object AddSleep : Screen("add_sleep", "Add Sleep")
+
 
     companion object {
         val bottomItems = listOf(Home, Mood, Habits, Health, Profile)
