@@ -8,10 +8,12 @@ import com.example.mybuddy.db.dao.BuddyProfileDao
 import com.example.mybuddy.db.dao.HabitDao
 import com.example.mybuddy.db.dao.HabitLogDao
 import com.example.mybuddy.db.dao.MoodDao
+import com.example.mybuddy.db.dao.WaterLogDao
 import com.example.mybuddy.db.entity.HabitEntity
 import com.example.mybuddy.db.entity.HabitLogEntity
 import com.example.mybuddy.db.entity.MoodEntity
 import com.example.mybuddy.db.entity.BuddyProfileEntity
+import com.example.mybuddy.db.entity.WaterLogEntity
 
 
 @Database(
@@ -19,7 +21,8 @@ import com.example.mybuddy.db.entity.BuddyProfileEntity
         HabitEntity::class,
         HabitLogEntity::class,
         MoodEntity::class,
-        BuddyProfileEntity::class
+        BuddyProfileEntity::class,
+        WaterLogEntity::class
     ],
     version = 1,
     exportSchema = false
@@ -32,6 +35,8 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun buddyProfileDao(): BuddyProfileDao
 
+    abstract fun waterLogDao(): WaterLogDao
+
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
@@ -43,7 +48,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "mybuddy_database"
                 )
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(true)
                     .build()
                 INSTANCE = instance
                 instance

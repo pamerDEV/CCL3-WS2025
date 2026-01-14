@@ -1,6 +1,7 @@
 package com.example.mybuddy.utils
 
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 object DateUtil {
@@ -47,5 +48,12 @@ object DateUtil {
 
     fun isToday(timestamp: Long): Boolean {
         return isSameDay(timestamp, System.currentTimeMillis())
+    }
+
+    fun currentWeekDates(): List<LocalDate> {
+        val today = LocalDate.now()
+        val monday = today.with(java.time.DayOfWeek.MONDAY)
+
+        return (0..6).map { monday.plusDays(it.toLong()) }
     }
 }

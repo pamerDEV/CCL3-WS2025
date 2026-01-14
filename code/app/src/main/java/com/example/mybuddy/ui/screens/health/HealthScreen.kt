@@ -13,15 +13,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.mybuddy.MyBuddyApplication
 import com.example.mybuddy.ui.components.health.tabs.HealthTabs
 import com.example.mybuddy.ui.theme.Background
 import com.example.mybuddy.ui.components.health.tabs.HealthTab
+import com.example.mybuddy.ui.viewmodel.WaterViewModel
+import com.example.mybuddy.ui.viewmodel.WaterViewModelFactory
 
 @Composable
 fun HealthScreen() {
 
     var selectedTab by remember { mutableStateOf(HealthTab.Sleep) }
+
+    val context = LocalContext.current
+    val app = context.applicationContext as MyBuddyApplication
+
+    val waterViewModel: WaterViewModel = viewModel(
+        factory = WaterViewModelFactory(app.database.waterLogDao())
+    )
 
     Column(
         modifier = Modifier
@@ -46,7 +58,7 @@ fun HealthScreen() {
             }
 
             HealthTab.Water -> {
-                WaterTab()
+                WaterTab(waterViewModel)
             }
         }
     }

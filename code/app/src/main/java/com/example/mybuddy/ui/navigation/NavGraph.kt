@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.mybuddy.ui.components.health.tabs.HealthTab
 import com.example.mybuddy.ui.screens.*
 import com.example.mybuddy.ui.screens.habit.AddHabitScreen
 import com.example.mybuddy.ui.screens.habit.EditHabitScreen
@@ -39,6 +40,17 @@ fun NavGraph(
                 },
                 onMoodClick = {
                     navController.navigate(Screen.Mood.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
+                onWaterClick = {
+                    navController.navigate(
+                        Screen.Health.route
+                    ) {
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true
                         }

@@ -4,8 +4,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mybuddy.ui.navigation.Screen
+
+fun NavDestination?.isHealth(): Boolean {
+    return this?.route?.startsWith("health") == true
+}
 
 @Composable
 fun BottomBar(
