@@ -147,13 +147,3 @@ fun HomeScreen(
         Spacer(Modifier.height(32.dp))
     }
 }
-
-@Composable
-fun CenteredText(text: String) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text, style = MaterialTheme.typography.headlineMedium)
-    }
-}

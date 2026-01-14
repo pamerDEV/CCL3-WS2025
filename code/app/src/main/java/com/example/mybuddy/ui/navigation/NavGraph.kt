@@ -11,6 +11,7 @@ import com.example.mybuddy.ui.screens.*
 import com.example.mybuddy.ui.screens.habit.AddHabitScreen
 import com.example.mybuddy.ui.screens.habit.EditHabitScreen
 import com.example.mybuddy.ui.screens.habit.HabitScreen
+import com.example.mybuddy.ui.screens.health.HealthScreen
 import com.example.mybuddy.ui.screens.mood.MoodScreen
 import com.example.mybuddy.ui.screens.profile.CustomizeBuddyScreen
 import com.example.mybuddy.ui.screens.profile.ProfileScreen
