@@ -3,19 +3,20 @@ package com.example.mybuddy.ui.viewmodel.habit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.mybuddy.data.repository.HabitRepository
 import com.example.mybuddy.db.dao.HabitDao
 import com.example.mybuddy.db.entity.HabitEntity
 import kotlinx.coroutines.launch
 
 class AddHabitViewModel(
-    private val habitDao: HabitDao
+    private val repository: HabitRepository
 ) : ViewModel() {
 
     fun createHabit(
         title: String, description: String, colorHex: String, onDone: () -> Unit
     ) {
         viewModelScope.launch {
-            habitDao.insertHabit(
+            repository.insertHabit(
                 HabitEntity(
                     name = title, description = description, color = colorHex
                 )
@@ -26,9 +27,9 @@ class AddHabitViewModel(
 }
 
 class AddHabitViewModelFactory(
-    private val habitDao: HabitDao
+    private val repository: HabitRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return AddHabitViewModel(habitDao) as T
+        return AddHabitViewModel(repository) as T
     }
 }
