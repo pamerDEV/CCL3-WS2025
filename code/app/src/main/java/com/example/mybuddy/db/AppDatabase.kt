@@ -8,13 +8,14 @@ import com.example.mybuddy.db.dao.BuddyProfileDao
 import com.example.mybuddy.db.dao.HabitDao
 import com.example.mybuddy.db.dao.HabitLogDao
 import com.example.mybuddy.db.dao.MoodDao
+import com.example.mybuddy.db.dao.SleepDao
 import com.example.mybuddy.db.dao.WaterLogDao
+import com.example.mybuddy.db.entity.BuddyProfileEntity
 import com.example.mybuddy.db.entity.HabitEntity
 import com.example.mybuddy.db.entity.HabitLogEntity
 import com.example.mybuddy.db.entity.MoodEntity
-import com.example.mybuddy.db.entity.BuddyProfileEntity
+import com.example.mybuddy.db.entity.SleepEntity
 import com.example.mybuddy.db.entity.WaterLogEntity
-
 
 @Database(
     entities = [
@@ -22,7 +23,8 @@ import com.example.mybuddy.db.entity.WaterLogEntity
         HabitLogEntity::class,
         MoodEntity::class,
         BuddyProfileEntity::class,
-        WaterLogEntity::class
+        WaterLogEntity::class,
+        SleepEntity::class
     ],
     version = 1,
     exportSchema = false
@@ -32,10 +34,9 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun habitDao(): HabitDao
     abstract fun habitLogDao(): HabitLogDao
     abstract fun moodDao(): MoodDao
-
     abstract fun buddyProfileDao(): BuddyProfileDao
-
     abstract fun waterLogDao(): WaterLogDao
+    abstract fun sleepDao(): SleepDao
 
     companion object {
         @Volatile
