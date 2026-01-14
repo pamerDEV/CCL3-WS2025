@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mybuddy.data.repository.MoodRepository
 import com.example.mybuddy.db.entity.MoodEntity
+import com.example.mybuddy.utils.DateUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
@@ -19,18 +20,21 @@ class MoodViewModel(private val repository: MoodRepository) : ViewModel() {
         )
 
     fun addMood(moodType: String, note: String? = null) {
-        viewModelScope.launch {
-            val mood = MoodEntity(
-                moodType = moodType,
-                note = note,
-                timestamp = System.currentTimeMillis()
-            )
-            repository.insertMood(mood)
-        }
+        addMoodWithTimestamp(moodType, note, System.currentTimeMillis())
     }
 
     fun addMoodWithTimestamp(moodType: String, note: String? = null, timestamp: Long) {
         viewModelScope.launch {
+            // Delete existing mood for this day first
+            val startOfDay = DateUtil.getStartOfDay(timestamp)
+            val endOfDay = DateUtil.getEndOfDay(timestamp)
+            val existingMood = repository.getMoodByDate(startOfDay, endOfDay)
+
+            if (existingMood != null) {
+                repository.deleteMood(existingMood)
+            }
+
+            // Insert new mood
             val mood = MoodEntity(
                 moodType = moodType,
                 note = note,
