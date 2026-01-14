@@ -35,6 +35,15 @@ fun NavGraph(
                         launchSingleTop = true
                         restoreState = true
                     }
+                },
+                onMoodClick = {
+                    navController.navigate(Screen.Mood.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 }
             )
         }
@@ -177,8 +186,5 @@ fun NavGraph(
                 }
             )
         }
-        /*Mood Screen End*/
-
-
     }
 }

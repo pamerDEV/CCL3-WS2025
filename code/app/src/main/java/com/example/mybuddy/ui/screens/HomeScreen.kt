@@ -2,7 +2,6 @@ package com.example.mybuddy.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -13,26 +12,28 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mybuddy.MyBuddyApplication
-import com.example.mybuddy.data.quote.QuoteApiProvider
 import com.example.mybuddy.ui.components.BlobMood
 import com.example.mybuddy.ui.components.BuddyBlob
+import com.example.mybuddy.ui.components.MoodType
 import com.example.mybuddy.ui.components.home.HabitsStatCard
-import com.example.mybuddy.ui.components.home.QuoteBubble
+import com.example.mybuddy.ui.components.home.MoodStatCard
 import com.example.mybuddy.ui.components.home.QuoteSection
 import com.example.mybuddy.ui.components.home.StatCard
 import com.example.mybuddy.ui.theme.*
 import com.example.mybuddy.ui.viewmodel.BuddyViewModel
 import com.example.mybuddy.ui.viewmodel.BuddyViewModelFactory
-import com.example.mybuddy.ui.viewmodel.QuoteViewModel
-import com.example.mybuddy.ui.viewmodel.QuoteViewModelFactory
+import com.example.mybuddy.ui.viewmodel.MoodViewModel
+import com.example.mybuddy.ui.viewmodel.MoodViewModelFactory
 import com.example.mybuddy.ui.viewmodel.habit.HabitViewModel
 import com.example.mybuddy.ui.viewmodel.habit.HabitsViewModelFactory
 import com.example.mybuddy.utils.ColorUtil
+import com.example.mybuddy.utils.DateUtil
 import com.example.mybuddy.utils.hexToColor
 
 @Composable
 fun HomeScreen(
-    onHabitsClick: () -> Unit = {}
+    onHabitsClick: () -> Unit = {},
+    onMoodClick: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val application = context.applicationContext as MyBuddyApplication
@@ -48,9 +49,18 @@ fun HomeScreen(
         )
     )
 
+    val moodViewModel: MoodViewModel = viewModel(
+        factory = MoodViewModelFactory(application.moodRepository)
+    )
+
     val buddyName by buddyViewModel.buddyName.collectAsState()
     val buddyColorHex by buddyViewModel.buddyColorHex.collectAsState()
     val habits by habitViewModel.habits.collectAsState()
+    val moods by moodViewModel.allMoods.collectAsState()
+
+    val todayMood = moods.find { mood ->
+        DateUtil.isToday(mood.timestamp)
+    }?.let { MoodType.fromString(it.moodType) }
 
     val buddyColor = hexToColor(buddyColorHex)
     val buddyColorTheme = ColorUtil.generateBlobTheme(buddyColor)
@@ -107,7 +117,10 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Box(modifier = Modifier.weight(1f)) {
-                    StatCard(title = "Mood")
+                    MoodStatCard(
+                        todayMood = todayMood,
+                        onClick = onMoodClick
+                    )
                 }
                 Box(modifier = Modifier.weight(1f)) {
                     StatCard(title = "Water")
@@ -130,7 +143,6 @@ fun HomeScreen(
                 }
             }
         }
-
 
         Spacer(Modifier.height(32.dp))
     }
