@@ -128,13 +128,20 @@ fun SleepStatCard(
                     color = Violet
                 )
             } else {
-                // No sleep logged
-                Text(
-                    text = "Log your sleep!",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = TextSecondary
-                )
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Log your sleep!",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = TextSecondary
+                    )
+                }
             }
+
         }
     }
 }

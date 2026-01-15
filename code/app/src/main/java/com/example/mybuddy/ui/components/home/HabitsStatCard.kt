@@ -3,9 +3,11 @@ package com.example.mybuddy.ui.components.home
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -57,11 +59,18 @@ fun HabitsStatCard(
             )
 
             if (total == 0) {
-                Text(
-                    text = "Create your first habit!",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = TextSecondary
-                )
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Create your first habit!",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = TextSecondary
+                    )
+                }
             } else {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -81,7 +90,7 @@ fun HabitsStatCard(
                     Spacer(Modifier.height(8.dp))
 
                     LinearProgressIndicator(
-                        progress = { if (total == 0) 0f else done.toFloat() / total.toFloat() },
+                        progress = { done.toFloat() / total.toFloat() },
                         modifier = Modifier.height(16.dp),
                         color = HabitOrange,
                         trackColor = Gray.copy(alpha = 0.3f),
@@ -90,6 +99,7 @@ fun HabitsStatCard(
                     )
                 }
             }
+
         }
     }
 }
