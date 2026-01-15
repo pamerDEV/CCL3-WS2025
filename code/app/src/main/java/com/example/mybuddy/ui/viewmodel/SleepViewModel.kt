@@ -41,19 +41,35 @@ class SleepViewModel(
 
     fun addSleep(bedtime: String, wakeTime: String, quality: String) {
         viewModelScope.launch {
-            val existing = repository.getSleepByDate(today)
             val durationMinutes = calculateDuration(bedtime, wakeTime)
 
             val sleep = SleepEntity(
-                id = existing?.id ?: 0,
+                id = 0,
                 date = today,
                 bedtime = bedtime,
                 wakeTime = wakeTime,
                 quality = quality,
                 durationMinutes = durationMinutes,
-                goalMinutes = existing?.goalMinutes ?: 480
+                goalMinutes = 480
             )
             repository.insertSleep(sleep)
+        }
+    }
+
+    fun updateSleep(bedtime: String, wakeTime: String, quality: String) {
+        viewModelScope.launch {
+            val existing = repository.getSleepByDate(today)
+            existing?.let {
+                val durationMinutes = calculateDuration(bedtime, wakeTime)
+
+                val updatedSleep = it.copy(
+                    bedtime = bedtime,
+                    wakeTime = wakeTime,
+                    quality = quality,
+                    durationMinutes = durationMinutes
+                )
+                repository.updateSleep(updatedSleep)
+            }
         }
     }
 
