@@ -5,6 +5,7 @@ import com.example.mybuddy.db.entity.SleepEntity
 import kotlinx.coroutines.flow.Flow
 
 class SleepRepository(private val sleepDao: SleepDao) {
+    val allLogs : Flow<List<SleepEntity>> = sleepDao.getAllSleepLogs()
 
     fun getAllSleepLogs(): Flow<List<SleepEntity>> = sleepDao.getAllSleepLogs()
 

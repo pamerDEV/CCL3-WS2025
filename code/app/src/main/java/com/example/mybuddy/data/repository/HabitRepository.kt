@@ -11,6 +11,8 @@ class HabitRepository(
     private val habitLogDao: HabitLogDao
 ) {
 
+    val allLogs: Flow<List<HabitLogEntity>> = habitLogDao.getAllLogs()
+
     fun getAllHabits(): Flow<List<HabitEntity>> = habitDao.getAllHabits()
 
     fun getLogsForHabit(habitId: Long): Flow<List<HabitLogEntity>> =

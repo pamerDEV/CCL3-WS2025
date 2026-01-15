@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.mybuddy.data.repository.BuddyRepository
 import com.example.mybuddy.data.repository.HabitRepository
 import com.example.mybuddy.data.repository.MoodRepository
+import com.example.mybuddy.data.repository.ProfileRepository
 import com.example.mybuddy.data.repository.SleepRepository
 import com.example.mybuddy.data.repository.WaterRepository
 import com.example.mybuddy.db.AppDatabase
@@ -17,4 +18,12 @@ class MyBuddyApplication : Application() {
     val habitRepository by lazy { HabitRepository(database.habitDao(), database.habitLogDao()) }
     val waterRepository by lazy { WaterRepository(database.waterLogDao()) }
     val sleepRepository by lazy { SleepRepository(database.sleepDao()) }
+    val profileRepository by lazy {
+        ProfileRepository(
+            habitRepository,
+            moodRepository,
+            sleepRepository,
+            waterRepository
+        )
+    }
 }

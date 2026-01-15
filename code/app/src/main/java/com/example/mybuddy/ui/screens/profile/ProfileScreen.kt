@@ -15,9 +15,12 @@ import com.example.mybuddy.MyBuddyApplication
 import com.example.mybuddy.ui.components.BlobMood
 import com.example.mybuddy.ui.components.BuddyBlob
 import com.example.mybuddy.ui.components.GradientButton
+import com.example.mybuddy.ui.components.profile.ProfileStatCard
 import com.example.mybuddy.ui.theme.*
 import com.example.mybuddy.ui.viewmodel.BuddyViewModel
 import com.example.mybuddy.ui.viewmodel.BuddyViewModelFactory
+import com.example.mybuddy.ui.viewmodel.ProfileViewModel
+import com.example.mybuddy.ui.viewmodel.ProfileViewModelFactory
 import com.example.mybuddy.utils.ColorUtil
 import com.example.mybuddy.utils.hexToColor
 
@@ -30,6 +33,13 @@ fun ProfileScreen(
     val viewModel: BuddyViewModel = viewModel(
         factory = BuddyViewModelFactory(application.buddyRepository)
     )
+
+    val profileViewModel: ProfileViewModel = viewModel(
+        factory = ProfileViewModelFactory(application.profileRepository)
+    )
+
+    val stats by profileViewModel.stats.collectAsState()
+
 
     val buddyName by viewModel.buddyName.collectAsState()
     val buddyColorHex by viewModel.buddyColorHex.collectAsState()
@@ -88,5 +98,64 @@ fun ProfileScreen(
             style = TitleLargeRegular,
             color = TextPrimary
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Column(
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Box(modifier = Modifier.weight(1f)) {
+                    var day = "days"
+
+                    if(stats.activeDays == 1) {
+                        day = "day"
+                    }
+
+                    ProfileStatCard(
+                        title = "Active days",
+                        emoji = "🌟",
+                        value = stats.activeDays.toString() + " " + day
+                    )
+                }
+                Box(modifier = Modifier.weight(1f)) {
+                    var day = "days"
+
+                    if(stats.highestStreak == 1) {
+                        day = "day"
+                    }
+
+                    ProfileStatCard(
+                        title = "Highest streak",
+                        emoji = "🔥",
+                        value = stats.highestStreak.toString() + " " + day
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Box(modifier = Modifier.weight(1f)) {
+                    ProfileStatCard(
+                        title = "Common mood",
+                        emoji = "🥰",
+                        value = stats.commonMood
+                    )
+                }
+                Box(modifier = Modifier.weight(1f)) {
+                    ProfileStatCard(
+                        title = "Average sleep",
+                        emoji = "😴",
+                        value = stats.averageSleepHours.toString() + "h"
+                    )
+                }
+            }
+        }
+
     }
 }

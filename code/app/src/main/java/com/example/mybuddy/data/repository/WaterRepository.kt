@@ -1,10 +1,13 @@
 package com.example.mybuddy.data.repository
 
 import com.example.mybuddy.db.dao.WaterLogDao
+import com.example.mybuddy.db.entity.MoodEntity
 import com.example.mybuddy.db.entity.WaterLogEntity
 import kotlinx.coroutines.flow.Flow
 
 class WaterRepository(private val waterLogDao: WaterLogDao) {
+
+    val allLogs: Flow<List<WaterLogEntity>> = waterLogDao.getAll()
 
     fun getLast7Days(): Flow<List<WaterLogEntity>> = waterLogDao.getLast7Days()
 

@@ -34,5 +34,11 @@ interface HabitLogDao {
         WHERE habitId = :habitId
     """)
     suspend fun deleteLogsForHabit(habitId: Long)
+
+    @Query("""
+    SELECT * FROM habit_logs
+    ORDER BY date ASC
+""")
+    fun getAllLogs(): Flow<List<HabitLogEntity>>
 }
 
