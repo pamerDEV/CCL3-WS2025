@@ -40,7 +40,6 @@ fun BottomBar(
                     color = TextPrimary.copy(alpha = 0.15f),
                     shape = RectangleShape
                 )
-                .height(100.dp)
         ) {
             Screen.bottomItems.forEach { screen ->
 

@@ -1,7 +1,5 @@
 package com.example.mybuddy.ui.screens
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -18,32 +16,22 @@ fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    val bottomBarHeight = 100.dp
-
-    val showBottomBar =
-        Screen.bottomRoutes.any { route ->
-            currentRoute == route || currentRoute?.startsWith(route) == true
-        }
 
     Scaffold(
         bottomBar = {
+            val showBottomBar =
+                Screen.bottomRoutes.any { route ->
+                    currentRoute == route || currentRoute?.startsWith(route) == true
+                }
+
             if (showBottomBar) {
                 BottomBar(navController)
             }
         }
     ) { padding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(
-                    bottom = if (showBottomBar) {
-                        bottomBarHeight
-                    } else {
-                        bottomBarHeight
-                    }
-                )
-        ) {
-            NavGraph(navController)
-        }
+        NavGraph(
+            navController = navController,
+            modifier = Modifier.padding(padding)
+        )
     }
 }
