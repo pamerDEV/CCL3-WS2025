@@ -17,7 +17,7 @@ import com.example.mybuddy.ui.components.BuddyBlob
 import com.example.mybuddy.ui.components.MoodType
 import com.example.mybuddy.ui.components.home.HabitsStatCard
 import com.example.mybuddy.ui.components.home.MoodStatCard
-import com.example.mybuddy.ui.components.home.QuoteSection
+import com.example.mybuddy.ui.components.api.QuoteSection
 import com.example.mybuddy.ui.components.home.SleepStatCard
 import com.example.mybuddy.ui.components.home.WaterStatCard
 import com.example.mybuddy.ui.theme.*

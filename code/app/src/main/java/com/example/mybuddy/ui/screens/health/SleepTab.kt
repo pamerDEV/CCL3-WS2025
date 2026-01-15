@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +23,7 @@ import com.example.mybuddy.ui.components.SleepQuality
 import com.example.mybuddy.ui.components.health.sleep.SleepClockRing
 import com.example.mybuddy.ui.components.health.sleep.SleepInfoCard
 import com.example.mybuddy.ui.components.health.sleep.SleepQualityCard
+import com.example.mybuddy.ui.theme.HabitGreen
 import com.example.mybuddy.ui.theme.TextPrimary
 import com.example.mybuddy.ui.theme.TextSecondary
 import com.example.mybuddy.ui.theme.Violet
@@ -81,9 +83,9 @@ fun SleepTab(
 
                 Spacer(Modifier.height(24.dp))
 
-                // Bedtime / Wakeup Cards
+                // Bedtime / Wakeup Cards - same width as clock (220dp)
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.width(220.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     SleepInfoCard(
@@ -95,16 +97,17 @@ fun SleepTab(
                     SleepInfoCard(
                         label = "Wakeup",
                         value = todaySleep.wakeTime,
-                        valueColor = Violet,
+                        valueColor = HabitGreen,
                         modifier = Modifier.weight(1f)
                     )
                 }
 
                 Spacer(Modifier.height(12.dp))
 
-                // Quality Card
+                // Quality Card - same width as clock
                 SleepQualityCard(
-                    quality = SleepQuality.fromString(todaySleep.quality)
+                    quality = SleepQuality.fromString(todaySleep.quality),
+                    modifier = Modifier.width(220.dp)
                 )
             } else {
                 // No sleep logged

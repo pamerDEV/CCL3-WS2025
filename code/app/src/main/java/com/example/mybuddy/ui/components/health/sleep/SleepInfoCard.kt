@@ -27,6 +27,7 @@ fun SleepInfoCard(
     Card(
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Background),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         modifier = modifier.border(
             width = 1.dp,
             color = TextPrimary.copy(alpha = 0.15f),
@@ -44,7 +45,7 @@ fun SleepInfoCard(
             )
             Text(
                 text = value,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.headlineSmall,
                 color = valueColor
             )
         }

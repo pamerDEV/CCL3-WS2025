@@ -4,13 +4,12 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
@@ -21,7 +20,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mybuddy.ui.theme.TextPrimary
-import com.example.mybuddy.ui.theme.TextSecondary
 import com.example.mybuddy.ui.theme.Violet
 import com.example.mybuddy.ui.theme.VioletLight
 import kotlin.math.cos
@@ -43,13 +41,21 @@ fun SleepClockRing(
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
             val strokeWidth = 12.dp.toPx()
-            val radius = (size.minDimension - strokeWidth) / 2
+            val outerRadius = (size.minDimension - strokeWidth) / 2
             val center = Offset(size.width / 2, size.height / 2)
+            val innerRadius = outerRadius - strokeWidth - 4.dp.toPx()
 
-            // Background circle
+            // Inner filled circle (light violet)
+            drawCircle(
+                color = VioletLight.copy(alpha = 0.2f),
+                radius = innerRadius,
+                center = center
+            )
+
+            // Background ring
             drawCircle(
                 color = VioletLight.copy(alpha = 0.3f),
-                radius = radius,
+                radius = outerRadius,
                 center = center,
                 style = Stroke(width = strokeWidth)
             )
@@ -65,11 +71,13 @@ fun SleepClockRing(
                 startAngle = bedAngle - 90,
                 sweepAngle = sweepAngle,
                 useCenter = false,
+                topLeft = Offset(strokeWidth / 2, strokeWidth / 2),
+                size = Size(size.width - strokeWidth, size.height - strokeWidth),
                 style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
             )
 
             // Clock numbers
-            val numberRadius = radius - 30.dp.toPx()
+            val numberRadius = innerRadius - 12.dp.toPx()
             for (i in 1..12) {
                 val angle = Math.toRadians((i * 30 - 90).toDouble())
                 val x = center.x + numberRadius * cos(angle).toFloat()
@@ -78,10 +86,10 @@ fun SleepClockRing(
                 drawContext.canvas.nativeCanvas.drawText(
                     i.toString(),
                     x,
-                    y + 8.dp.toPx(),
+                    y + 5.dp.toPx(),
                     android.graphics.Paint().apply {
                         color = android.graphics.Color.parseColor("#666666")
-                        textSize = 14.sp.toPx()
+                        textSize = 12.sp.toPx()
                         textAlign = android.graphics.Paint.Align.CENTER
                     }
                 )
@@ -89,25 +97,23 @@ fun SleepClockRing(
         }
 
         // Center text
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = buildAnnotatedString {
-                    withStyle(SpanStyle(fontSize = 32.sp, fontWeight = FontWeight.Bold)) {
-                        append("$hours")
-                    }
-                    withStyle(SpanStyle(fontSize = 20.sp)) {
-                        append("h")
-                    }
-                    withStyle(SpanStyle(fontSize = 32.sp, fontWeight = FontWeight.Bold)) {
-                        append("$minutes")
-                    }
-                    withStyle(SpanStyle(fontSize = 20.sp)) {
-                        append("m")
-                    }
-                },
-                color = TextPrimary
-            )
-        }
+        Text(
+            text = buildAnnotatedString {
+                withStyle(SpanStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold)) {
+                    append("$hours")
+                }
+                withStyle(SpanStyle(fontSize = 18.sp)) {
+                    append("h")
+                }
+                withStyle(SpanStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold)) {
+                    append("$minutes")
+                }
+                withStyle(SpanStyle(fontSize = 18.sp)) {
+                    append("m")
+                }
+            },
+            color = TextPrimary
+        )
     }
 }
 

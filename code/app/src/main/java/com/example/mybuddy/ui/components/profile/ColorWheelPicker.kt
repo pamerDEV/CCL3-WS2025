@@ -1,4 +1,4 @@
-package com.example.mybuddy.ui.components
+package com.example.mybuddy.ui.components.profile
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures

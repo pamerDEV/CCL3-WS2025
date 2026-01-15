@@ -17,7 +17,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mybuddy.MyBuddyApplication
 import com.example.mybuddy.ui.components.BlobMood
 import com.example.mybuddy.ui.components.BuddyBlob
-import com.example.mybuddy.ui.components.ColorWheelPicker
+import com.example.mybuddy.ui.components.profile.ColorWheelPicker
 import com.example.mybuddy.ui.components.GradientButton
 import com.example.mybuddy.ui.theme.*
 import com.example.mybuddy.ui.viewmodel.BuddyViewModel

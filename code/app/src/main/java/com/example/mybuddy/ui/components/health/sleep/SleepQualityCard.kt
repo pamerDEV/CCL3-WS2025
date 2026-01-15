@@ -33,18 +33,17 @@ fun SleepQualityCard(
     Card(
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Background),
-        modifier = modifier
-            .fillMaxWidth()
-            .border(
-                width = 1.dp,
-                color = TextPrimary.copy(alpha = 0.15f),
-                shape = RoundedCornerShape(16.dp)
-            )
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        modifier = modifier.border(
+            width = 1.dp,
+            color = TextPrimary.copy(alpha = 0.15f),
+            shape = RoundedCornerShape(16.dp)
+        )
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -56,7 +55,7 @@ fun SleepQualityCard(
                 )
                 Text(
                     text = quality.label,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     color = Violet
                 )
             }
@@ -64,7 +63,7 @@ fun SleepQualityCard(
             Image(
                 painter = painterResource(id = quality.iconRes),
                 contentDescription = quality.label,
-                modifier = Modifier.size(56.dp),
+                modifier = Modifier.size(40.dp),
                 contentScale = ContentScale.Fit
             )
         }
