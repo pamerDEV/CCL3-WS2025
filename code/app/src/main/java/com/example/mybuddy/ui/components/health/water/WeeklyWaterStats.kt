@@ -23,22 +23,22 @@ import com.example.mybuddy.ui.theme.TextPrimary
 @Composable
 fun WeeklyWaterStats(values: List<Int>) {
     Card(
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(containerColor = Background),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 4.dp)
             .border(
                 1.dp,
                 TextPrimary.copy(alpha = 0.15f),
-                RoundedCornerShape(20.dp)
+                RoundedCornerShape(14.dp)
             )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Text(
                 text = "Weekly Statistics",
                 style = MaterialTheme.typography.bodyLarge
@@ -47,7 +47,7 @@ fun WeeklyWaterStats(values: List<Int>) {
             Spacer(Modifier.height(16.dp))
 
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 val days = listOf("Mo", "Tu", "We", "Th", "Fr", "Sa", "Su")

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import com.example.mybuddy.ui.theme.GradientBlueEnd
 import com.example.mybuddy.ui.theme.HabitBlue
 import com.example.mybuddy.ui.theme.Violet
 
@@ -26,7 +27,7 @@ fun HealthTabs(
         HealthTabPill(
             text = "Water",
             selected = selectedTab == HealthTab.Water,
-            activeColor = HabitBlue,
+            activeColor = GradientBlueEnd,
             onClick = { onTabSelected(HealthTab.Water) }
         )
     }

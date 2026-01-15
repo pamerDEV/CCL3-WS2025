@@ -13,7 +13,7 @@ val GradientVioletEnd = Color(0xFF9756F2)
 
 // blue Gradient für Water Tab Button
 val GradientBlueStart = Color(0xFFE9F1FF)
-val GradientBlueEnd = Color(0xFF83D0F5)
+val GradientBlueEnd = Color(0xFF60CBFF)
 
 // Delete Button Rot
 val DeleteRed = Color(0xFFC60F12)               // Delete Button Text

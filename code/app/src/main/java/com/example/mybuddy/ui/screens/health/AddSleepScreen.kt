@@ -39,7 +39,7 @@ fun AddSleepScreen(
         factory = SleepViewModelFactory(application.sleepRepository)
     )
 
-    var selectedBedtimeHour by remember { mutableIntStateOf(23) }
+    var selectedBedtimeHour by remember { mutableIntStateOf(21) }
     var selectedBedtimeMinute by remember { mutableIntStateOf(0) }
     var selectedWakeHour by remember { mutableIntStateOf(6) }
     var selectedWakeMinute by remember { mutableIntStateOf(0) }

@@ -1,20 +1,23 @@
 package com.example.mybuddy.ui.components.home
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import com.example.mybuddy.ui.theme.Background
-import com.example.mybuddy.ui.theme.HabitBlue
+import com.example.mybuddy.ui.theme.GradientBlueEnd
+import com.example.mybuddy.ui.theme.GradientBlueStart
 import com.example.mybuddy.ui.theme.TextPrimary
-import com.example.mybuddy.ui.theme.TextSecondary
 
 @Composable
 fun WaterStatCard(
@@ -40,7 +43,7 @@ fun WaterStatCard(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
@@ -50,38 +53,57 @@ fun WaterStatCard(
                 color = TextPrimary
             )
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+            // Ring with inner circle
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.size(64.dp)
             ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.size(64.dp)
-                ) {
-                    CircularProgressIndicator(
-                        progress = { progress.coerceIn(0f, 1f) },
-                        modifier = Modifier.fillMaxSize(),
-                        color = HabitBlue,
-                        strokeWidth = 6.dp,
-                        trackColor = HabitBlue.copy(alpha = 0.2f),
-                        strokeCap = ProgressIndicatorDefaults.CircularDeterminateStrokeCap,
-                        gapSize = (-15).dp
+                Canvas(modifier = Modifier.matchParentSize()) {
+                    val strokeWidth = 6.dp.toPx()
+                    val outerRadius = (size.minDimension - strokeWidth) / 2
+                    val center = Offset(size.width / 2, size.height / 2)
+                    val innerRadius = outerRadius - strokeWidth - 2.dp.toPx()
+
+                    // Inner filled circle (light blue)
+                    drawCircle(
+                        color = GradientBlueStart,
+                        radius = innerRadius,
+                        center = center
                     )
 
-                    Text(
-                        text = "${(progress * 100).toInt()}%",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = TextPrimary
+                    // Background ring
+                    drawCircle(
+                        color = GradientBlueStart,
+                        radius = outerRadius,
+                        center = center,
+                        style = Stroke(width = strokeWidth)
+                    )
+
+                    // Progress arc
+                    drawArc(
+                        color = GradientBlueEnd,
+                        startAngle = -90f,
+                        sweepAngle = 360f * progress.coerceIn(0f, 1f),
+                        useCenter = false,
+                        topLeft = Offset(strokeWidth / 2, strokeWidth / 2),
+                        size = Size(size.width - strokeWidth, size.height - strokeWidth),
+                        style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
                     )
                 }
 
-                Spacer(Modifier.height(6.dp))
-
                 Text(
-                    text = "${currentMl}/${goalMl}ml",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = HabitBlue
+                    text = "${(progress * 100).toInt()}%",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = TextPrimary
                 )
             }
+
+            // Goal text
+            Text(
+                text = "${currentMl}/${goalMl}ml",
+                style = MaterialTheme.typography.bodySmall,
+                color = GradientBlueEnd
+            )
         }
     }
 }

@@ -1,9 +1,11 @@
 package com.example.mybuddy.ui.screens.health
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +23,7 @@ import com.example.mybuddy.ui.components.health.water.AddWaterButton
 import com.example.mybuddy.ui.components.health.water.AddWaterDialog
 import com.example.mybuddy.ui.components.health.water.WaterProgressRing
 import com.example.mybuddy.ui.components.health.water.WeeklyWaterStats
+import com.example.mybuddy.ui.theme.GradientBlueEnd
 import com.example.mybuddy.ui.theme.HabitBlue
 import com.example.mybuddy.ui.theme.TextSecondary
 import com.example.mybuddy.ui.viewmodel.WaterViewModel
@@ -32,41 +35,47 @@ fun WaterTab(
     val state by viewModel.uiState.collectAsState()
     var showDialog by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Text(
-            text = "Daily Water Tracker",
-            style = MaterialTheme.typography.titleLarge
-        )
-
-        Spacer(Modifier.height(8.dp))
-
-        Row {
-            Text("Daily goal: ", color = TextSecondary)
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 80.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text(
-                text = "${state.currentMl}/${state.goalMl}ml",
-                color = HabitBlue
+                text = "Daily Water Tracker",
+                style = MaterialTheme.typography.titleLarge
             )
+
+            Spacer(Modifier.height(8.dp))
+
+            Row {
+                Text("Daily goal: ", color = TextSecondary)
+                Text(
+                    text = "${state.currentMl}/${state.goalMl}ml",
+                    color = GradientBlueEnd
+                )
+            }
+
+            Spacer(Modifier.height(32.dp))
+
+            WaterProgressRing(progress = state.progress)
+
+            Spacer(Modifier.height(32.dp))
+
+            WeeklyWaterStats(state.weeklyPercentages)
         }
 
-        Spacer(Modifier.height(32.dp))
-
-        WaterProgressRing(progress = state.progress)
-
-        Spacer(Modifier.height(32.dp))
-
-        WeeklyWaterStats(state.weeklyPercentages)
-
-        Spacer(Modifier.weight(1f))
-
-        AddWaterButton(
-            onClick = { showDialog = true }
-        )
+        // Floating Button
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp)
+        ) {
+            AddWaterButton(
+                onClick = { showDialog = true }
+            )
+        }
     }
 
     if (showDialog) {
@@ -75,7 +84,8 @@ fun WaterTab(
             onAdd = { amount ->
                 viewModel.addWater(amount)
                 showDialog = false
-            }
+            },
+            dailyGoal = state.goalMl  // Vom ViewModel
         )
     }
 }
