@@ -18,13 +18,15 @@ import com.example.mybuddy.ui.components.MoodType
 import com.example.mybuddy.ui.components.home.HabitsStatCard
 import com.example.mybuddy.ui.components.home.MoodStatCard
 import com.example.mybuddy.ui.components.home.QuoteSection
-import com.example.mybuddy.ui.components.home.StatCard
+import com.example.mybuddy.ui.components.home.SleepStatCard
 import com.example.mybuddy.ui.components.home.WaterStatCard
 import com.example.mybuddy.ui.theme.*
 import com.example.mybuddy.ui.viewmodel.BuddyViewModel
 import com.example.mybuddy.ui.viewmodel.BuddyViewModelFactory
 import com.example.mybuddy.ui.viewmodel.MoodViewModel
 import com.example.mybuddy.ui.viewmodel.MoodViewModelFactory
+import com.example.mybuddy.ui.viewmodel.SleepViewModel
+import com.example.mybuddy.ui.viewmodel.SleepViewModelFactory
 import com.example.mybuddy.ui.viewmodel.WaterViewModel
 import com.example.mybuddy.ui.viewmodel.WaterViewModelFactory
 import com.example.mybuddy.ui.viewmodel.habit.HabitViewModel
@@ -37,7 +39,8 @@ import com.example.mybuddy.utils.hexToColor
 fun HomeScreen(
     onHabitsClick: () -> Unit = {},
     onMoodClick: () -> Unit = {},
-    onWaterClick: () -> Unit = {}
+    onWaterClick: () -> Unit = {},
+    onSleepClick: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val application = context.applicationContext as MyBuddyApplication
@@ -58,11 +61,16 @@ fun HomeScreen(
         factory = WaterViewModelFactory(application.waterRepository)
     )
 
+    val sleepViewModel: SleepViewModel = viewModel(
+        factory = SleepViewModelFactory(application.sleepRepository)
+    )
+
     val buddyName by buddyViewModel.buddyName.collectAsState()
     val buddyColorHex by buddyViewModel.buddyColorHex.collectAsState()
     val habits by habitViewModel.habits.collectAsState()
     val moods by moodViewModel.allMoods.collectAsState()
     val waterState by waterViewModel.uiState.collectAsState()
+    val sleepState by sleepViewModel.uiState.collectAsState()
 
     val todayMood = moods.find { mood ->
         DateUtil.isToday(mood.timestamp)
@@ -142,7 +150,11 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Box(modifier = Modifier.weight(1f)) {
-                    StatCard(title = "Sleep")
+                    SleepStatCard(
+                        durationMinutes = sleepState.todaySleep?.durationMinutes,
+                        goalMinutes = sleepState.goalMinutes,
+                        onClick = onSleepClick
+                    )
                 }
                 Box(modifier = Modifier.weight(1f)) {
                     HabitsStatCard(

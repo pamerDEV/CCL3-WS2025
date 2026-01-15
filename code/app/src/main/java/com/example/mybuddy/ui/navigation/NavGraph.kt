@@ -49,14 +49,21 @@ fun NavGraph(
                     }
                 },
                 onWaterClick = {
-                    navController.navigate(
-                        Screen.Health.route
-                    ) {
+                    navController.navigate("health?tab=water") {
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true
                         }
                         launchSingleTop = true
-                        restoreState = true
+
+                    }
+                },
+                onSleepClick = {
+                    navController.navigate("health?tab=sleep") {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+
                     }
                 }
             )
@@ -77,13 +84,6 @@ fun NavGraph(
                     navController.navigate(Screen.AddHabit.route)
                 },
                 navController
-            )
-        }
-        composable(Screen.Health.route) {
-            HealthScreen(
-                onAddSleepClick = {
-                    navController.navigate(Screen.AddSleep.route)
-                }
             )
         }
         composable(Screen.Profile.route) {
@@ -212,6 +212,24 @@ fun NavGraph(
                 },
                 onSaveClick = {
                     navController.popBackStack()
+                }
+            )
+        }
+
+        composable(
+            route = "health?tab={tab}",
+            arguments = listOf(
+                navArgument("tab") {
+                    type = NavType.StringType
+                    defaultValue = "sleep"
+                }
+            )
+        ) { backStackEntry ->
+            val tab = backStackEntry.arguments?.getString("tab") ?: "sleep"
+            HealthScreen(
+                initialTab = tab,
+                onAddSleepClick = {
+                    navController.navigate(Screen.AddSleep.route)
                 }
             )
         }

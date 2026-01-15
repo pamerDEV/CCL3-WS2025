@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,6 +28,7 @@ import com.example.mybuddy.ui.viewmodel.WaterViewModelFactory
 
 @Composable
 fun HealthScreen(
+    initialTab: String = "sleep",
     onAddSleepClick: () -> Unit = {}
 ) {
     val context = LocalContext.current
@@ -41,6 +43,10 @@ fun HealthScreen(
     )
 
     var selectedTab by remember { mutableStateOf(HealthTab.Sleep) }
+
+    LaunchedEffect(initialTab) {
+        selectedTab = if (initialTab == "water") HealthTab.Water else HealthTab.Sleep
+    }
 
     Column(
         modifier = Modifier
