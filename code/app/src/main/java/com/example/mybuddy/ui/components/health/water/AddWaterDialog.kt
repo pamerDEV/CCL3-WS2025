@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -44,15 +43,12 @@ import com.example.mybuddy.ui.theme.TextSecondary
 @Composable
 fun AddWaterDialog(
     onDismiss: () -> Unit,
-    onAdd: (Int) -> Unit,
-    dailyGoal: Int = 2000  // Parameter für Daily Goal
+    onAdd: (Int) -> Unit
 ) {
-    var amount by remember { mutableFloatStateOf((dailyGoal / 8f)) }
+    var amount by remember { mutableFloatStateOf(250f) }
 
-    // Dynamisch: 4 Gläser = Daily Goal
-    val mlPerGlass = dailyGoal / 4
-    val glasses = (amount / mlPerGlass).toInt().coerceIn(0, 4)
-    val maxSlider = dailyGoal.toFloat()
+    // Fixe Werte: 1 Glas = 250ml
+    val glasses = (amount / 250f).toInt().coerceIn(0, 4)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -96,7 +92,7 @@ fun AddWaterDialog(
                             contentDescription = "Glass $i",
                             modifier = Modifier
                                 .size(32.dp)
-                                .clickable { amount = (i * mlPerGlass).toFloat() },
+                                .clickable { amount = (i * 250).toFloat() },
                             tint = if (i <= glasses) GradientBlueEnd else TextSecondary.copy(alpha = 0.3f)
                         )
                     }
@@ -108,7 +104,7 @@ fun AddWaterDialog(
                 Slider(
                     value = amount,
                     onValueChange = { amount = it },
-                    valueRange = 50f..maxSlider,
+                    valueRange = 50f..1000f,
                     colors = SliderDefaults.colors(
                         thumbColor = GradientBlueEnd,
                         activeTrackColor = GradientBlueEnd,
@@ -127,7 +123,7 @@ fun AddWaterDialog(
                         color = TextSecondary
                     )
                     Text(
-                        text = "${dailyGoal}ml",
+                        text = "1000ml",
                         style = MaterialTheme.typography.labelSmall,
                         color = TextSecondary
                     )

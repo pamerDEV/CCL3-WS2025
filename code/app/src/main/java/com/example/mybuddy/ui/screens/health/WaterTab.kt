@@ -84,8 +84,7 @@ fun WaterTab(
             onAdd = { amount ->
                 viewModel.addWater(amount)
                 showDialog = false
-            },
-            dailyGoal = state.goalMl  // Vom ViewModel
+            }
         )
     }
 }
