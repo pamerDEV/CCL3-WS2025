@@ -33,6 +33,7 @@ import com.example.mybuddy.ui.viewmodel.habit.HabitViewModel
 import com.example.mybuddy.ui.viewmodel.habit.HabitsViewModelFactory
 import com.example.mybuddy.utils.ColorUtil
 import com.example.mybuddy.utils.DateUtil
+import com.example.mybuddy.utils.WellbeingCalculator
 import com.example.mybuddy.utils.hexToColor
 
 @Composable
@@ -76,6 +77,21 @@ fun HomeScreen(
         DateUtil.isToday(mood.timestamp)
     }?.let { MoodType.fromString(it.moodType) }
 
+    // Calculate Wellbeing Score
+    val wellbeingScore = WellbeingCalculator.calculateScore(
+        todayMood = todayMood,
+        habitsCompleted = habits.count { it.completedToday },
+        totalHabits = habits.size,
+        sleepDurationMinutes = sleepState.todaySleep?.durationMinutes,
+        sleepGoalMinutes = sleepState.goalMinutes,
+        sleepQuality = sleepState.todaySleep?.quality,
+        waterIntakeMl = waterState.currentMl,
+        waterGoalMl = waterState.goalMl
+    )
+
+    // Map score to Buddy mood
+    val buddyMood = WellbeingCalculator.scoreToBuddyMood(wellbeingScore)
+
     val buddyColor = hexToColor(buddyColorHex)
     val buddyColorTheme = ColorUtil.generateBlobTheme(buddyColor)
 
@@ -105,7 +121,7 @@ fun HomeScreen(
         Spacer(Modifier.height(2.dp))
 
         BuddyBlob(
-            mood = BlobMood.HAPPY,
+            mood = buddyMood,
             colorTheme = buddyColorTheme,
             modifier = Modifier.size(240.dp)
         )
