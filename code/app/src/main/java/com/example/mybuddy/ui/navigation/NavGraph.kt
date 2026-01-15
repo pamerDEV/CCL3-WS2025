@@ -1,5 +1,7 @@
 package com.example.mybuddy.ui.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -26,6 +28,10 @@ fun NavGraph(
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None },
         modifier = modifier
     ) {
         composable(Screen.Home.route) {

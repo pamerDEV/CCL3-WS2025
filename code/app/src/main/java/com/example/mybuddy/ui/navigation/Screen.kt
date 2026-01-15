@@ -47,5 +47,7 @@ sealed class Screen(
 
     companion object {
         val bottomItems = listOf(Home, Mood, Habits, Health, Profile)
+
+        val bottomRoutes = bottomItems.map { it.route }
     }
 }
