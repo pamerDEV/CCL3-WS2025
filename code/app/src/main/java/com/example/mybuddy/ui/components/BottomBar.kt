@@ -4,13 +4,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.mybuddy.ui.navigation.Screen
-
-fun NavDestination?.isHealth(): Boolean {
-    return this?.route?.startsWith("health") == true
-}
 
 @Composable
 fun BottomBar(
@@ -22,7 +17,13 @@ fun BottomBar(
     NavigationBar {
         Screen.bottomItems.forEach { screen ->
 
-            val selected = currentRoute == screen.route
+            var currentScreen = currentRoute
+
+            if(currentScreen.toString().startsWith("health")) {
+                currentScreen = "health"
+            }
+
+            val selected = currentScreen == screen.route
 
             NavigationBarItem(
                 selected = selected,
