@@ -39,11 +39,27 @@ fun AddSleepScreen(
         factory = SleepViewModelFactory(application.sleepRepository)
     )
 
-    var selectedBedtimeHour by remember { mutableIntStateOf(21) }
-    var selectedBedtimeMinute by remember { mutableIntStateOf(0) }
-    var selectedWakeHour by remember { mutableIntStateOf(6) }
-    var selectedWakeMinute by remember { mutableIntStateOf(0) }
-    var selectedQuality by remember { mutableStateOf(SleepQuality.OKAY) }
+    val state by viewModel.uiState.collectAsState()
+    val isEditing = state.hasLoggedToday
+
+    // Pre-fill
+    var selectedBedtimeHour by remember(state.todaySleep) {
+        mutableIntStateOf(state.todaySleep?.bedtime?.split(":")?.get(0)?.toIntOrNull() ?: 21)
+    }
+    var selectedBedtimeMinute by remember(state.todaySleep) {
+        mutableIntStateOf(state.todaySleep?.bedtime?.split(":")?.get(1)?.toIntOrNull() ?: 0)
+    }
+    var selectedWakeHour by remember(state.todaySleep) {
+        mutableIntStateOf(state.todaySleep?.wakeTime?.split(":")?.get(0)?.toIntOrNull() ?: 6)
+    }
+    var selectedWakeMinute by remember(state.todaySleep) {
+        mutableIntStateOf(state.todaySleep?.wakeTime?.split(":")?.get(1)?.toIntOrNull() ?: 0)
+    }
+    var selectedQuality by remember(state.todaySleep) {
+        mutableStateOf(
+            state.todaySleep?.quality?.let { SleepQuality.fromString(it) } ?: SleepQuality.OKAY
+        )
+    }
 
     var showBedtimePicker by remember { mutableStateOf(false) }
     var showWakePicker by remember { mutableStateOf(false) }
@@ -71,9 +87,8 @@ fun AddSleepScreen(
 
         Spacer(Modifier.height(16.dp))
 
-        // Title
         Text(
-            text = "Last Night's Sleep",
+            text = if (isEditing) "Edit Sleep" else "Last Night's Sleep",
             style = MaterialTheme.typography.headlineMedium,
             color = TextPrimary,
             textAlign = TextAlign.Center
@@ -143,11 +158,16 @@ fun AddSleepScreen(
 
         // Save Button
         GradientButton(
-            text = "Save",
+            text = if (isEditing) "Update" else "Save",
             onClick = {
                 val bedtime = String.format("%02d:%02d", selectedBedtimeHour, selectedBedtimeMinute)
                 val wakeTime = String.format("%02d:%02d", selectedWakeHour, selectedWakeMinute)
-                viewModel.addSleep(bedtime, wakeTime, selectedQuality.name)
+
+                if (isEditing) {
+                    viewModel.updateSleep(bedtime, wakeTime, selectedQuality.name)
+                } else {
+                    viewModel.addSleep(bedtime, wakeTime, selectedQuality.name)
+                }
                 onSaveClick()
             }
         )
