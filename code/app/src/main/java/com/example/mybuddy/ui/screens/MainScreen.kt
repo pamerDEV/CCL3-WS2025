@@ -21,7 +21,7 @@ fun MainScreen() {
         bottomBar = {
             val showBottomBar =
                 Screen.bottomRoutes.any { route ->
-                    currentRoute == route || currentRoute?.startsWith(route) == true
+                    currentRoute == route || currentRoute?.startsWith("health") == true
                 }
 
             if (showBottomBar) {
