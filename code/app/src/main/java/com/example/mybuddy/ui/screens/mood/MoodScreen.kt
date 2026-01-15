@@ -8,6 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.*
@@ -45,6 +46,11 @@ fun MoodScreen(
     )
 
     val allMoods by viewModel.allMoods.collectAsState()
+
+    // Check if mood already logged today
+    val hasMoodToday = allMoods.any { mood ->
+        DateUtil.isToday(mood.timestamp)
+    }
 
     var currentYear by remember { mutableIntStateOf(Calendar.getInstance().get(Calendar.YEAR)) }
     var currentMonth by remember { mutableIntStateOf(Calendar.getInstance().get(Calendar.MONTH)) }
@@ -144,10 +150,16 @@ fun MoodScreen(
                 .background(Background)
                 .padding(16.dp)
         ) {
-            GradientButton(
-                text = "Add Today's Mood",
-                onClick = onAddMoodClick
-            )
+            if (hasMoodToday) {
+                // Done Button (grey, disabled)
+                DoneButton()
+            } else {
+                // Add Mood Button (gradient, enabled)
+                GradientButton(
+                    text = "Add Today's Mood",
+                    onClick = onAddMoodClick
+                )
+            }
         }
     }
 }
@@ -259,6 +271,36 @@ fun CalendarDay(
                 text = day.toString(),
                 style = MaterialTheme.typography.bodyMedium,
                 color = if (isToday) Violet else TextSecondary
+            )
+        }
+    }
+}
+
+@Composable
+fun DoneButton() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(42.dp)
+            .clip(RoundedCornerShape(14.dp))
+            .background(TextSecondary.copy(alpha = 0.3f)),
+        contentAlignment = Alignment.Center
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.Check,
+                contentDescription = "Done",
+                tint = TextSecondary,
+                modifier = Modifier.size(20.dp)
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                text = "Done",
+                style = MaterialTheme.typography.labelLarge,
+                color = TextSecondary
             )
         }
     }

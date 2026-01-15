@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.mybuddy.db.entity.MoodEntity
+import com.example.mybuddy.ui.components.MoodType
 import com.example.mybuddy.ui.theme.HabitBlue
 import com.example.mybuddy.ui.theme.HabitGreen
 import com.example.mybuddy.ui.theme.HabitOrange
@@ -38,9 +39,10 @@ fun MoodStatsRow(
     // Entries for selected month
     val entries = monthMoods.size
 
-    // Positive percentage for selected month
-    val positiveMoods = listOf("AWESOME", "LOVED", "OKAY")
-    val positiveCount = monthMoods.count { positiveMoods.contains(it.moodType) }
+    // Positive percentage using isPositive from MoodType
+    val positiveCount = monthMoods.count { mood ->
+        MoodType.fromString(mood.moodType).isPositive
+    }
     val positivePercent = if (entries > 0) (positiveCount * 100) / entries else 0
 
     // Streak for selected month
@@ -86,7 +88,6 @@ fun MoodStatsRow(
 private fun calculateMonthStreak(monthMoods: List<MoodEntity>, year: Int, month: Int): Int {
     if (monthMoods.isEmpty()) return 0
 
-    // Get all days in the month that have moods
     val daysWithMood = monthMoods.map { mood ->
         val calendar = Calendar.getInstance().apply {
             timeInMillis = mood.timestamp
@@ -94,7 +95,6 @@ private fun calculateMonthStreak(monthMoods: List<MoodEntity>, year: Int, month:
         calendar.get(Calendar.DAY_OF_MONTH)
     }.toSet()
 
-    // Find longest consecutive streak in the month
     var maxStreak = 0
     var currentStreak = 0
     val daysInMonth = DateUtil.getDaysInMonth(year, month)
