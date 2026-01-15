@@ -18,7 +18,7 @@ fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    val BottomBarHeight = 64.dp
+    val bottomBarHeight = 100.dp
 
     val showBottomBar =
         Screen.bottomRoutes.any { route ->
@@ -37,9 +37,9 @@ fun MainScreen() {
                 .fillMaxSize()
                 .padding(
                     bottom = if (showBottomBar) {
-                        BottomBarHeight
+                        bottomBarHeight
                     } else {
-                        BottomBarHeight
+                        bottomBarHeight
                     }
                 )
         ) {

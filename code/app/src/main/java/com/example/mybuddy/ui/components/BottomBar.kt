@@ -5,6 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -39,6 +40,7 @@ fun BottomBar(
                     color = TextPrimary.copy(alpha = 0.15f),
                     shape = RectangleShape
                 )
+                .height(100.dp)
         ) {
             Screen.bottomItems.forEach { screen ->
 
