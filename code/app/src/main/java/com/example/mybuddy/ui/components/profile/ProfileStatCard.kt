@@ -24,11 +24,12 @@ fun ProfileStatCard(
     Card(
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Background),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         modifier = Modifier
             .height(110.dp)
             .border(
                 width = 1.dp,
-                color = TextPrimary.copy(alpha = 0.25f),
+                color = TextPrimary.copy(alpha = 0.15f),
                 shape = RoundedCornerShape(16.dp)
             )
     ) {
