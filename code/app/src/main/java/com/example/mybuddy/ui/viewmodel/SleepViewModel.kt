@@ -4,10 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mybuddy.data.repository.SleepRepository
+import com.example.mybuddy.data.repository.UserSettingsRepository
 import com.example.mybuddy.db.entity.SleepEntity
 import com.example.mybuddy.ui.components.health.sleep.SleepDayData
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -23,28 +25,36 @@ data class SleepUiState(
 )
 
 class SleepViewModel(
-    private val repository: SleepRepository
+    private val repository: SleepRepository,
+    private val userSettingsRepository: UserSettingsRepository
 ) : ViewModel() {
 
-    private val today = LocalDate.now().toString()
+    val uiState: StateFlow<SleepUiState> =
+        combine(
+            repository.getAllSleepLogs(),
+            userSettingsRepository.settings
+        ) { logs, settings ->
 
-    val uiState: StateFlow<SleepUiState> = repository.getAllSleepLogs()
-        .map { logs ->
             val todaySleep = logs.find { it.date == today }
+
             SleepUiState(
                 todaySleep = todaySleep,
-                goalMinutes = todaySleep?.goalMinutes ?: 480,
+                goalMinutes = settings.sleepGoalMinutes,
                 hasLoggedToday = todaySleep != null,
-                weeklyData = calculateWeeklyData(logs)
+                weeklyData = calculateWeeklyData(logs, settings.sleepGoalMinutes)
             )
-        }
-        .stateIn(
+        }.stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
+            started = SharingStarted.WhileSubscribed(5_000),
             initialValue = SleepUiState()
         )
 
-    private fun calculateWeeklyData(logs: List<SleepEntity>): List<SleepDayData> {
+    private val today = LocalDate.now().toString()
+
+    private fun calculateWeeklyData(
+        logs: List<SleepEntity>,
+        goalMinutes: Int
+    ): List<SleepDayData> {
         val today = LocalDate.now()
         val last7Days = (6 downTo 0).map { today.minusDays(it.toLong()) }
 
@@ -52,13 +62,16 @@ class SleepViewModel(
             val log = logs.find { it.date == date.toString() }
 
             SleepDayData(
-                dayLabel = date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US).take(2),
+                dayLabel = date.dayOfWeek
+                    .getDisplayName(TextStyle.SHORT, Locale.US)
+                    .take(2),
                 durationHours = (log?.durationMinutes ?: 0) / 60f,
-                goalHours = (log?.goalMinutes ?: 480) / 60f,
+                goalHours = goalMinutes / 60f,
                 quality = log?.quality
             )
         }
     }
+
 
     fun addSleep(bedtime: String, wakeTime: String, quality: String) {
         viewModelScope.launch {
@@ -117,12 +130,13 @@ class SleepViewModel(
 }
 
 class SleepViewModelFactory(
-    private val repository: SleepRepository
+    private val repository: SleepRepository,
+    private val userSettingsRepository: UserSettingsRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SleepViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return SleepViewModel(repository) as T
+            return SleepViewModel(repository, userSettingsRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -1,9 +1,11 @@
 package com.example.mybuddy.data.repository
 
 import android.util.Log
+import com.example.mybuddy.db.entity.HabitEntity
 import com.example.mybuddy.db.entity.HabitLogEntity
 import com.example.mybuddy.db.entity.MoodEntity
 import com.example.mybuddy.db.entity.SleepEntity
+import com.example.mybuddy.db.entity.UserSettingsEntity
 import com.example.mybuddy.db.entity.WaterLogEntity
 import com.example.mybuddy.ui.viewmodel.ProfileStatsState
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +22,8 @@ class ProfileRepository(
     private val habitRepository: HabitRepository,
     private val moodRepository: MoodRepository,
     private val sleepRepository: SleepRepository,
-    private val waterRepository: WaterRepository
+    private val waterRepository: WaterRepository,
+    private val userSettingsRepository: UserSettingsRepository
 ) {
 
     fun getProfileStats(): Flow<ProfileStatsState> =
@@ -29,15 +32,26 @@ class ProfileRepository(
             habitRepository.getAllHabits(),
             moodRepository.allMoods,
             sleepRepository.allLogs,
-            waterRepository.allLogs
-        ) { habitLogs, habits, moods, sleepLogs, waterLogs ->
+            waterRepository.allLogs,
+            userSettingsRepository.settings
+        ) { values: Array<Any> ->
+
+            val habitLogs = values[0] as List<HabitLogEntity>
+            val habits = values[1] as List<HabitEntity>
+            val moods = values[2] as List<MoodEntity>
+            val sleepLogs = values[3] as List<SleepEntity>
+            val waterLogs = values[4] as List<WaterLogEntity>
+            val settings = values[5] as UserSettingsEntity
+
             ProfileStatsState(
                 activeDays = calculateActiveDays(
                     habitLogs = habitLogs,
                     totalHabits = habits.size,
                     sleepLogs = sleepLogs,
                     moods = moods,
-                    waterLogs = waterLogs
+                    waterLogs = waterLogs,
+                    sleepGoalMinutes = settings.sleepGoalMinutes,
+                    waterGoalMl = settings.waterGoalMl
                 ),
 
                 highestStreak = calculateHighestStreak(habitLogs),
@@ -84,7 +98,9 @@ private fun calculateActiveDays(
     totalHabits: Int,
     sleepLogs: List<SleepEntity>,
     moods: List<MoodEntity>,
-    waterLogs: List<WaterLogEntity>
+    waterLogs: List<WaterLogEntity>,
+    sleepGoalMinutes: Int,
+    waterGoalMl: Int
 ): Int {
 
     val allDays: Set<LocalDate> = (
@@ -103,18 +119,21 @@ private fun calculateActiveDays(
                 .distinct()
                 .count() == totalHabits
 
-        val hasSleep =
-            sleepLogs.any { LocalDate.parse(it.date) == day }
+        val sleepDone =
+            sleepLogs.any {
+                LocalDate.parse(it.date) == day &&
+                        it.durationMinutes >= sleepGoalMinutes
+            }
 
-        val hasMood =
+        val moodDone =
             moods.any { it.timestamp.toLocalDate() == day }
 
         val waterDone =
             waterLogs.any {
                 LocalDate.parse(it.date) == day &&
-                        it.amount >= it.goal
+                        it.amount >= waterGoalMl
             }
 
-        habitsDone && hasSleep && hasMood && waterDone
+        habitsDone && sleepDone && moodDone && waterDone
     }
 }

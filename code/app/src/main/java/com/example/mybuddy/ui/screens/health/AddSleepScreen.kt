@@ -36,7 +36,7 @@ fun AddSleepScreen(
     val application = context.applicationContext as MyBuddyApplication
 
     val viewModel: SleepViewModel = viewModel(
-        factory = SleepViewModelFactory(application.sleepRepository)
+        factory = SleepViewModelFactory(application.sleepRepository, application.userSettingsRepository)
     )
 
     val state by viewModel.uiState.collectAsState()

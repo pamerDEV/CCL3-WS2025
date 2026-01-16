@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,26 +27,24 @@ fun SleepWeeklyBar(
     day: String,
     quality: String?
 ) {
-    val hasData = durationHours > 0
-    val barColor = if (hasData) {
-        SleepQualityColor.getColor(quality)
-    } else {
-        VioletLight.copy(alpha = 0.3f)
+    val hasData = durationHours > 0 && goalHours > 0
+
+    val rawProgress =
+        if (hasData) (durationHours / goalHours).coerceIn(0f, 1f) else 0f
+
+    val displayProgress = when {
+        !hasData -> 0f
+        rawProgress < 0.1f -> 0.1f
+        else -> rawProgress
     }
 
-    // Höhe relativ zum Goal berechnen
+    val barColor = SleepQualityColor.getColor(quality)
     val maxHeight = 100.dp
-    val progress = if (hasData && goalHours > 0) {
-        (durationHours / goalHours).coerceIn(0f, 1f)
-    } else {
-        0.1f  // Minimale Höhe wenn keine Daten
-    }
-    val barHeight = maxHeight * progress
+    val barHeight = maxHeight * displayProgress
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Stunden Label oben
         Text(
             text = if (hasData) "${durationHours.toInt()}h" else "-",
             style = MaterialTheme.typography.labelSmall,
@@ -54,35 +53,31 @@ fun SleepWeeklyBar(
 
         Spacer(Modifier.height(4.dp))
 
-        // Bar Container
         Box(
             modifier = Modifier
                 .width(28.dp)
                 .height(maxHeight),
             contentAlignment = Alignment.BottomCenter
         ) {
-            // Background Track
             Box(
                 modifier = Modifier
-                    .width(28.dp)
-                    .height(maxHeight)
+                    .fillMaxSize()
                     .clip(RoundedCornerShape(14.dp))
                     .background(VioletLight.copy(alpha = 0.2f))
             )
-
-            // Filled Bar
-            Box(
-                modifier = Modifier
-                    .width(28.dp)
-                    .height(barHeight)
-                    .clip(RoundedCornerShape(14.dp))
-                    .background(barColor)
-            )
+            if (displayProgress > 0f) {
+                Box(
+                    modifier = Modifier
+                        .width(28.dp)
+                        .height(barHeight)
+                        .clip(RoundedCornerShape(14.dp))
+                        .background(barColor)
+                )
+            }
         }
 
         Spacer(Modifier.height(8.dp))
 
-        // Day Label
         Text(
             text = day,
             style = MaterialTheme.typography.labelSmall,

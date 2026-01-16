@@ -6,6 +6,7 @@ import com.example.mybuddy.data.repository.HabitRepository
 import com.example.mybuddy.data.repository.MoodRepository
 import com.example.mybuddy.data.repository.ProfileRepository
 import com.example.mybuddy.data.repository.SleepRepository
+import com.example.mybuddy.data.repository.UserSettingsRepository
 import com.example.mybuddy.data.repository.WaterRepository
 import com.example.mybuddy.db.AppDatabase
 
@@ -23,7 +24,9 @@ class MyBuddyApplication : Application() {
             habitRepository,
             moodRepository,
             sleepRepository,
-            waterRepository
+            waterRepository,
+            userSettingsRepository
         )
     }
+    val userSettingsRepository by lazy { UserSettingsRepository(database.userSettingsDao()) }
 }

@@ -1,8 +1,11 @@
 package com.example.mybuddy.ui.screens.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -16,11 +19,16 @@ import com.example.mybuddy.ui.components.BlobMood
 import com.example.mybuddy.ui.components.BuddyBlob
 import com.example.mybuddy.ui.components.GradientButton
 import com.example.mybuddy.ui.components.profile.ProfileStatCard
+import com.example.mybuddy.ui.components.profile.SettingsRow
+import com.example.mybuddy.ui.components.profile.SleepGoalDialog
+import com.example.mybuddy.ui.components.profile.WaterGoalDialog
 import com.example.mybuddy.ui.theme.*
 import com.example.mybuddy.ui.viewmodel.BuddyViewModel
 import com.example.mybuddy.ui.viewmodel.BuddyViewModelFactory
 import com.example.mybuddy.ui.viewmodel.ProfileViewModel
 import com.example.mybuddy.ui.viewmodel.ProfileViewModelFactory
+import com.example.mybuddy.ui.viewmodel.UserSettingsViewModel
+import com.example.mybuddy.ui.viewmodel.UserSettingsViewModelFactory
 import com.example.mybuddy.utils.ColorUtil
 import com.example.mybuddy.utils.hexToColor
 
@@ -38,13 +46,22 @@ fun ProfileScreen(
         factory = ProfileViewModelFactory(application.profileRepository)
     )
 
-    val stats by profileViewModel.stats.collectAsState()
+    val settingsViewModel: UserSettingsViewModel = viewModel(
+        factory = UserSettingsViewModelFactory(
+            application.userSettingsRepository
+        )
+    )
 
+    val stats by profileViewModel.stats.collectAsState()
+    val settings by settingsViewModel.uiState.collectAsState()
 
     val buddyName by viewModel.buddyName.collectAsState()
     val buddyColorHex by viewModel.buddyColorHex.collectAsState()
     val buddyColor = hexToColor(buddyColorHex)
     val buddyColorTheme = ColorUtil.generateBlobTheme(buddyColor)
+
+    var showWaterDialog by remember { mutableStateOf(false) }
+    var showSleepDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -157,5 +174,50 @@ fun ProfileScreen(
             }
         }
 
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = "Settings",
+            style = TitleLargeRegular,
+            color = TextPrimary
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        SettingsRow(
+            title = "Water goal",
+            value = "${settings.waterGoalMl}ml",
+            onClick = { showWaterDialog = true }
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        SettingsRow(
+            title = "Sleep goal",
+            value = "${settings.sleepGoalMinutes / 60}h",
+            onClick = { showSleepDialog = true }
+        )
+
+        if (showWaterDialog) {
+            WaterGoalDialog(
+                current = settings.waterGoalMl,
+                onDismiss = { showWaterDialog = false },
+                onSave = { newGoal ->
+                    settingsViewModel.setWaterGoal(newGoal)
+                    showWaterDialog = false
+                }
+            )
+        }
+
+        if (showSleepDialog) {
+            SleepGoalDialog(
+                currentMinutes = settings.sleepGoalMinutes,
+                onDismiss = { showSleepDialog = false },
+                onSave = { minutes ->
+                    settingsViewModel.setSleepGoal(minutes)
+                    showSleepDialog = false
+                }
+            )
+        }
     }
 }

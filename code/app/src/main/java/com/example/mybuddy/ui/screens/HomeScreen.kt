@@ -59,11 +59,11 @@ fun HomeScreen(
     )
 
     val waterViewModel: WaterViewModel = viewModel(
-        factory = WaterViewModelFactory(application.waterRepository)
+        factory = WaterViewModelFactory(application.waterRepository, application.userSettingsRepository)
     )
 
     val sleepViewModel: SleepViewModel = viewModel(
-        factory = SleepViewModelFactory(application.sleepRepository)
+        factory = SleepViewModelFactory(application.sleepRepository, application.userSettingsRepository)
     )
 
     val buddyName by buddyViewModel.buddyName.collectAsState()

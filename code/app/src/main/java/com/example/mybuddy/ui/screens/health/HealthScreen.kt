@@ -35,11 +35,11 @@ fun HealthScreen(
     val application = context.applicationContext as MyBuddyApplication
 
     val waterViewModel: WaterViewModel = viewModel(
-        factory = WaterViewModelFactory(application.waterRepository)
+        factory = WaterViewModelFactory(application.waterRepository, application.userSettingsRepository)
     )
 
     val sleepViewModel: SleepViewModel = viewModel(
-        factory = SleepViewModelFactory(application.sleepRepository)
+        factory = SleepViewModelFactory(application.sleepRepository, application.userSettingsRepository)
     )
 
     var selectedTab by remember { mutableStateOf(HealthTab.Sleep) }
