@@ -2,7 +2,6 @@ package com.example.mybuddy.ui.components.health.sleep
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +19,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mybuddy.ui.theme.TextPrimary
-import com.example.mybuddy.ui.theme.Violet
 import com.example.mybuddy.ui.theme.VioletLight
+import com.example.mybuddy.utils.SleepQualityColor
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -36,6 +35,9 @@ fun SleepClockRing(
     val hours = durationMinutes / 60
     val minutes = durationMinutes % 60
 
+    // Duration arc bekommt Quality-Farbe
+    val progressColor = SleepQualityColor.getColor(quality)
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier.size(220.dp)
@@ -46,14 +48,14 @@ fun SleepClockRing(
             val center = Offset(size.width / 2, size.height / 2)
             val innerRadius = outerRadius - strokeWidth - 4.dp.toPx()
 
-            // Inner filled circle (light violet)
+            // Inner filled circle - immer VioletLight
             drawCircle(
                 color = VioletLight.copy(alpha = 0.2f),
                 radius = innerRadius,
                 center = center
             )
 
-            // Background ring
+            // Background ring - immer VioletLight
             drawCircle(
                 color = VioletLight.copy(alpha = 0.3f),
                 radius = outerRadius,
@@ -66,9 +68,9 @@ fun SleepClockRing(
             val wakeAngle = timeToAngle(wakeTime)
             val sweepAngle = calculateSweepAngle(bedAngle, wakeAngle)
 
-            // Progress arc
+            // Progress arc - Quality Farbe
             drawArc(
-                color = Violet,
+                color = progressColor,
                 startAngle = bedAngle - 90,
                 sweepAngle = sweepAngle,
                 useCenter = false,
