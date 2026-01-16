@@ -30,6 +30,7 @@ fun SleepClockRing(
     durationMinutes: Int,
     bedtime: String,
     wakeTime: String,
+    quality: String? = null,
     modifier: Modifier = Modifier
 ) {
     val hours = durationMinutes / 60

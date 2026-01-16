@@ -129,7 +129,7 @@ fun ProfileScreen(
                     }
 
                     ProfileStatCard(
-                        title = "Highest streak",
+                        title = "Habit streak",
                         emoji = "🔥",
                         value = stats.highestStreak.toString() + " " + day
                     )
@@ -151,7 +151,7 @@ fun ProfileScreen(
                     ProfileStatCard(
                         title = "Average sleep",
                         emoji = "😴",
-                        value = stats.averageSleepHours.toString() + "h"
+                        value = String.format(java.util.Locale.US, "%.1fh", stats.averageSleepHours)
                     )
                 }
             }

@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +25,7 @@ import com.example.mybuddy.ui.components.SleepQuality
 import com.example.mybuddy.ui.components.health.sleep.SleepClockRing
 import com.example.mybuddy.ui.components.health.sleep.SleepInfoCard
 import com.example.mybuddy.ui.components.health.sleep.SleepQualityCard
+import com.example.mybuddy.ui.components.health.sleep.WeeklySleepStats
 import com.example.mybuddy.ui.theme.HabitGreen
 import com.example.mybuddy.ui.theme.TextPrimary
 import com.example.mybuddy.ui.theme.TextSecondary
@@ -41,6 +44,7 @@ fun SleepTab(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(bottom = 80.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -52,7 +56,7 @@ fun SleepTab(
 
             Spacer(Modifier.height(8.dp))
 
-            // Daily Goal
+            // Daily Goal - immer Violet
             Row {
                 Text("Daily goal: ", color = TextSecondary)
                 if (todaySleep != null) {
@@ -78,14 +82,15 @@ fun SleepTab(
                 SleepClockRing(
                     durationMinutes = todaySleep.durationMinutes,
                     bedtime = todaySleep.bedtime,
-                    wakeTime = todaySleep.wakeTime
+                    wakeTime = todaySleep.wakeTime,
+                    quality = todaySleep.quality
                 )
 
                 Spacer(Modifier.height(24.dp))
 
-                // Bedtime / Wakeup Cards - same width as clock (220dp)
+                // Bedtime / Wakeup Cards
                 Row(
-                    modifier = Modifier.width(220.dp),
+                    modifier = Modifier.width(420.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     SleepInfoCard(
@@ -94,21 +99,21 @@ fun SleepTab(
                         valueColor = Violet,
                         modifier = Modifier.weight(1f)
                     )
+                    SleepQualityCard(
+                        quality = SleepQuality.fromString(todaySleep.quality),
+                        modifier = Modifier.weight(1f)
+                    )
                     SleepInfoCard(
                         label = "Wakeup",
                         value = todaySleep.wakeTime,
                         valueColor = HabitGreen,
                         modifier = Modifier.weight(1f)
                     )
+
                 }
 
                 Spacer(Modifier.height(12.dp))
 
-                // Quality Card - same width as clock
-                SleepQualityCard(
-                    quality = SleepQuality.fromString(todaySleep.quality),
-                    modifier = Modifier.width(220.dp)
-                )
             } else {
                 // No sleep logged
                 Spacer(Modifier.height(48.dp))
@@ -123,6 +128,13 @@ fun SleepTab(
                     color = TextSecondary
                 )
             }
+
+            Spacer(Modifier.height(24.dp))
+
+            // Weekly Sleep Stats
+            WeeklySleepStats(
+                weeklyData = state.weeklyData
+            )
         }
 
         // Floating Button

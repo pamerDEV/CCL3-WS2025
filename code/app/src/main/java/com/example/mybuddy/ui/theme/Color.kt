@@ -28,6 +28,11 @@ val TextViolet = Color(0xFF8A38F5)       // Violet Text
 val Background = Color(0xFFFFFFFF)
 val Surface = Color(0xFFF8FAFC)         // Cards, Dialogs
 
+// Sleep Quality Colors
+val SleepAwesome = Color(0xFFFFD700)  // Gold/Gelb
+val SleepOkay = Color(0xFF4AE050)      // Grün
+val SleepTerrible = Color(0xFF9756F2)  // Lila/Purple
+
 // Habit Color Picker (Rainbow)
 val HabitRed = Color(0xFFEF4444)
 val HabitOrange = Color(0xFFF97316)

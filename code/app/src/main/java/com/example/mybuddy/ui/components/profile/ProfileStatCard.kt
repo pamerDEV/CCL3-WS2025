@@ -10,10 +10,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.mybuddy.ui.components.MoodType
 import com.example.mybuddy.ui.theme.Background
 import com.example.mybuddy.ui.theme.TextPrimary
+import com.example.mybuddy.ui.theme.TextSecondary
+import com.example.mybuddy.ui.theme.Violet
 
 @Composable
 fun ProfileStatCard(
@@ -41,8 +45,8 @@ fun ProfileStatCard(
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.labelLarge,
-                color = TextPrimary
+                style = MaterialTheme.typography.labelMedium,
+                color = TextSecondary
             )
 
             Spacer(modifier = Modifier.weight(1f))
@@ -51,8 +55,16 @@ fun ProfileStatCard(
                 CommonMoodContent(moodValue = value)
             } else {
                 Text(
-                    text = "$emoji $value",
-                    style = MaterialTheme.typography.bodyLarge,
+                    text = emoji,
+                    fontSize = 22.sp
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = value,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Medium,
                     color = TextPrimary
                 )
             }
@@ -83,7 +95,8 @@ private fun CommonMoodContent(
 
         Text(
             text = moodType.label,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Medium,
             color = TextPrimary
         )
     }

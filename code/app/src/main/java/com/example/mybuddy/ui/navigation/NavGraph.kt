@@ -2,6 +2,9 @@ package com.example.mybuddy.ui.navigation
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -28,10 +31,10 @@ fun NavGraph(
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None },
-        popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None },
+        enterTransition = { fadeIn(animationSpec = tween(200)) },
+        exitTransition = { fadeOut(animationSpec = tween(200)) },
+        popEnterTransition = { fadeIn(animationSpec = tween(200)) },
+        popExitTransition = { fadeOut(animationSpec = tween(200)) },
         modifier = modifier
     ) {
         composable(Screen.Home.route) {

@@ -1,7 +1,12 @@
 package com.example.mybuddy.ui.components.health.sleep
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -35,7 +40,11 @@ fun SleepInfoCard(
         )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .fillMaxHeight(),
+            verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -43,6 +52,7 @@ fun SleepInfoCard(
                 style = MaterialTheme.typography.labelMedium,
                 color = TextSecondary
             )
+            Spacer(Modifier.height(14.dp))
             Text(
                 text = value,
                 style = MaterialTheme.typography.headlineSmall,

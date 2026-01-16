@@ -40,32 +40,30 @@ fun SleepQualityCard(
             shape = RoundedCornerShape(16.dp)
         )
     ) {
-        Row(
+        Column (
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
+                .padding(16.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Text(
                     text = "Sleep Quality",
                     style = MaterialTheme.typography.labelMedium,
                     color = TextSecondary
                 )
+
+                Image(
+                    painter = painterResource(id = quality.iconRes),
+                    contentDescription = quality.label,
+                    modifier = Modifier.size(32.dp),
+                    contentScale = ContentScale.Fit
+                )
                 Text(
                     text = quality.label,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Violet
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = TextSecondary
                 )
             }
-
-            Image(
-                painter = painterResource(id = quality.iconRes),
-                contentDescription = quality.label,
-                modifier = Modifier.size(40.dp),
-                contentScale = ContentScale.Fit
-            )
         }
     }
-}
