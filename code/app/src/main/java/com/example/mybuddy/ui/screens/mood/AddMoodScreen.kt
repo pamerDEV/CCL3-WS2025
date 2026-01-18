@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -29,7 +31,6 @@ import com.example.mybuddy.ui.theme.*
 import com.example.mybuddy.ui.viewmodel.MoodViewModel
 import com.example.mybuddy.ui.viewmodel.MoodViewModelFactory
 import com.example.mybuddy.utils.DateUtil
-import com.example.mybuddy.utils.DateUtil.isToday
 
 @Composable
 fun AddMoodScreen(
@@ -45,7 +46,7 @@ fun AddMoodScreen(
 
     var selectedMood by remember { mutableStateOf<MoodType?>(null) }
     var note by remember { mutableStateOf("") }
-    var step by remember { mutableIntStateOf(1) } // 1 = Select Mood, 2 = Add Note
+    var step by remember { mutableIntStateOf(1) }
 
     val moodTimestamp = timestamp ?: System.currentTimeMillis()
 
@@ -53,20 +54,18 @@ fun AddMoodScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Background)
+            .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
-        // Top Bar
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = {
-                if (step == 2) {
-                    step = 1
-                } else {
-                    onBackClick()
+            IconButton(
+                onClick = {
+                    if (step == 2) step = 1 else onBackClick()
                 }
-            }) {
+            ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Back",
@@ -93,39 +92,31 @@ fun AddMoodScreen(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         if (step == 1) {
-            // Step 1: Select Mood
             MoodSelectionStep(
                 selectedMood = selectedMood,
-                onMoodSelected = { mood ->
-                    selectedMood = mood
-                }
+                onMoodSelected = { selectedMood = it }
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(32.dp))
 
-            // Next Button
             GradientButton(
                 text = "Next",
                 onClick = {
-                    if (selectedMood != null) {
-                        step = 2
-                    }
+                    if (selectedMood != null) step = 2
                 }
             )
         } else {
-            // Step 2: Add Note
             AddNoteStep(
                 selectedMood = selectedMood!!,
                 note = note,
                 onNoteChange = { note = it }
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(32.dp))
 
-            // Save Button
             GradientButton(
                 text = "Save",
                 onClick = {
@@ -139,7 +130,7 @@ fun AddMoodScreen(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
     }
 }
 
@@ -148,9 +139,8 @@ fun MoodSelectionStep(
     selectedMood: MoodType?,
     onMoodSelected: (MoodType) -> Unit
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
         Text(
             text = "How are you feeling today?",
             style = MaterialTheme.typography.headlineMedium,
@@ -160,12 +150,13 @@ fun MoodSelectionStep(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Mood Grid (2 rows x 4 columns)
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(max = 360.dp)
         ) {
             items(MoodType.entries.toList()) { mood ->
                 MoodItem(
@@ -215,9 +206,8 @@ fun AddNoteStep(
     note: String,
     onNoteChange: (String) -> Unit
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
         Text(
             text = "Add a note (optional)",
             style = MaterialTheme.typography.headlineMedium,
@@ -227,7 +217,6 @@ fun AddNoteStep(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Note TextField
         OutlinedTextField(
             value = note,
             onValueChange = onNoteChange,

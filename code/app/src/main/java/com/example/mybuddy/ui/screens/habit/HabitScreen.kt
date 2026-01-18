@@ -4,7 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
@@ -30,7 +32,8 @@ import com.example.mybuddy.ui.components.habit.StatCard
 
 @Composable
 fun HabitScreen(
-    onCreateHabit: () -> Unit = {}, navController: NavController
+    onCreateHabit: () -> Unit,
+    navController: NavController
 ) {
     val context = LocalContext.current
     val app = context.applicationContext as MyBuddyApplication
@@ -41,60 +44,79 @@ fun HabitScreen(
 
     val habits by viewModel.habits.collectAsState()
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Background)
-            .padding(16.dp),
+            .background(Background),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
 
-        Text(
-            text = "My Daily Habits",
-            style = MaterialTheme.typography.titleLarge,
-            color = TextPrimary
-        )
+        // 🔹 HEADER
+        item {
+            Spacer(Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(12.dp))
-
-        Text(
-            text = "Build routines that will lead you to success.",
-            style = MaterialTheme.typography.bodyMedium,
-            color = TextSecondary
-        )
-
-        Spacer(Modifier.height(16.dp))
-
-        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            StatCard(
-                "Total Habits", habits.size.toString(), HabitBlue
+            Text(
+                text = "My Daily Habits",
+                style = MaterialTheme.typography.titleLarge,
+                color = TextPrimary
             )
-            StatCard(
-                "Completed Today", habits.count { it.completedToday }.toString(), HabitGreen
+
+            Spacer(Modifier.height(12.dp))
+
+            Text(
+                text = "Build routines that will lead you to success.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = TextSecondary
+            )
+
+            Spacer(Modifier.height(16.dp))
+
+            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                StatCard(
+                    "Total Habits",
+                    habits.size.toString(),
+                    HabitBlue
+                )
+                StatCard(
+                    "Completed Today",
+                    habits.count { it.completedToday }.toString(),
+                    HabitGreen
+                )
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            GradientButton(
+                text = "Create new Habit",
+                onClick = onCreateHabit
+            )
+
+            Spacer(Modifier.height(28.dp))
+        }
+
+        // 🔹 HABIT LIST
+        items(
+            items = habits,
+            key = { it.habit.id }
+        ) { habitState ->
+            HabitCard(
+                state = habitState,
+                onCheckIn = {
+                    viewModel.toggleCheckIn(
+                        habitState.habit.id,
+                        !habitState.completedToday
+                    )
+                },
+                onEdit = {
+                    navController.navigate("edit_habit/${habitState.habit.id}")
+                }
             )
         }
 
-        Spacer(Modifier.height(16.dp))
-
-        GradientButton(
-            text = "Create new Habit", onClick = onCreateHabit
-        )
-
-        Spacer(Modifier.height(28.dp))
-
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            items(habits) { habitState ->
-                HabitCard(state = habitState, onCheckIn = {
-                    viewModel.toggleCheckIn(
-                        habitState.habit.id, !habitState.completedToday
-                    )
-                }, onEdit = {
-                    navController.navigate("edit_habit/${habitState.habit.id}")
-                })
-            }
+        item {
+            Spacer(Modifier.height(80.dp))
         }
     }
 }
