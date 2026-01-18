@@ -160,11 +160,13 @@
             <li><a href="#app-structure">App Structure</a></li>
             <li><a href="#screenshots">Hi-Fi Prototype</a></li>
             <li><a href="#wellbeing-score">Wellbeing Score</a></li>
+            <li><a href="#heuristic">Heuristic Evaluation</a></li>
+            <li><a href="#usability-test">User Test Plan</a></li>
         </ul>
     </section>
 
     <!-- APP CONCEPT -->
-    <section class="container py-5" id="app-concept">
+    <section class="container py-2" id="app-concept">
         <h2>App Concept</h2>
         <p><b>Chosen Use Case: B - Wellbeing</b></p>
         <p>
@@ -400,7 +402,7 @@
     </section>
 
         <!-- SCREENSHOTS -->
-        <section class="container py-5" id="screenshots">
+        <section class="container py-2" id="screenshots">
             <h2>Hi-Fi Prototype</h2>
 
             <!-- Main Screens -->
@@ -614,6 +616,113 @@
                 <li><strong>Total – 92 → EXCITED</strong></li>
             </ul>
         </section>
+
+    <section class="container py-5" id="heuristic">
+
+        <h2>Heuristic Evaluation</h2>
+        <div class="mb-4">
+            <p>
+                We will analyze the current version (19.01.2026) of our App MyBuddy to find potential problems which we can work on in the coming week, based on Nielsen’s 10 Usability Heuristics.
+            </p>
+            <h3>10 Usability Heuristics</h3>
+                <ol>
+                    <li>Visibility of System Status</li>
+                    <li>Match Between System and the Real World</li>
+                    <li>User Control and Freedom</li>
+                    <li>Consistency and Standards</li>
+                    <li>Error Prevention</li>
+                    <li>Recognition Rather Than Recall</li>
+                    <li>Flexibility and Efficiency of Use</li>
+                    <li>Aesthetic and Minimalist Design</li>
+                    <li>Help Users Recognize, Diagnose, and Recover from Errors</li>
+                    <li>Help and Documentation</li>
+                </ol>
+        </div>
+    </section>
+
+    <!-- USABILITY TEST -->
+    <section class="container py-2" id="usability-test">
+        <h2>Usability Test Plan</h2>
+
+        <p>
+            The goal of this usability test is to evaluate the overall usability and user experience of our MyBuddy app.
+            We want to identify any confusing areas in the interaction flow - particularly around logging wellbeing information - so we can improve clarity, navigation, and user experience.
+        </p>
+        <p><b>Specifically, we try to answer the following key questions:</b></p>
+        <ol>
+            <li>How intuitive is it for users to log their daily wellbeing data?</li>
+            <li>How easy is it for users to navigate between sections in the MyBuddy app?</li>
+            <li>Does Buddy (virtual companion) create an emotional connection or sense of support with users?</li>
+            <li>What usability issues and improvement opportunities remain in the MyBuddy app after completing core tasks?</li>
+        </ol>
+
+        <h3>Target User</h3>
+        <div class="mb-4">
+            <ul>
+                <li>Young adults (18-35)</li>
+                <li>Students and young professionals </li>
+                <li>People interested in improving wellbeing   </li>
+                <li>Participants do not need previous experience with wellbeing apps.</li>
+            </ul>
+        </div>
+
+        <h3>Data to Collect</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Quantitative</h4>
+                <ul>
+                    <li><b>Task Success Rate</b> – Record whether participants can complete tasks without assistance (success or failure).</li>
+                    <li><b>Time on Task</b> – Measure the time it takes for users to complete each task</li>
+                    <li><b>SEQ Score</b> – Single Ease Question (1-7) after each task  to understand the perceived difficulty on a scale of 1 (Very Difficult) to 7 (Very Easy).</li>
+                    <li><b>SUS Score</b> – System Usability Scale (0-100) after all tasks to gather insights into overall user satisfaction.</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h4>Qualitative</h4>
+                <ul>
+                    <li><b>Observation</b> – Notes of any errors, confusion, or unusual behavior during tasks</li>
+                    <li><b>Post-Test Interview</b> – Open-ended questions about experience, Buddy perception, and suggestions</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Test Tasks</h3>
+        <p>
+            Participants will complete a series of tasks designed to evaluate core app functionality.
+            After each task they will rate the task using the SEQ:
+        </p>
+        <ol>
+            <li>Log your current mood with a note</li>
+            <li>Add a new habit called "Drink tea"</li>
+            <li>Log that you drank 3 glasses of water</li>
+            <li>Log your last night's sleep duration and quality</li>
+            <li>Find where you can change the daily goal for drinking water</li>
+        </ol>
+
+        <h3>Post-Test Interview</h3>
+        <p>
+            After completing the tasks, we will conduct a brief interview with open-ended questions, to clarify observations made during testing.
+            This will provide additional insights into the user experience and areas for improvement.
+        </p>
+        <ol>
+            <li>What did you enjoy most about the app?</li>
+            <li>Was anything in the app frustrating or confusing?</li>
+            <li>How did you feel about Buddy as your wellbeing companion?</li>
+            <li>What feature or improvement would you suggest to make the app better?</li>
+        </ol>
+
+        <h3>Data Visualization</h3>
+        <p>
+            To present the collected data effectively, we will use the following methods:
+        </p>
+        <ul>
+            <li><b>Task Success Rate</b> – stacked bar chart showing success vs. failure clearly per task</li>
+            <li><b>Time on Task</b> – Boxplot showing the distribution of task completion times (in seconds) for each task </li>
+            <li><b>SEQ Score</b> – boxplot to visualize the distribution of SEQ ratings (1–7) for each task </li>
+            <li><b>SUS Score</b> – boxplot to display the distribution of overall SUS scores across participants, including a benchmark reference line</li>
+            <li><b>Qualitative feedback </b> – Categorized table grouping feedback by theme (positive, issues, suggestions)</li>
+        </ul>
+    </section>
 
         <footer class="text-center py-4 text-muted">
             © 2026 MyBuddy – Ilse Hahn & Pascal Pamer
