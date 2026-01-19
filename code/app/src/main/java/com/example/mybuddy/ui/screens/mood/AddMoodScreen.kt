@@ -104,9 +104,8 @@ fun AddMoodScreen(
 
             GradientButton(
                 text = "Next",
-                onClick = {
-                    if (selectedMood != null) step = 2
-                }
+                onClick = { step = 2 },
+                enabled = selectedMood != null
             )
         } else {
             AddNoteStep(

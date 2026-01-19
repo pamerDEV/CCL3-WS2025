@@ -20,6 +20,7 @@ fun GradientButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     gradientColors: List<Color> = listOf(GradientVioletStart, GradientVioletEnd)
 ) {
     Box(
@@ -28,15 +29,20 @@ fun GradientButton(
             .height(42.dp)
             .clip(RoundedCornerShape(14.dp))
             .background(
-                brush = Brush.horizontalGradient(colors = gradientColors)
+                brush = Brush.horizontalGradient(
+                    colors = if (enabled) gradientColors
+                    else listOf(TextSecondary.copy(alpha = 0.3f), TextSecondary.copy(alpha = 0.3f))
+                )
             )
-            .clickable { onClick() },
+            .then(
+                if (enabled) Modifier.clickable { onClick() } else Modifier
+            ),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.labelLarge,
-            color = Color.White
+            color = if (enabled) Color.White else TextSecondary
         )
     }
 }
