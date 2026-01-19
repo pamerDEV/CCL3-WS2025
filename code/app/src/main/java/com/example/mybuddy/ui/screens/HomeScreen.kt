@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mybuddy.MyBuddyApplication
@@ -92,6 +93,9 @@ fun HomeScreen(
     // Map score to Buddy mood
     val buddyMood = WellbeingCalculator.scoreToBuddyMood(wellbeingScore)
 
+    // Buddy Mood Text
+    val (buddyMoodTitle, buddyMoodReason) = getBuddyMoodText(buddyMood)
+
     val buddyColor = hexToColor(buddyColorHex)
     val buddyColorTheme = ColorUtil.generateBlobTheme(buddyColor)
 
@@ -118,19 +122,26 @@ fun HomeScreen(
             color = TextPrimary
         )
 
-        Spacer(Modifier.height(2.dp))
+        Spacer(Modifier.height(4.dp))
+
+        Text(
+            text = "$buddyMoodTitle $buddyMoodReason",
+            style = MaterialTheme.typography.bodySmall,
+            color = TextSecondary,
+            textAlign = TextAlign.Center
+        )
 
         BuddyBlob(
             mood = buddyMood,
             colorTheme = buddyColorTheme,
-            modifier = Modifier.size(240.dp)
+            modifier = Modifier.size(220.dp)
         )
 
         Spacer(Modifier.height(2.dp))
 
         QuoteSection()
 
-        Spacer(Modifier.height(18.dp))
+        Spacer(Modifier.height(12.dp))
 
         Text(
             text = "Today's Stats",
@@ -138,7 +149,7 @@ fun HomeScreen(
             color = TextPrimary
         )
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(12.dp))
 
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
 
@@ -183,5 +194,33 @@ fun HomeScreen(
         }
 
         Spacer(Modifier.height(32.dp))
+    }
+}
+
+/**
+ * Returns Buddy mood title and reason based on BlobMood
+ */
+private fun getBuddyMoodText(mood: BlobMood): Pair<String, String> {
+    return when (mood) {
+        BlobMood.EXCITED -> Pair(
+            "Buddy is excited!",
+            "You're on top of your wellbeing!"
+        )
+        BlobMood.HAPPY -> Pair(
+            "Buddy is happy!",
+            "Your tracking looks great today!"
+        )
+        BlobMood.WORRIED -> Pair(
+            "Buddy is worried",
+            "Some activities are missing today!"
+        )
+        BlobMood.SAD -> Pair(
+            "Buddy is sad",
+            "Let's track something together!"
+        )
+        BlobMood.SLEEPY -> Pair(
+            "Buddy is sleepy",
+            "Not much tracked yet today!"
+        )
     }
 }
