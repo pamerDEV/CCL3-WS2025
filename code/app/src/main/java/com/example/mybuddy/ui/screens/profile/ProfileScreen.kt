@@ -133,7 +133,7 @@ fun ProfileScreen(
                     }
 
                     ProfileStatCard(
-                        title = "Active days",
+                        title = "Perfect days",
                         emoji = "🌟",
                         value = stats.activeDays.toString() + " " + day
                     )
