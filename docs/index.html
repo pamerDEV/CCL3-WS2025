@@ -622,21 +622,101 @@
         <h2>Heuristic Evaluation</h2>
         <div class="mb-4">
             <p>
-                We will analyze the current version (19.01.2026) of our App MyBuddy to find potential problems which we can work on in the coming week, based on Nielsen’s 10 Usability Heuristics.
+                We will analyze the current version (19.01.2026) of our App MyBuddy to find potential problems which we can work on in the coming week, based on Nielsen's 10 Usability Heuristics.
             </p>
             <h3>10 Usability Heuristics</h3>
-                <ol>
-                    <li>Visibility of System Status</li>
-                    <li>Match Between System and the Real World</li>
-                    <li>User Control and Freedom</li>
-                    <li>Consistency and Standards</li>
-                    <li>Error Prevention</li>
-                    <li>Recognition Rather Than Recall</li>
-                    <li>Flexibility and Efficiency of Use</li>
-                    <li>Aesthetic and Minimalist Design</li>
-                    <li>Help Users Recognize, Diagnose, and Recover from Errors</li>
-                    <li>Help and Documentation</li>
-                </ol>
+            <ol>
+                <li>Visibility of System Status</li>
+                <li>Match Between System and the Real World</li>
+                <li>User Control and Freedom</li>
+                <li>Consistency and Standards</li>
+                <li>Error Prevention</li>
+                <li>Recognition Rather Than Recall</li>
+                <li>Flexibility and Efficiency of Use</li>
+                <li>Aesthetic and Minimalist Design</li>
+                <li>Help Users Recognize, Diagnose, and Recover from Errors</li>
+                <li>Help and Documentation</li>
+            </ol>
+        </div>
+
+        <h3>Evaluation Results</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-light">
+                <tr>
+                    <th>Screen</th>
+                    <th>Heuristic</th>
+                    <th>Problem</th>
+                    <th>Severity</th>
+                    <th>Fix</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Home</td>
+                    <td>1. Visibility of System Status</td>
+                    <td>User can't see why the Buddy has a certain animation (Wellbeing Score is hidden)</td>
+                    <td><span class="badge bg-danger">High</span></td>
+                    <td><span class="badge bg-success">Fixed</span></td>
+                </tr>
+                <tr>
+                    <td>Add Mood Screen</td>
+                    <td>9. Help Users Recognize, Diagnose and Recover from Errors</td>
+                    <td>If a user tried to add a mood without selecting a mood first the screen doesn't do anything instead of printing an error message</td>
+                    <td><span class="badge bg-warning text-dark">Medium</span></td>
+                    <td><span class="badge bg-success">Fixed</span></td>
+                </tr>
+                <tr>
+                    <td>App</td>
+                    <td>10. Help and Documentation</td>
+                    <td>There is no description about what the app is used for which could potentially confuse people who download the app out of curiosity without having ever used a wellbeing app.</td>
+                    <td><span class="badge bg-warning text-dark">Medium</span></td>
+                    <td><span class="badge bg-success">Fixed</span></td>
+                </tr>
+                <tr>
+                    <td>Mood</td>
+                    <td>3. User Control & Freedom</td>
+                    <td>No "Undo" when user by mistake deletes a mood</td>
+                    <td><span class="badge bg-warning text-dark">Medium</span></td>
+                    <td><span class="badge bg-secondary">Future</span></td>
+                </tr>
+                <tr>
+                    <td>Health Sleep</td>
+                    <td>2. Between System and the Real World</td>
+                    <td>12 Hour Clock but no AM/PM clock display</td>
+                    <td><span class="badge bg-info text-dark">Low</span></td>
+                    <td><span class="badge bg-secondary">Future</span></td>
+                </tr>
+                <tr>
+                    <td>Profile Customize</td>
+                    <td>3. User Control & Freedom</td>
+                    <td>No "Reset" button for Buddy Customization</td>
+                    <td><span class="badge bg-info text-dark">Low</span></td>
+                    <td><span class="badge bg-secondary">Future</span></td>
+                </tr>
+                <tr>
+                    <td>Health Screen (both tabs)</td>
+                    <td>3. User Control and Freedom</td>
+                    <td>No way to switch between weeks in weekly statistics, can only see current week</td>
+                    <td><span class="badge bg-info text-dark">Low</span></td>
+                    <td><span class="badge bg-secondary">Future</span></td>
+                </tr>
+                <tr>
+                    <td>Profile</td>
+                    <td>2. Match between System and Real World</td>
+                    <td>Some terms maybe need to be explained to the user (e.g. "streak", "perfect day")</td>
+                    <td><span class="badge bg-info text-dark">Low</span></td>
+                    <td><span class="badge bg-secondary">Future</span></td>
+                </tr>
+                <tr>
+                    <td>Home</td>
+                    <td>10. Help and Documentation</td>
+                    <td>Explanation for scores would be very useful (wellbeing, streaks)</td>
+                    <td><span class="badge bg-info text-dark">Low</span></td>
+                    <td><span class="badge bg-secondary">Future</span></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 
