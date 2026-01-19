@@ -3,6 +3,7 @@ package com.example.mybuddy.ui.components.health.sleep
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,10 +16,12 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mybuddy.ui.theme.TextPrimary
+import com.example.mybuddy.ui.theme.TextSecondary
 import com.example.mybuddy.ui.theme.VioletLight
 import com.example.mybuddy.utils.SleepQualityColor
 import kotlin.math.cos
@@ -26,16 +29,17 @@ import kotlin.math.sin
 
 @Composable
 fun SleepClockRing(
-    durationMinutes: Int,
-    bedtime: String,
-    wakeTime: String,
+    durationMinutes: Int?,  // Nullable jetzt
+    bedtime: String?,       // Nullable
+    wakeTime: String?,      // Nullable
     quality: String? = null,
     modifier: Modifier = Modifier
 ) {
-    val hours = durationMinutes / 60
-    val minutes = durationMinutes % 60
+    val hasData = durationMinutes != null && bedtime != null && wakeTime != null
 
-    // Duration arc bekommt Quality-Farbe
+    val hours = durationMinutes?.let { it / 60 } ?: 0
+    val minutes = durationMinutes?.let { it % 60 } ?: 0
+
     val progressColor = SleepQualityColor.getColor(quality)
 
     Box(
@@ -63,21 +67,22 @@ fun SleepClockRing(
                 style = Stroke(width = strokeWidth)
             )
 
-            // Calculate angles from times
-            val bedAngle = timeToAngle(bedtime)
-            val wakeAngle = timeToAngle(wakeTime)
-            val sweepAngle = calculateSweepAngle(bedAngle, wakeAngle)
+            // Progress arc - nur wenn Daten vorhanden
+            if (hasData && bedtime != null && wakeTime != null) {
+                val bedAngle = timeToAngle(bedtime)
+                val wakeAngle = timeToAngle(wakeTime)
+                val sweepAngle = calculateSweepAngle(bedAngle, wakeAngle)
 
-            // Progress arc - Quality Farbe
-            drawArc(
-                color = progressColor,
-                startAngle = bedAngle - 90,
-                sweepAngle = sweepAngle,
-                useCenter = false,
-                topLeft = Offset(strokeWidth / 2, strokeWidth / 2),
-                size = Size(size.width - strokeWidth, size.height - strokeWidth),
-                style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
-            )
+                drawArc(
+                    color = progressColor,
+                    startAngle = bedAngle - 90,
+                    sweepAngle = sweepAngle,
+                    useCenter = false,
+                    topLeft = Offset(strokeWidth / 2, strokeWidth / 2),
+                    size = Size(size.width - strokeWidth, size.height - strokeWidth),
+                    style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
+                )
+            }
 
             // Clock numbers
             val numberRadius = innerRadius - 12.dp.toPx()
@@ -99,24 +104,33 @@ fun SleepClockRing(
             }
         }
 
-        // Center text
-        Text(
-            text = buildAnnotatedString {
-                withStyle(SpanStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold)) {
-                    append("$hours")
-                }
-                withStyle(SpanStyle(fontSize = 18.sp)) {
-                    append("h")
-                }
-                withStyle(SpanStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold)) {
-                    append("$minutes")
-                }
-                withStyle(SpanStyle(fontSize = 18.sp)) {
-                    append("m")
-                }
-            },
-            color = TextPrimary
-        )
+        // Center text - unterschiedlich je nach State
+        if (hasData) {
+            Text(
+                text = buildAnnotatedString {
+                    withStyle(SpanStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold)) {
+                        append("$hours")
+                    }
+                    withStyle(SpanStyle(fontSize = 18.sp)) {
+                        append("h")
+                    }
+                    withStyle(SpanStyle(fontSize = 28.sp, fontWeight = FontWeight.Bold)) {
+                        append("$minutes")
+                    }
+                    withStyle(SpanStyle(fontSize = 18.sp)) {
+                        append("m")
+                    }
+                },
+                color = TextPrimary
+            )
+        } else {
+            Text(
+                text = "Tap below to\nadd your sleep",
+                style = MaterialTheme.typography.bodyMedium,
+                color = TextSecondary,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 

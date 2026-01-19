@@ -115,17 +115,12 @@ fun SleepTab(
                 Spacer(Modifier.height(12.dp))
 
             } else {
-                // No sleep logged
-                Spacer(Modifier.height(48.dp))
-                Text(
-                    text = "No sleep logged yet",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = TextSecondary
-                )
-                Text(
-                    text = "Tap below to add your sleep",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = TextSecondary
+                // No sleep logged - zeige leeren Clock Ring
+                SleepClockRing(
+                    durationMinutes = null,
+                    bedtime = null,
+                    wakeTime = null,
+                    quality = null
                 )
             }
 
