@@ -8,5 +8,6 @@ data class UserSettingsEntity(
     @PrimaryKey val id: Int = 0,
 
     val waterGoalMl: Int = 2000,
-    val sleepGoalMinutes: Int = 8 * 60
+    val sleepGoalMinutes: Int = 8 * 60,
+    val onboardingDone: Boolean = false
 )

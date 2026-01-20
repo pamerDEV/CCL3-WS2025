@@ -44,6 +44,8 @@ sealed class Screen(
     //Health Sleep
     object AddSleep : Screen("add_sleep", "Add Sleep")
 
+    object Onboarding : Screen("onboarding", "Onboarding")
+
 
     companion object {
         val bottomItems = listOf(Home, Mood, Habits, Health, Profile)

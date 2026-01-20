@@ -23,4 +23,9 @@ class UserSettingsRepository(
         val current = dao.observe().first() ?: UserSettingsEntity()
         dao.upsert(current.copy(sleepGoalMinutes = minutes))
     }
+
+    suspend fun setOnboardingDone() {
+        val current = dao.observe().first() ?: UserSettingsEntity()
+        dao.upsert(current.copy(onboardingDone = true))
+    }
 }

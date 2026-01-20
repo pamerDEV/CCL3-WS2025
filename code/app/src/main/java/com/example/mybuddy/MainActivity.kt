@@ -17,9 +17,12 @@ import com.example.mybuddy.ui.theme.MyBuddyTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val app = application as MyBuddyApplication
+
         setContent {
             MyBuddyTheme {
-                MainScreen()
+                MainScreen(app = app)
             }
         }
     }
