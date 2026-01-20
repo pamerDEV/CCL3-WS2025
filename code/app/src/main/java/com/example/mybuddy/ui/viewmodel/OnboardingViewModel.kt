@@ -14,13 +14,13 @@ class OnboardingViewModel(
     private val repository: UserSettingsRepository
 ) : ViewModel() {
 
-    val onboardingDone: StateFlow<Boolean> =
+    val onboardingDone: StateFlow<Boolean?> =
         repository.settings
             .map { it.onboardingDone }
             .stateIn(
                 viewModelScope,
                 SharingStarted.WhileSubscribed(5_000),
-                false
+                null
             )
 
     fun completeOnboarding() {
