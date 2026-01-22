@@ -149,20 +149,22 @@ fun MoodSelectionStep(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(max = 360.dp)
+        Column(
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(MoodType.entries.toList()) { mood ->
-                MoodItem(
-                    mood = mood,
-                    isSelected = mood == selectedMood,
-                    onClick = { onMoodSelected(mood) }
-                )
+            MoodType.entries.chunked(3).forEach { rowMoods ->
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    rowMoods.forEach { mood ->
+                        MoodItem(
+                            mood = mood,
+                            isSelected = mood == selectedMood,
+                            onClick = { onMoodSelected(mood) }
+                        )
+                    }
+                }
             }
         }
     }
