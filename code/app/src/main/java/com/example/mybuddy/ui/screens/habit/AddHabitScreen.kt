@@ -85,7 +85,7 @@ fun AddHabitScreen(
 
         Spacer(Modifier.height(16.dp))
 
-        Text("Description", style = MaterialTheme.typography.labelMedium)
+        Text("Description (optional)", style = MaterialTheme.typography.labelMedium)
         Spacer(Modifier.height(6.dp))
 
         OutlinedTextField(

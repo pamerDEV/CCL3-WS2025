@@ -30,6 +30,7 @@ import com.example.mybuddy.ui.theme.Background
 import com.example.mybuddy.ui.theme.Surface
 import com.example.mybuddy.ui.theme.TextPrimary
 import com.example.mybuddy.ui.theme.TextSecondary
+import com.example.mybuddy.ui.theme.Violet
 import com.example.mybuddy.ui.viewmodel.habit.HabitUiState
 
 @Composable
@@ -83,7 +84,7 @@ fun HabitCard(
                         Icon(
                             imageVector = Icons.Default.Edit,
                             contentDescription = "Edit Habit",
-                            tint = TextSecondary
+                            tint = Violet
                         )
                     }
                 }

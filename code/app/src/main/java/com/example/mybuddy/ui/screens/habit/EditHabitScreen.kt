@@ -119,7 +119,7 @@ private fun EditHabitContent(
 
         Spacer(Modifier.height(16.dp))
 
-        Text("Description", style = MaterialTheme.typography.labelMedium)
+        Text("Description (optional)", style = MaterialTheme.typography.labelMedium)
         Spacer(Modifier.height(6.dp))
 
         OutlinedTextField(
@@ -160,6 +160,15 @@ private fun EditHabitContent(
             modifier = Modifier.fillMaxWidth()
         ) {
             GradientButton(
+                text = "Delete",
+                modifier = Modifier.weight(1f),
+                onClick = {
+                    showDeleteDialog = true
+                },
+                gradientColors = listOf(DeleteRedLight, DeleteRed)
+            )
+
+            GradientButton(
                 text = "Save",
                 modifier = Modifier.weight(1f),
                 onClick = {
@@ -171,15 +180,6 @@ private fun EditHabitContent(
                         onDone = onDone
                     )
                 }
-            )
-
-            GradientButton(
-                text = "Delete",
-                modifier = Modifier.weight(1f),
-                onClick = {
-                    showDeleteDialog = true
-                },
-                gradientColors = listOf(DeleteRedLight, DeleteRed)
             )
         }
 
