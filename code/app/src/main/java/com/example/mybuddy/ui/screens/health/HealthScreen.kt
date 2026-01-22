@@ -25,6 +25,8 @@ import com.example.mybuddy.ui.components.health.tabs.HealthTabs
 import com.example.mybuddy.ui.theme.Background
 import com.example.mybuddy.ui.viewmodel.SleepViewModel
 import com.example.mybuddy.ui.viewmodel.SleepViewModelFactory
+import com.example.mybuddy.ui.viewmodel.UserSettingsViewModel
+import com.example.mybuddy.ui.viewmodel.UserSettingsViewModelFactory
 import com.example.mybuddy.ui.viewmodel.WaterViewModel
 import com.example.mybuddy.ui.viewmodel.WaterViewModelFactory
 
@@ -42,6 +44,10 @@ fun HealthScreen(
 
     val sleepViewModel: SleepViewModel = viewModel(
         factory = SleepViewModelFactory(application.sleepRepository, application.userSettingsRepository)
+    )
+
+    val settingsViewModel: UserSettingsViewModel = viewModel(
+        factory = UserSettingsViewModelFactory(application.userSettingsRepository)
     )
 
     var selectedTab by remember { mutableStateOf(HealthTab.Sleep) }
@@ -70,12 +76,20 @@ fun HealthScreen(
             HealthTab.Sleep -> {
                 SleepTab(
                     viewModel = sleepViewModel,
-                    onAddSleepClick = onAddSleepClick
+                    onAddSleepClick = onAddSleepClick,
+                    onGoalChange = { minutes ->
+                        settingsViewModel.setSleepGoal(minutes)
+                    }
                 )
             }
 
             HealthTab.Water -> {
-                WaterTab(viewModel = waterViewModel)
+                WaterTab(
+                    viewModel = waterViewModel,
+                    onGoalChange = { ml ->
+                        settingsViewModel.setWaterGoal(ml)
+                    }
+                )
             }
         }
     }

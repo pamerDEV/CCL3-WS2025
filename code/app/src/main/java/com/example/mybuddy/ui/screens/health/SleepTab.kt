@@ -1,5 +1,6 @@
 package com.example.mybuddy.ui.screens.health
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,14 +10,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -26,6 +34,7 @@ import com.example.mybuddy.ui.components.health.sleep.SleepClockRing
 import com.example.mybuddy.ui.components.health.sleep.SleepInfoCard
 import com.example.mybuddy.ui.components.health.sleep.SleepQualityCard
 import com.example.mybuddy.ui.components.health.sleep.WeeklySleepStats
+import com.example.mybuddy.ui.components.profile.SleepGoalDialog
 import com.example.mybuddy.ui.theme.HabitGreen
 import com.example.mybuddy.ui.theme.TextPrimary
 import com.example.mybuddy.ui.theme.TextSecondary
@@ -35,10 +44,12 @@ import com.example.mybuddy.ui.viewmodel.SleepViewModel
 @Composable
 fun SleepTab(
     viewModel: SleepViewModel,
-    onAddSleepClick: () -> Unit
+    onAddSleepClick: () -> Unit,
+    onGoalChange: (Int) -> Unit = {}
 ) {
     val state by viewModel.uiState.collectAsState()
     val todaySleep = state.todaySleep
+    var showGoalDialog by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -56,8 +67,10 @@ fun SleepTab(
 
             Spacer(Modifier.height(8.dp))
 
-            // Daily Goal - immer Violet
-            Row {
+            Row(
+                modifier = Modifier.clickable { showGoalDialog = true },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text("Daily goal: ", color = TextSecondary)
                 if (todaySleep != null) {
                     val hours = todaySleep.durationMinutes / 60
@@ -77,7 +90,6 @@ fun SleepTab(
 
             Spacer(Modifier.height(24.dp))
 
-            // Clock Ring
             if (todaySleep != null) {
                 SleepClockRing(
                     durationMinutes = todaySleep.durationMinutes,
@@ -88,7 +100,6 @@ fun SleepTab(
 
                 Spacer(Modifier.height(24.dp))
 
-                // Bedtime / Wakeup Cards
                 Row(
                     modifier = Modifier.width(420.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -109,13 +120,10 @@ fun SleepTab(
                         valueColor = HabitGreen,
                         modifier = Modifier.weight(1f)
                     )
-
                 }
 
                 Spacer(Modifier.height(12.dp))
-
             } else {
-                // No sleep logged - zeige leeren Clock Ring
                 SleepClockRing(
                     durationMinutes = null,
                     bedtime = null,
@@ -126,23 +134,30 @@ fun SleepTab(
 
             Spacer(Modifier.height(24.dp))
 
-            // Weekly Sleep Stats
-            WeeklySleepStats(
-                weeklyData = state.weeklyData
-            )
+            WeeklySleepStats(weeklyData = state.weeklyData)
         }
 
-        // Floating Button
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .padding(2.dp)
+                .padding(16.dp)
         ) {
             GradientButton(
                 text = if (todaySleep != null) "Edit Today's Sleep" else "Add Today's Sleep",
                 onClick = onAddSleepClick
             )
         }
+    }
+
+    if (showGoalDialog) {
+        SleepGoalDialog(
+            currentMinutes = state.goalMinutes,
+            onDismiss = { showGoalDialog = false },
+            onSave = { minutes ->
+                onGoalChange(minutes)
+                showGoalDialog = false
+            }
+        )
     }
 }
