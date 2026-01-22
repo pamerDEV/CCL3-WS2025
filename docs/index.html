@@ -195,7 +195,25 @@
           border-radius: .35rem;
           font-size: .95rem;
         }
-
+        .result-card{
+            border: 1px solid rgba(124,58,237,.15);
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 6px 18px rgba(15,23,42,.05);
+          }
+          .result-card .card-header{
+            background: rgba(124,58,237,.06);
+            border-bottom: 1px solid rgba(124,58,237,.12);
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            font-weight: 600;
+            color: var(--ink);
+          }
+          .plot-caption{
+            font-size: .95rem;
+            color: var(--muted);
+            margin-top: .4rem;
+          }
     </style>
 </head>
 
@@ -928,6 +946,126 @@
             <li><b>SUS Score</b> – boxplot to display the distribution of overall SUS scores across participants, including a benchmark reference line</li>
             <li><b>Qualitative feedback </b> – Categorized table grouping feedback by theme (positive, issues, suggestions)</li>
         </ul>
+    </section>
+
+    <section class="container py-5" id="usability-results">
+        <h2>Usability Test Results (n = 5)</h2>
+
+        <p>
+            We conducted the usability test with 5 participants. Overall, users completed the tasks successfully,
+            rated them mostly as easy, and reported a positive experience with the Buddy companion.
+        </p>
+
+        <h3>Quantitative Results</h3>
+        <ul>
+            <li><b>Task Success Rate:</b> All tasks were completed successfully (100% success per task).</li>
+            <li><b>Time on Task:</b> Most tasks were completed quickly (generally within under a minute), indicating efficient interaction flows.</li>
+            <li><b>SEQ (1–7):</b> Participants rated tasks as easy overall, with most ratings between 6–7. The lowest ease ratings were related to finding the daily goal setting.</li>
+            <li><b>SUS (0–100):</b> The app achieved an average SUS score of <b>91.5</b>, well above the common benchmark of <b>68</b>, indicating excellent perceived usability.</li>
+        </ul>
+
+        <!-- 4 PLOTS (2x2 GRID) -->
+        <div class="row g-4 mt-2">
+            <div class="col-12 col-md-6">
+                <div class="result-card p-3 h-100">
+                    <div class="card-header px-3 py-2 mb-3">Task Success Rate</div>
+                    <img src="images/task success.png" class="img-fluid rounded" alt="Task Success Rate plot">
+                    <div class="plot-caption">All tasks reached 100% success.</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="result-card p-3 h-100">
+                    <div class="card-header px-3 py-2 mb-3">Time on Task</div>
+                    <img src="images/time on task.png" class="img-fluid rounded" alt="Time on Task plot">
+                    <div class="plot-caption">Most tasks were completed in under a minute.</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="result-card p-3 h-100">
+                    <div class="card-header px-3 py-2 mb-3">SEQ (1–7)</div>
+                    <img src="images/seq.png" class="img-fluid rounded" alt="SEQ plot">
+                    <div class="plot-caption">Ratings clustered around 6–7 (easy).</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="result-card p-3 h-100">
+                    <div class="card-header px-3 py-2 mb-3">SUS (0–100)</div>
+                    <img src="images/sus.png" class="img-fluid rounded" alt="SUS plot">
+                    <div class="plot-caption">Average SUS: <b>91.5</b> (benchmark: 68).</div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mt-5">Qualitative Feedback (n = 5)</h3>
+
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th style="width: 180px;">Category</th>
+                    <th>Key Findings</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="fw-semibold">Positive</td>
+                    <td>
+                        <ul class="mb-0">
+                            <li>Clean, minimalistic, and cohesive design</li>
+                            <li>Home Screen shortcuts are very useful and efficient</li>
+                            <li>Onboarding and navigation are intuitive</li>
+                            <li>Buddy is cute and gives positive vibes</li>
+                            <li>App offers many relevant daily-tracking features (water, sleep, habits, statistics)</li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="fw-semibold">Issues</td>
+                    <td>
+                        <ul class="mb-0">
+                            <li>
+                                Changing daily goals was confusing and hard to find at first
+                                <span class="fw-semibold" style="color:#16a34a;">(Implemented)</span>
+                            </li>
+                            <li>
+                                Save/Delete button placement was unintuitive; users expected the save action on the right side
+                                <span class="fw-semibold" style="color:#16a34a;">(Implemented)</span>
+                            </li>
+                            <li>
+                                Occasional scrolling and hidden buttons (e.g., behind the keyboard) caused confusion
+                                <span class="fw-semibold" style="color:#16a34a;">(Implemented)</span>
+                            </li>
+                            <li>
+                                Some interactive elements were not immediately recognizable (e.g., water glasses perceived as decorative, blue text interpreted as links)
+                            </li>
+                            <li>
+                                Sleep time format (12-hour clock without AM/PM) caused minor confusion for some users
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="fw-semibold">Suggestions</td>
+                    <td>
+                        <ul class="mb-0">
+                            <li>Allow goal changes directly in relevant screens (e.g., water tab &amp; sleep tab)</li>
+                            <li>Improve Buddy’s interaction and make him engage even more with users</li>
+                            <li>Add wearable/app data integration for even faster logging</li>
+                            <li>Add reminders/notifications for habits and water intake</li>
+                            <li>Include notes for sleep tracking and more sleep quality emoji options</li>
+                            <li>More emoji/mood options (current selection felt restrictive to some users)</li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
     </section>
 
         <footer class="text-center py-4 text-muted">
