@@ -137,7 +137,7 @@ fun SleepTab(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .padding(16.dp)
+                .padding(2.dp)
         ) {
             GradientButton(
                 text = if (todaySleep != null) "Edit Today's Sleep" else "Add Today's Sleep",
