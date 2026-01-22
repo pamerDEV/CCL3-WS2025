@@ -134,6 +134,68 @@
         #toc li a:hover {
             color: var(--violet);
         }
+        /* ---------- Components Tree (details/summary) ---------- */
+        .components-tree details {
+          margin: .35rem 0;
+          padding-left: .25rem;
+        }
+
+        .components-tree details details {
+          margin-left: 1.25rem;           /* nested indent */
+          border-left: 2px solid rgba(124,58,237,.18);
+          padding-left: .9rem;
+        }
+
+        .components-tree summary {
+          cursor: pointer;
+          list-style: none;               /* remove default marker */
+          display: flex;
+          align-items: center;
+          gap: .55rem;
+          font-size: 1.05rem;
+          color: var(--ink);
+          font-weight: 600;
+          padding: .25rem .2rem;
+        }
+
+        .components-tree summary::-webkit-details-marker {
+          display: none;                  /* remove default marker (Chrome/Safari) */
+        }
+
+        /* Custom triangle */
+        .components-tree summary::before {
+          content: "▸";
+          color: rgba(124,58,237,.9);
+          font-size: 1rem;
+          line-height: 1;
+          transform: translateY(-1px);
+          transition: transform .15s ease;
+        }
+
+        .components-tree details[open] > summary::before {
+          transform: rotate(90deg) translateX(1px);
+        }
+
+        /* file list */
+        .components-tree ul {
+          margin: .35rem 0 .6rem 1.75rem; /* aligns nicely under summary */
+          padding-left: 0;
+        }
+
+        .components-tree li {
+          margin: .25rem 0;
+          color: var(--muted);
+          font-weight: 400;
+        }
+
+        .components-tree code {
+          color: var(--ink);
+          background: rgba(124,58,237,.08);
+          padding: .08rem .35rem;
+          border-radius: .35rem;
+          font-size: .95rem;
+        }
+
     </style>
 </head>
 
@@ -234,18 +296,23 @@
                     </tr>
                     <tr>
                         <td>sleep_logs</td>
-                        <td>id, date, bedtime, wake_time, duration, quality, goal_hours</td>
+                        <td>id, date, bedtime, waketime, durationMinutes, quality, goalMinutes</td>
                         <td>Records sleep duration and quality ratings</td>
                     </tr>
                     <tr>
                         <td>water_logs</td>
-                        <td>id, date, amount_ml, goal_ml</td>
+                        <td>id, date, amount, goal</td>
                         <td>Tracks daily water intake</td>
                     </tr>
                     <tr>
                         <td>buddy_profile</td>
                         <td>id, name, color_hex</td>
                         <td>Stores Buddy customization settings</td>
+                    </tr>
+                    <tr>
+                        <td>user_settings</td>
+                        <td>id, waterGoalMl, sleepGoalMinutes, onboardingDone</td>
+                        <td>Tracks the daily goal settings and welcome screen</td>
                     </tr>
                 </tbody>
             </table>
@@ -264,6 +331,20 @@
 
         <h4>Screens</h4>
         <ul class="screen-tree">
+            <li>
+                Splash Screen
+                <ul>
+                    <li class="desc">Shows animated Buddy logo while app loads
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Onboarding Screen
+                <ul>
+                    <li class="desc">Welcome screen for first-time users explaining the app concept and Buddy companion
+                    </li>
+                </ul>
+            </li>
             <li>
                 HomeScreen
                 <ul>
@@ -317,57 +398,102 @@
 
 
         <h4>Components</h4>
-        <ul>
-            <li>
-                BottomNavBar
-                <ul>
-                    <li>Contains main navigation (Home, Mood, Habits, Health, Profile)</li>
-                </ul>
-            </li>
 
-            <li>
-                StatWidget
+        <div class="components-tree">
+            <details>
+                <summary>api</summary>
                 <ul>
-                    <li>Reusable widget cards for Home screen (Mood, Sleep, Water, Habits)</li>
+                    <li><code>QuoteBubble.kt</code> – UI bubble for quote display</li>
+                    <li><code>QuoteSection.kt</code> – quote container + layout</li>
                 </ul>
-            </li>
+            </details>
 
-            <li>
-                BuddyBlob
+            <details>
+                <summary>habit</summary>
                 <ul>
-                    <li>Animated Canvas component with Bézier curves, supports multiple moods and colors</li>
+                    <li><code>HabitCard.kt</code> – habit list item with streak/check-in</li>
+                    <li><code>HabitsStreakGrid.kt</code> – streak grid visualization</li>
+                    <li><code>StatCard.kt</code> – small stats cards</li>
                 </ul>
-            </li>
+            </details>
 
-            <li>
-                MoodCalendar
+            <details open>
+                <summary>health</summary>
+
+                <details open>
+                    <summary>sleep</summary>
+                    <ul>
+                        <li><code>SleepClockRing.kt</code> – sleep visualization ring</li>
+                        <li><code>SleepInfoCard.kt</code> – bedtime/wakeup info card</li>
+                        <li><code>SleepQuality.kt</code> – sleep quality model/enum</li>
+                        <li><code>SleepQualityCard.kt</code> – UI card for quality display</li>
+                        <li><code>SleepWeeklyBar.kt</code> – weekly sleep bar chart</li>
+                        <li><code>WeeklySleepStats.kt</code> – weekly stats wrapper</li>
+                    </ul>
+                </details>
+
+                <details>
+                    <summary>tabs</summary>
+                    <ul>
+                        <li><code>HealthTab.kt</code> – tab content wrapper</li>
+                        <li><code>HealthTabPill.kt</code> – tab pill UI</li>
+                        <li><code>HealthTabs.kt</code> – tab navigation row</li>
+                    </ul>
+                </details>
+
+                <details>
+                    <summary>water</summary>
+                    <ul>
+                        <li><code>AddWaterButton.kt</code> – quick add button</li>
+                        <li><code>AddWaterDialog.kt</code> – dialog for adding water</li>
+                        <li><code>WaterProgressRing.kt</code> – progress visualization ring</li>
+                        <li><code>WeeklyCircle.kt</code> – weekly indicator circle</li>
+                        <li><code>WeeklyWaterStats.kt</code> – weekly stats wrapper</li>
+                    </ul>
+                </details>
+            </details>
+
+            <details>
+                <summary>home</summary>
                 <ul>
-                    <li>Monthly calendar grid with emoji indicators for logged days</li>
+                    <li><code>HabitsStatCard.kt</code> – habits widget for Home screen</li>
+                    <li><code>MoodStatCard.kt</code> – mood widget for Home screen</li>
+                    <li><code>SleepStatCard.kt</code> – sleep widget for Home screen</li>
+                    <li><code>WaterStatCard.kt</code> – water widget for Home screen</li>
                 </ul>
-            </li>
+            </details>
 
-            <li>
-                HabitCard
+            <details>
+                <summary>mood</summary>
                 <ul>
-                    <li>Displays habit with streak grid, name, and check-in button</li>
+                    <li><code>EditMoodItem.kt</code> – mood list/detail row item</li>
+                    <li><code>MoodStatCard.kt</code> – mood stats card component</li>
+                    <li><code>MoodStatsRow.kt</code> – stats row wrapper</li>
                 </ul>
-            </li>
+            </details>
 
-            <li>
-                CircularProgress
+            <details>
+                <summary>profile</summary>
                 <ul>
-                    <li>Reusable progress indicator for Sleep and Water widgets</li>
+                    <li><code>ColorWheelPicker.kt</code> – buddy color picker</li>
+                    <li><code>ProfileStatCard.kt</code> – profile stat card</li>
+                    <li><code>SettingsRow.kt</code> – row for settings items</li>
+                    <li><code>SleepGoalDialog.kt</code> – edit sleep goal dialog</li>
+                    <li><code>WaterGoalDialog.kt</code> – edit water goal dialog</li>
                 </ul>
-            </li>
+            </details>
 
-            <li>
-                ColorWheelPicker
+            <details>
+                <summary>shared</summary>
                 <ul>
-                    <li>HSV color wheel for Buddy customization</li>
+                    <li><code>BlobMood.kt</code> – mood mapping for Buddy blob</li>
+                    <li><code>BottomBar.kt</code> – bottom navigation bar</li>
+                    <li><code>BuddyBlob.kt</code> – animated Buddy component</li>
+                    <li><code>GradientButton.kt</code> – reusable gradient button</li>
+                    <li><code>MoodType.kt</code> – mood type mapping</li>
                 </ul>
-            </li>
-        </ul>
-
+            </details>
+        </div>
 
         <h4>Utils</h4>
         <ul>
@@ -379,9 +505,9 @@
             </li>
 
             <li>
-                BuddyMoodMapper
+                SleepQualityColor
                 <ul>
-                    <li>Maps Wellbeing Score ranges to Buddy mood states</li>
+                    <li>maps sleep quality states to theme colors (Awesome/Okay/Terrible → color)</li>
                 </ul>
             </li>
 
