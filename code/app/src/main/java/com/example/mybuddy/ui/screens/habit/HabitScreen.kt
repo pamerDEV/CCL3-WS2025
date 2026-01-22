@@ -53,7 +53,7 @@ fun HabitScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        // 🔹 HEADER
+        // HEADER
         item {
             Spacer(Modifier.height(16.dp))
 
@@ -96,7 +96,7 @@ fun HabitScreen(
             Spacer(Modifier.height(28.dp))
         }
 
-        // 🔹 HABIT LIST
+        // HABIT LIST
         items(
             items = habits,
             key = { it.habit.id }

@@ -67,15 +67,27 @@ fun MoodScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 80.dp) // Extra bottom padding for button
         ) {
+            // Header
+            Spacer(Modifier.height(16.dp))
+
             Text(
-                text = "Mood History",
-                style = MaterialTheme.typography.headlineMedium,
+                text = "Mood Calendar",
+                style = MaterialTheme.typography.titleLarge,
                 color = TextPrimary,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.align(Alignment.CenterHorizontally) // matches HabitScreen's centered header
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            Text(
+                text = "Track how you feel over time and notice patterns.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = TextSecondary,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(Modifier.height(16.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -147,7 +159,6 @@ fun MoodScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .background(Background)
                 .padding(16.dp)
         ) {
             if (hasMoodToday) {
