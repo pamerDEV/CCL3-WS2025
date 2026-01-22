@@ -238,8 +238,9 @@
         <ul>
             <li><a href="#app-concept">App Concept</a></li>
             <li><a href="#app-structure">App Structure</a></li>
-            <li><a href="#screenshots">Hi-Fi Prototype</a></li>
             <li><a href="#wellbeing-score">Wellbeing Score</a></li>
+            <li><a href="#prototype">Hi-Fi Prototype</a></li>
+            <li><a href="#screenshots">Screenshots from the App</a></li>
             <li><a href="#heuristic">Heuristic Evaluation</a></li>
             <li><a href="#usability-test">User Test Plan</a></li>
             <li><a href="#usability-results">Usability Test Results</a></li>
@@ -546,8 +547,130 @@
         </ul>
     </section>
 
-        <!-- SCREENSHOTS -->
-        <section class="container py-2" id="screenshots">
+    <!-- WELLBEING SCORE -->
+    <section class="container py-5" id="wellbeing-score">
+        <h2>Wellbeing Score</h2>
+
+        <p>
+            The Wellbeing Score (0-100) combines four wellbeing dimensions.
+            The score is calculated internally and reflected through Buddy's mood -
+            users never see the number directly, only Buddy's expression.
+        </p>
+
+        <h3>Score Calculation</h3>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-light">
+                <tr>
+                    <th>Component</th>
+                    <th>Max Points</th>
+                    <th>Calculation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Mood</td>
+                    <td>30</td>
+                    <td>Based on logged mood type</td>
+                </tr>
+                <tr>
+                    <td>Habits</td>
+                    <td>30</td>
+                    <td>(completed ÷ total) * 30</td>
+                </tr>
+                <tr>
+                    <td>Sleep</td>
+                    <td>25</td>
+                    <td>Duration: (actual ÷ goal) * 15 + Quality (10)</td>
+                </tr>
+                <tr>
+                    <td>Water</td>
+                    <td>15</td>
+                    <td>(intake ÷ goal) * 15</td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td>100</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mood & Sleep Points Side by Side -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h3 class="mt-0">Mood Points (0-30)</h3>
+                <ul>
+                    <li>Awesome – 30</li>
+                    <li>Loved – 28</li>
+                    <li>Okay – 20</li>
+                    <li>Tired – 12</li>
+                    <li>Anxious – 10</li>
+                    <li>Sad – 8</li>
+                    <li>Upset – 5</li>
+                    <li>Terrible – 3</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3 class="mt-0">Sleep Points (0-25)</h3>
+                <p><strong>Duration (0-15 points):</strong></p>
+                <p>Score = (actual_hours ÷ goal_hours) * 15, max 15</p>
+                <p><strong>Quality (0-10 points):</strong></p>
+                <ul>
+                    <li>Awesome: 10 points</li>
+                    <li>Okay: 6 points</li>
+                    <li>Terrible: 2 points</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Buddy Mood Logic with GIFs -->
+        <h3>Buddy Mood Logic</h3>
+        <div class="row g-4 text-center mb-5">
+            <div class="col">
+                <img src="images/exited.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Excited">
+                <p class="mb-0 mt-2"><strong>EXCITED</strong></p>
+                <small class="text-muted">85-100</small>
+            </div>
+            <div class="col">
+                <img src="images/happy.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Happy">
+                <p class="mb-0 mt-2"><strong>HAPPY</strong></p>
+                <small class="text-muted">65-84</small>
+            </div>
+            <div class="col">
+                <img src="images/worried.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Worried">
+                <p class="mb-0 mt-2"><strong>WORRIED</strong></p>
+                <small class="text-muted">45-64</small>
+            </div>
+            <div class="col">
+                <img src="images/sad.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Sad">
+                <p class="mb-0 mt-2"><strong>SAD</strong></p>
+                <small class="text-muted">25-44</small>
+            </div>
+            <div class="col">
+                <img src="images/sleepy.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Sleepy">
+                <p class="mb-0 mt-2"><strong>SLEEPY</strong></p>
+                <small class="text-muted">0-24</small>
+            </div>
+        </div>
+
+        <!-- Example Calculation -->
+        <h3>Example Calculation</h3>
+        <p><strong>Great Day Example</strong></p>
+        <ul>
+            <li>Mood: Awesome –> 30 points</li>
+            <li>Habits: 4/5 completed –> 24 points</li>
+            <li>Sleep: 8h + Awesome quality – 15 + 10 –> 25 points</li>
+            <li>Water: 1800ml / 2000ml –> 13 points</li>
+            <li><strong>Total – 92 → EXCITED</strong></li>
+        </ul>
+    </section>
+
+
+    <!-- HighFi Prototype -->
+        <section class="container py-2" id="prototype">
             <h2>Hi-Fi Prototype</h2>
 
             <!-- Main Screens -->
@@ -640,127 +763,133 @@
             </div>
         </section>
 
+    <!-- Screenshots -->
+    <section class="container py-2" id="screenshots">
+        <h2>Screenshots from the App</h2>
 
-        <!-- WELLBEING SCORE -->
-        <section class="container py-5" id="wellbeing-score">
-            <h2>Wellbeing Score</h2>
+        <h3>Onboarding & Splash Screen</h3>
+        <div class="row g-4 mb-5">
+            <div class="col-6 col-md-4 col-lg-3">
+                <img src="images/Screenshot_onboarding.jpg" class="img-fluid rounded shadow" alt="Onboarding">
+                <p class="text-center mt-2 small">Onboarding</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <img src="images/Screenshot_splashscreen.jpg" class="img-fluid rounded shadow" alt="Splash Screen">
+                <p class="text-center mt-2 small">Splash Screen</p>
+            </div>
+        </div>
 
-            <p>
-                The Wellbeing Score (0-100) combines four wellbeing dimensions.
-                The score is calculated internally and reflected through Buddy's mood -
-                users never see the number directly, only Buddy's expression.
-            </p>
+        <h3>Main Screens</h3>
+        <p class="text-muted">Bottom navigation screens</p>
+        <div class="row g-4 mb-5">
+            <div class="col-6 col-md-4 col-lg">
+                <img src="images/Screenshot_home.jpg" class="img-fluid rounded shadow" alt="Home">
+                <p class="text-center mt-2 small">Home</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg">
+                <img src="images/Screenshot_mood.jpg" class="img-fluid rounded shadow" alt="Mood">
+                <p class="text-center mt-2 small">Mood</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg">
+                <img src="images/Screenshots_habits.jpg" class="img-fluid rounded shadow" alt="Habits">
+                <p class="text-center mt-2 small">Habits</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg">
+                <img src="images/Screenshot_sleep.jpg" class="img-fluid rounded shadow" alt="Sleep Tab">
+                <p class="text-center mt-2 small">Sleep Duration & Quality Tab</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg">
+                <img src="images/Screenshot_water.jpg" class="img-fluid rounded shadow" alt="Water Tab">
+                <p class="text-center mt-2 small">Water Intake Tab</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg">
+                <img src="images/Screenshot_profile.jpg" class="img-fluid rounded shadow" alt="Profile">
+                <p class="text-center mt-2 small">Profile</p>
+            </div>
+        </div>
 
-            <h3>Score Calculation</h3>
+        <h3>Mood Flow</h3>
+        <div class="row g-4 mb-5">
+            <div class="col-6 col-md-4 col-lg">
+                <img src="images/Screenshot_moodadd.jpg" class="img-fluid rounded shadow" alt="Select Mood">
+                <p class="text-center mt-2 small">Select Mood</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg">
+                <img src="images/Screenshot_addnote.jpg" class="img-fluid rounded shadow" alt="Add Notes">
+                <p class="text-center mt-2 small">Add Notes</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg">
+                <img src="images/Screenshot_mooddetailview.jpg" class="img-fluid rounded shadow" alt="Day Detail View">
+                <p class="text-center mt-2 small">Day Detail View</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg">
+                <img src="images/Screenshot_editmood.jpg" class="img-fluid rounded shadow" alt="Edit Mood">
+                <p class="text-center mt-2 small">Mood Edit View</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg">
+                <img src="images/Screenshot_mooddelete.jpg" class="img-fluid rounded shadow" alt="Delete Mood">
+                <p class="text-center mt-2 small">Mood Delete Confirm</p>
+            </div>
+        </div>
 
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Component</th>
-                            <th>Max Points</th>
-                            <th>Calculation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Mood</td>
-                            <td>30</td>
-                            <td>Based on logged mood type</td>
-                        </tr>
-                        <tr>
-                            <td>Habits</td>
-                            <td>30</td>
-                            <td>(completed ÷ total) * 30</td>
-                        </tr>
-                        <tr>
-                            <td>Sleep</td>
-                            <td>25</td>
-                            <td>Duration: (actual ÷ goal) * 15 + Quality (10)</td>
-                        </tr>
-                        <tr>
-                            <td>Water</td>
-                            <td>15</td>
-                            <td>(intake ÷ goal) * 15</td>
-                        </tr>
-                        <tr>
-                            <td>Total</td>
-                            <td>100</td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
+        <h3>Habits Flow</h3>
+        <div class="row g-4 mb-5">
+            <div class="col-6 col-md-4 col-lg-3">
+                <img src="images/Screenshot_createhabit.jpg" class="img-fluid rounded shadow" alt="Create Habit">
+                <p class="text-center mt-2 small">Create Habit</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <img src="images/Screenshot_edithabit.jpg" class="img-fluid rounded shadow" alt="Edit Habit">
+                <p class="text-center mt-2 small">Edit Habit</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <img src="images/Screenshot_habitdelete.jpg" class="img-fluid rounded shadow" alt="Delete Habit">
+                <p class="text-center mt-2 small">Habit Delete Confirm</p>
+            </div>
+        </div>
+
+        <h3>Sleep Flow</h3>
+        <div class="row g-4 mb-5">
+            <div class="col-6 col-md-4 col-lg-3">
+                <img src="images/" class="img-fluid rounded shadow" alt="Add Sleep">
+                <p class="text-center mt-2 small">Add Sleep duration and quality</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <img src="images/Screenshot_editsleep.jpg" class="img-fluid rounded shadow" alt="Add Sleep">
+                <p class="text-center mt-2 small">Edit Sleep</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <img src="images/Screenshot_dailysleepgoal.jpg" class="img-fluid rounded shadow" alt="daily sleep goal edit">
+                <p class="text-center mt-2 small">Change daily sleep goal</p>
             </div>
 
-            <!-- Mood & Sleep Points Side by Side -->
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <h3 class="mt-0">Mood Points (0-30)</h3>
-                    <ul>
-                        <li>Awesome – 30</li>
-                        <li>Loved – 28</li>
-                        <li>Okay – 20</li>
-                        <li>Tired – 12</li>
-                        <li>Anxious – 10</li>
-                        <li>Sad – 8</li>
-                        <li>Upset – 5</li>
-                        <li>Terrible – 3</li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <h3 class="mt-0">Sleep Points (0-25)</h3>
-                    <p><strong>Duration (0-15 points):</strong></p>
-                    <p>Score = (actual_hours ÷ goal_hours) * 15, max 15</p>
-                    <p><strong>Quality (0-10 points):</strong></p>
-                    <ul>
-                        <li>Awesome: 10 points</li>
-                        <li>Okay: 6 points</li>
-                        <li>Terrible: 2 points</li>
-                    </ul>
-                </div>
-            </div>
+        </div>
 
-            <!-- Buddy Mood Logic with GIFs -->
-            <h3>Buddy Mood Logic</h3>
-            <div class="row g-4 text-center mb-5">
-                <div class="col">
-                    <img src="images/exited.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Excited">
-                    <p class="mb-0 mt-2"><strong>EXCITED</strong></p>
-                    <small class="text-muted">85-100</small>
-                </div>
-                <div class="col">
-                    <img src="images/happy.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Happy">
-                    <p class="mb-0 mt-2"><strong>HAPPY</strong></p>
-                    <small class="text-muted">65-84</small>
-                </div>
-                <div class="col">
-                    <img src="images/worried.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Worried">
-                    <p class="mb-0 mt-2"><strong>WORRIED</strong></p>
-                    <small class="text-muted">45-64</small>
-                </div>
-                <div class="col">
-                    <img src="images/sad.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Sad">
-                    <p class="mb-0 mt-2"><strong>SAD</strong></p>
-                    <small class="text-muted">25-44</small>
-                </div>
-                <div class="col">
-                    <img src="images/sleepy.gif" class="img-fluid rounded" style="max-height: 120px;" alt="Sleepy">
-                    <p class="mb-0 mt-2"><strong>SLEEPY</strong></p>
-                    <small class="text-muted">0-24</small>
-                </div>
+        <h3>Water Intake Flow</h3>
+        <div class="row g-4 mb-5">
+            <div class="col-6 col-md-4 col-lg-3">
+                <img src="images/Screenshot_addwater.jpg" class="img-fluid rounded shadow" alt="Add Water">
+                <p class="text-center mt-2 small">Add Water</p>
             </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <img src="images/Screenshot_dailywatergoal.jpg" class="img-fluid rounded shadow" alt="daily water goal edit">
+                <p class="text-center mt-2 small">Change daily water goal</p>
+            </div>
+        </div>
 
-            <!-- Example Calculation -->
-            <h3>Example Calculation</h3>
-            <p><strong>Great Day Example</strong></p>
-            <ul>
-                <li>Mood: Awesome –> 30 points</li>
-                <li>Habits: 4/5 completed –> 24 points</li>
-                <li>Sleep: 8h + Awesome quality – 15 + 10 –> 25 points</li>
-                <li>Water: 1800ml / 2000ml –> 13 points</li>
-                <li><strong>Total – 92 → EXCITED</strong></li>
-            </ul>
-        </section>
+        <h3>Profile Flow</h3>
+        <div class="row g-4 mb-5">
+            <div class="col-6 col-md-4 col-lg-3">
+                <img src="images/Screenshot_profile.jpg" class="img-fluid rounded shadow" alt="Profile">
+                <p class="text-center mt-2 small">Profile</p>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <img src="images/Screenshot_customizebuddy.jpg" class="img-fluid rounded shadow" alt="Customize Buddy">
+                <p class="text-center mt-2 small">Customize Buddy</p>
+            </div>
+        </div>
+
+    </section>
 
     <section class="container py-5" id="heuristic">
 
