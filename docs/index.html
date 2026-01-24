@@ -244,6 +244,7 @@
             <li><a href="#heuristic">Heuristic Evaluation</a></li>
             <li><a href="#usability-test">User Test Plan</a></li>
             <li><a href="#usability-results">Usability Test Results</a></li>
+            <li><a href="#demo">App Demo - Screen recording</a></li>
             <li><a href="#final-reflection">Final Reflection</a></li>
         </ul>
     </section>
@@ -852,7 +853,7 @@
         <h3>Sleep Flow</h3>
         <div class="row g-4 mb-5">
             <div class="col-6 col-md-4 col-lg-3">
-                <img src="images/" class="img-fluid rounded shadow" alt="Add Sleep">
+                <img src="images/Screenshot_addsleep.jpg" class="img-fluid rounded shadow" alt="Add Sleep">
                 <p class="text-center mt-2 small">Add Sleep duration and quality</p>
             </div>
             <div class="col-6 col-md-4 col-lg-3">
@@ -1087,6 +1088,7 @@
         </ul>
     </section>
 
+    <!-- USABILITY TEST Results-->
     <section class="container py-5" id="usability-results">
         <h2>Usability Test Results (n = 5)</h2>
 
@@ -1222,6 +1224,21 @@
                 </tbody>
             </table>
         </div>
+
+        <h3 class="mt-5">Implemented Improvements</h3>
+        <p>
+            Based on the feedback we received during usability testing, we implemented several improvements before the final submission. The most requested change was making the daily goal settings easier to find-we added the goal adjustment slider directly to both the water and sleep tabs, so users can now change their goals either in the profile settings or right where they track their data. We also swapped the position of the Save and Delete buttons, placing Save on the right side as users expected. Additionally, we moved the "Next" button in the mood logging flow further down so users no longer need to scroll past the emoji grid. These changes directly addressed the main pain points identified during testing and improved the overall user experience.
+        </p>
+    </section>
+
+    <section class="container py-5" id="demo">
+        <h2>App Demo</h2>
+        <p>Watch a quick walkthrough of MyBuddy's main features:</p>
+        <div class="text-center">
+            <video controls class="rounded shadow" style="max-width: 300px;">
+                <source src="videos/screenrecording.mp4" type="video/mp4">
+            </video>
+        </div>
     </section>
 
     <!-- FINAL REFLECTION -->
@@ -1232,9 +1249,7 @@
         <p>
             From the beginning, Pascal and I had a clear plan for how to split our work. I was responsible for the entire UI design in Figma, and after that we divided the development tasks so we could work in parallel. We started with the core features-mood and habit tracking-and once those worked, we moved on to the health screen with sleep and water tracking.        </p>
         <p>
-            I focused on building the mood tracking system with the calendar view and statistics, the sleep tracking with the clock ring and weekly overview. And then I worked on the Sleep tracking feature with its clock-based ring visualization and weekly overview, as well as the splash screen and the necessary navigation logic. For the Buddy digital companion, I was able to reuse and expand on the animated blob I had designed and coded in my previous Mobile Coding course, which saved us time and gave the app its unique character.
-            I also cleaned up the R plots for our data analysis and wrote the user testing plan.
-        <p>
+            I focused on building the mood tracking system with the calendar view and statistics, and the profile page with Buddy customization including the color wheel picker. I then worked on the Sleep tracking feature with its clock-based ring visualization and weekly overview. I also created the splash screen and handled the necessary navigation logic. For the Buddy digital companion, I was able to reuse and expand on the animated blob I had designed and coded in my previous Mobile Coding course, which saved us time and gave the app its unique character. I also cleaned up the R plots for our data analysis and wrote the user testing plan.        <p>
         The trickiest part for me was making the sleep clock ring look like it did in our Figma design. Drawing the arc so it correctly showed the sleep duration from going to bed to waking up, and getting the angles right, took a lot of trial and error and ended up being more time-consuming than I expected.
         User testing turned out to be really helpful. We found issues we never would have caught ourselves, and it was satisfying to actually fix them before the presentation day.
         </p>
